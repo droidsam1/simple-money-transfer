@@ -1,7 +1,6 @@
 package org.example.bank.domain.strategy;
 
 import java.util.Map;
-import java.util.function.Consumer;
 import org.example.bank.domain.account.Account;
 import org.example.bank.domain.account.AccountId;
 import org.example.bank.domain.exceptions.AccountNotFoundException;
@@ -16,13 +15,13 @@ public class OptimisticLockTransferStrategy implements TransferStrategy {
         if (originAccount == null || destinyAccount == null) {
             throw new AccountNotFoundException();
         }
-        retry(a -> {
+        retry(() -> {
             synchronized (originAccount) {
                 var originBalance = originAccount.balance();
                 originAccount.compareAndSetBalance(originBalance, originBalance.subtract(amount));
             }
         });
-        retry(a -> {
+        retry(() -> {
             synchronized (destinyAccount) {
                 var originBalance = destinyAccount.balance();
                 destinyAccount.compareAndSetBalance(originBalance, originBalance.add(amount));
@@ -31,10 +30,10 @@ public class OptimisticLockTransferStrategy implements TransferStrategy {
     }
 
     //Just a simple retry loop
-    private <T> void retry(Consumer<T> operation) {
+    private void retry(Runnable operation) {
         while (true) {
             try {
-                operation.accept(null);
+                operation.run();
                 break;
             } catch (Exception e) {
                 // The loop will continue because success is still false
