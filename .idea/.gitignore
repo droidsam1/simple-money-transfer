@@ -1,0 +1,48 @@
+src/main/resources/plugins/*.jar
+out
+
+# ---- Sonar
+.sonar
+/.idea/sonarlint
+/.idea/sonarlint/**
+
+
+# ---- IntelliJ IDEA
+*.iws
+*.iml
+*.ipr
+/.idea/sonarlint/*
+/.idea/sonarlint/*.
+/.idea/*.xml
+/.idea/shelf/*
+
+**/target/*
+
+# ---- Eclipse
+.classpath
+.project
+.settings
+
+# ---- Maven
+target
+
+# ---- Mac OS X
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.Spotlight-V100
+.Trashes
+
+# ---- Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Gradle
+.gradle
+classes
+build
+.scannerwork/
