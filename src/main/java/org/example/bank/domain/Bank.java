@@ -1,42 +1,33 @@
 package org.example.bank.domain;
 
-import java.util.HashMap;
-import java.util.Map;
 import org.example.bank.domain.account.Account;
 import org.example.bank.domain.account.AccountId;
-import org.example.bank.domain.exceptions.AccountNotFoundException;
+import org.example.bank.domain.account.repository.AccountRepository;
 import org.example.bank.domain.money.Money;
-import org.example.bank.domain.strategy.SerializedTransferStrategy;
-import org.example.bank.domain.strategy.TransferStrategy;
+import org.example.bank.infraestructure.account.repository.inmemory.InMemoryConcurrentDataStructureAccountRepository;
 
 public class Bank {
 
-    private final Map<AccountId, Account> accounts;
-    private final TransferStrategy transferStrategy;
+    private final AccountRepository accountRepository;
 
     public Bank() {
-        accounts = new HashMap<>();
-        this.transferStrategy = new SerializedTransferStrategy();
+        this.accountRepository = new InMemoryConcurrentDataStructureAccountRepository();
     }
 
-    public Bank(TransferStrategy transferStrategy) {
-        accounts = new HashMap<>();
-        this.transferStrategy = transferStrategy;
+    public Bank(AccountRepository repository) {
+        this.accountRepository = repository;
+
     }
 
     public void registerAccount(Account anAccount) {
-        accounts.putIfAbsent(anAccount.id(), anAccount);
+        accountRepository.registerAccount(anAccount);
     }
 
     public Money getBalance(AccountId id) {
-        var account = accounts.get(id);
-        if (account == null) {
-            throw new AccountNotFoundException();
-        }
-        return account.balance();
+        return accountRepository.getBalance(id);
     }
 
     public void transfer(Money amount, AccountId origin, AccountId destiny) {
-        this.transferStrategy.transfer(accounts, amount, origin, destiny);
+        accountRepository.transfer(amount, origin, destiny);
     }
 }

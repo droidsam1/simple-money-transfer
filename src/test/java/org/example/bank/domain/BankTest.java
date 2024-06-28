@@ -13,6 +13,8 @@ import org.example.bank.domain.strategy.OptimisticLockTransferStrategy;
 import org.example.bank.domain.strategy.PessimisticLockTransferStrategy;
 import org.example.bank.domain.strategy.SerializedTransferStrategy;
 import org.example.bank.domain.strategy.TransferStrategy;
+import org.example.bank.infraestructure.account.repository.inmemory.InMemoryAccountRepository;
+import org.example.bank.infraestructure.account.repository.inmemory.InMemoryConcurrentDataStructureAccountRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
@@ -60,7 +62,7 @@ class BankTest {
     void shouldTransferMoney(TransferStrategy strategy) {
         var a = createAccountWithBalance("A", euros(100));
         var b = createAccountWithBalance("B", euros(100));
-        this.bank = new Bank(strategy);
+        this.bank = new Bank(new InMemoryAccountRepository(strategy));
         this.bank.registerAccount(a);
         this.bank.registerAccount(b);
 
@@ -76,7 +78,7 @@ class BankTest {
         var originalBalance = euros(20_000);
         var a = createAccountWithBalance("A", originalBalance);
         var b = createAccountWithBalance("B", originalBalance);
-        this.bank = new Bank(strategy);
+        this.bank = new Bank(new InMemoryAccountRepository(strategy));
         this.bank.registerAccount(a);
         this.bank.registerAccount(b);
 
@@ -100,7 +102,7 @@ class BankTest {
         var a = createAccountWithBalance("A", originalBalance);
         var b = createAccountWithBalance("B", originalBalance);
         var c = createAccountWithBalance("AA", originalBalance);
-        this.bank = new Bank(strategy);
+        this.bank = new Bank(new InMemoryAccountRepository(strategy));
 
         this.bank.registerAccount(a);
         this.bank.registerAccount(b);
@@ -137,8 +139,9 @@ class BankTest {
         this.bank.registerAccount(a);
         this.bank.registerAccount(b);
 
-        int numberOfTransfers = 10; // this number is multiplied by the number of repetitions inside shouldSupportConcurrentlyTransfers
+        int numberOfTransfers = 1000;
 
+        long totalConcurrentHashMap = 0;
         long totalSerializedTransferTime = 0;
         long totalPessimisticLockTransferTime = 0;
         long totalOptimisticLockTransferTime = 0;
@@ -146,16 +149,31 @@ class BankTest {
         // Measure serializedTransfer
         long start = System.nanoTime();
         for (int i = 0; i < numberOfTransfers; i++) {
-            shouldSupportConcurrentlyTransfers(new SerializedTransferStrategy());
+            concurrentlyTransfer(new Bank(new InMemoryConcurrentDataStructureAccountRepository()), numberOfTransfers);
         }
         long end = System.nanoTime();
+        long concurrentHashMapTransferTime = end - start;
+        totalConcurrentHashMap += concurrentHashMapTransferTime;
+
+        // Measure serializedTransfer
+        start = System.nanoTime();
+        for (int i = 0; i < numberOfTransfers; i++) {
+            concurrentlyTransfer(
+                    new Bank(new InMemoryAccountRepository(new SerializedTransferStrategy())),
+                    numberOfTransfers
+            );
+        }
+        end = System.nanoTime();
         long serializedTransferTime = end - start;
         totalSerializedTransferTime += serializedTransferTime;
 
         // Measure pessimisticLockTransfer
         start = System.nanoTime();
         for (int i = 0; i < numberOfTransfers; i++) {
-            shouldSupportConcurrentlyTransfers(new PessimisticLockTransferStrategy());
+            concurrentlyTransfer(
+                    new Bank(new InMemoryAccountRepository(new PessimisticLockTransferStrategy())),
+                    numberOfTransfers
+            );
         }
         end = System.nanoTime();
         long pessimisticLockTransferTime = end - start;
@@ -164,7 +182,10 @@ class BankTest {
         // Measure optimisticLockTransfer
         start = System.nanoTime();
         for (int i = 0; i < numberOfTransfers; i++) {
-            shouldSupportConcurrentlyTransfers(new OptimisticLockTransferStrategy());
+            concurrentlyTransfer(
+                    new Bank(new InMemoryAccountRepository(new OptimisticLockTransferStrategy())),
+                    numberOfTransfers
+            );
         }
         end = System.nanoTime();
         long optimisticLockTransferTime = end - start;
@@ -172,19 +193,63 @@ class BankTest {
 
         // Print the mean time taken and speedup after all repetitions
         if (repetitionInfo.getCurrentRepetition() == repetitionInfo.getTotalRepetitions()) {
+            System.out.println("Mean time taken by concurrentHashMap: " + (totalConcurrentHashMap / repetitionInfo.getTotalRepetitions()) + " ns");
             System.out.println("Mean time taken by serializedTransfer: " + (totalSerializedTransferTime / repetitionInfo.getTotalRepetitions()) + " ns");
             System.out.println("Mean time taken by pessimisticLockTransfer: " + (totalPessimisticLockTransferTime / repetitionInfo.getTotalRepetitions()) + " ns");
             System.out.println("Mean time taken by optimisticLockTransfer: " + (totalOptimisticLockTransferTime / repetitionInfo.getTotalRepetitions()) + " ns");
             System.out.println("---------------------------------------------");
             System.out.printf(
-                    "Mean speedup of pessimisticLockTransfer over serializedTransfer: %.2f x%n",
+                    "Mean speedup of serializedTransfer: %.2f x%n",
+                    (double) totalSerializedTransferTime / totalSerializedTransferTime
+            );
+            System.out.printf(
+                    "Mean speedup of concurrentHashMap: %.2f x%n",
+                    (double) totalSerializedTransferTime / totalConcurrentHashMap
+            );
+            System.out.printf(
+                    "Mean speedup of pessimisticLockTransfer: %.2f x%n",
                     (double) totalSerializedTransferTime / totalPessimisticLockTransferTime
             );
             System.out.printf(
-                    "Mean speedup of optimisticLockTransfer over serializedTransfer: %.2f x %n",
+                    "Mean speedup of optimisticLockTransfer: %.2f x %n",
                     (double) totalSerializedTransferTime / totalOptimisticLockTransferTime
             );
         }
+    }
+
+    void concurrentlyTransfer(Bank bankInstance, int numberOfTransfers) {
+        var originalBalance = euros(numberOfTransfers);
+        var a = createAccountWithBalance("A", originalBalance);
+        var b = createAccountWithBalance("B", originalBalance);
+        var c = createAccountWithBalance("AA", originalBalance);
+        var d = createAccountWithBalance("BB", originalBalance);
+
+        bankInstance.registerAccount(a);
+        bankInstance.registerAccount(b);
+        bankInstance.registerAccount(c);
+        bankInstance.registerAccount(d);
+
+        // move money from A to B
+        var futures = new ArrayList<CompletableFuture<Void>>();
+        for (int i = 0; i < numberOfTransfers; i++) {
+            futures.add(CompletableFuture.runAsync(() -> {
+                bankInstance.transfer(euros(1), a.id(), b.id());
+                bankInstance.transfer(euros(1), c.id(), a.id());
+                bankInstance.transfer(euros(1), d.id(), c.id());
+            }));
+        }
+        // move money from B to A
+        for (int i = 0; i < numberOfTransfers; i++) {
+            futures.add(CompletableFuture.runAsync(() -> {
+                bankInstance.transfer(euros(1), b.id(), a.id());
+                bankInstance.transfer(euros(1), a.id(), c.id());
+                bankInstance.transfer(euros(1), c.id(), d.id());
+            }));
+        }
+        futures.forEach(CompletableFuture::join);
+        Assertions.assertEquals(bankInstance.getBalance(a.id()), bankInstance.getBalance(b.id()));
+        Assertions.assertEquals(originalBalance, bankInstance.getBalance(a.id()));
+        Assertions.assertEquals(originalBalance, bankInstance.getBalance(c.id()));
     }
 
     private Account createAccountWithBalance(String id) {
