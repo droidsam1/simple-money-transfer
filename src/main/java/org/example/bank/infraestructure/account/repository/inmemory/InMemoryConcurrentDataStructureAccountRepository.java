@@ -1,6 +1,7 @@
 package org.example.bank.infraestructure.account.repository.inmemory;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import org.example.bank.domain.account.Account;
 import org.example.bank.domain.account.AccountId;
@@ -36,5 +37,9 @@ public class InMemoryConcurrentDataStructureAccountRepository implements Account
         }
         accounts.computeIfPresent(originAccount.id(), (accountId, account) -> account.withdraw(amount));
         accounts.computeIfPresent(destinyAccount.id(), (accountId, account) -> account.deposit(amount));
+    }
+
+    @Override public Optional<Account> getAccount(AccountId id) {
+        return Optional.ofNullable(accounts.get(id));
     }
 }

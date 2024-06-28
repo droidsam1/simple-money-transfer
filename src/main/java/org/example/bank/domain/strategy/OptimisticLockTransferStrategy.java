@@ -3,7 +3,6 @@ package org.example.bank.domain.strategy;
 import java.util.Map;
 import org.example.bank.domain.account.Account;
 import org.example.bank.domain.account.AccountId;
-import org.example.bank.domain.exceptions.AccountNotFoundException;
 import org.example.bank.domain.money.Money;
 
 public class OptimisticLockTransferStrategy implements TransferStrategy {
@@ -12,9 +11,6 @@ public class OptimisticLockTransferStrategy implements TransferStrategy {
     public void transfer(Map<AccountId, Account> accounts, Money amount, AccountId origin, AccountId destiny) {
         var originAccount = accounts.get(origin);
         var destinyAccount = accounts.get(destiny);
-        if (originAccount == null || destinyAccount == null) {
-            throw new AccountNotFoundException();
-        }
         retry(() -> {
             synchronized (originAccount) {
                 var originBalance = originAccount.balance();

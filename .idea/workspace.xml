@@ -4,16 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/account/repository/AccountRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/infraestructure/account/repository/inmemory/InMemoryAccountRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/infraestructure/account/repository/inmemory/InMemoryConcurrentDataStructureAccountRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" afterDir="false" />
+    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="refactor: extract account existence validation to domain&#10;add: get account method to repository">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/Bank.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/Bank.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/org/example/bank/domain/BankTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/bank/domain/BankTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -60,6 +52,7 @@
     "JUnit.BankTest.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "settings.editor.selected.configurable": "reference.settingsdialog.IDE.editor.colors.Console Font"
@@ -137,13 +130,41 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1719605402858</updated>
-      <workItem from="1719605403978" duration="2251000" />
+      <workItem from="1719605403978" duration="2778000" />
     </task>
+    <task id="LOCAL-00001" summary="refactor: introduce repository pattern&#10;add: inmemory concurrent hash map implementation">
+      <option name="closed" value="true" />
+      <created>1719607755036</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1719607755036</updated>
+    </task>
+    <task id="LOCAL-00002" summary="refactor: introduce repository pattern&#10;add: inmemory concurrent hash map implementation&#10;refactor: strengthen concurrency in comparative test">
+      <option name="closed" value="true" />
+      <created>1719607794550</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1719607794550</updated>
+    </task>
+    <task id="LOCAL-00003" summary="refactor: extract account existence validation to domain&#10;add: get account method to repository">
+      <option name="closed" value="true" />
+      <created>1719608161619</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1719608161619</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="remove useless methods" />
-    <option name="LAST_COMMIT_MESSAGE" value="" />
+    <MESSAGE value="refactor: introduce repository pattern&#10;add: inmemory concurrent hash map implementation" />
+    <MESSAGE value="refactor: introduce repository pattern&#10;add: inmemory concurrent hash map implementation&#10;refactor: strengthen concurrency in comparative test" />
+    <MESSAGE value="refactor: extract account existence validation to domain&#10;add: get account method to repository" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor: extract account existence validation to domain&#10;add: get account method to repository" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -2,6 +2,7 @@ package org.example.bank.infraestructure.account.repository.inmemory;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import org.example.bank.domain.account.Account;
 import org.example.bank.domain.account.AccountId;
 import org.example.bank.domain.account.repository.AccountRepository;
@@ -33,5 +34,9 @@ public class InMemoryAccountRepository implements AccountRepository {
 
     @Override public void transfer(Money amount, AccountId origin, AccountId destiny) {
         this.transferStrategy.transfer(accounts, amount, origin, destiny);
+    }
+
+    @Override public Optional<Account> getAccount(AccountId id) {
+        return Optional.ofNullable(accounts.get(id));
     }
 }

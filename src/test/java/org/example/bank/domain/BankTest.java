@@ -38,7 +38,7 @@ class BankTest {
 
     @Test
     void shouldRegisterAccount() {
-        Assertions.assertDoesNotThrow(() -> bank.registerAccount(createAccountWithBalance("A")));
+        Assertions.assertDoesNotThrow(() -> bank.registerAccount(createAccountWithBalance("A", euros(0))));
     }
 
     @Test
@@ -85,9 +85,7 @@ class BankTest {
         int numberOfTransfers = 10_000;
         var futures = new ArrayList<CompletableFuture<Void>>();
         for (int i = 0; i < numberOfTransfers; i++) {
-            futures.add(CompletableFuture.runAsync(() -> {
-                bank.transfer(euros(1), a.id(), b.id());
-            }));
+            futures.add(CompletableFuture.runAsync(() -> bank.transfer(euros(1), a.id(), b.id())));
         }
         futures.forEach(CompletableFuture::join);
 
@@ -250,10 +248,6 @@ class BankTest {
         Assertions.assertEquals(bankInstance.getBalance(a.id()), bankInstance.getBalance(b.id()));
         Assertions.assertEquals(originalBalance, bankInstance.getBalance(a.id()));
         Assertions.assertEquals(originalBalance, bankInstance.getBalance(c.id()));
-    }
-
-    private Account createAccountWithBalance(String id) {
-        return createAccountWithBalance(id, euros(0));
     }
 
     private Account createAccountWithBalance(String id, Money balance) {

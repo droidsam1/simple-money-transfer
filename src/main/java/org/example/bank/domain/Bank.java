@@ -3,6 +3,7 @@ package org.example.bank.domain;
 import org.example.bank.domain.account.Account;
 import org.example.bank.domain.account.AccountId;
 import org.example.bank.domain.account.repository.AccountRepository;
+import org.example.bank.domain.exceptions.AccountNotFoundException;
 import org.example.bank.domain.money.Money;
 import org.example.bank.infraestructure.account.repository.inmemory.InMemoryConcurrentDataStructureAccountRepository;
 
@@ -16,7 +17,6 @@ public class Bank {
 
     public Bank(AccountRepository repository) {
         this.accountRepository = repository;
-
     }
 
     public void registerAccount(Account anAccount) {
@@ -28,6 +28,11 @@ public class Bank {
     }
 
     public void transfer(Money amount, AccountId origin, AccountId destiny) {
+        var originAccount = accountRepository.getAccount(origin);
+        var destinyAccount = accountRepository.getAccount(destiny);
+        if (originAccount.isEmpty() || destinyAccount.isEmpty()) {
+            throw new AccountNotFoundException();
+        }
         accountRepository.transfer(amount, origin, destiny);
     }
 }
