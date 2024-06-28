@@ -6,8 +6,6 @@ import org.example.bank.domain.account.Account;
 import org.example.bank.domain.account.AccountId;
 import org.example.bank.domain.exceptions.AccountNotFoundException;
 import org.example.bank.domain.money.Money;
-import org.example.bank.domain.strategy.OptimisticLockTransferStrategy;
-import org.example.bank.domain.strategy.PessimisticLockTransferStrategy;
 import org.example.bank.domain.strategy.SerializedTransferStrategy;
 import org.example.bank.domain.strategy.TransferStrategy;
 
@@ -41,17 +39,4 @@ public class Bank {
     public void transfer(Money amount, AccountId origin, AccountId destiny) {
         this.transferStrategy.transfer(accounts, amount, origin, destiny);
     }
-
-    protected void optimisticLockTransfer(Money amount, AccountId origin, AccountId destiny) {
-        new OptimisticLockTransferStrategy().transfer(accounts, amount, origin, destiny);
-    }
-
-    protected void pessimisticLockTransfer(Money amount, AccountId origin, AccountId destiny) {
-        new PessimisticLockTransferStrategy().transfer(accounts, amount, origin, destiny);
-    }
-
-    protected synchronized void serializedTransfer(Money amount, AccountId origin, AccountId destiny) {
-        new SerializedTransferStrategy().transfer(accounts, amount, origin, destiny);
-    }
-
 }
