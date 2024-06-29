@@ -30,4 +30,8 @@ public record Money(BigDecimal amount, Currency currency) {
         }
         return new Money(this.amount.add(summand.amount), this.currency);
     }
+
+    public boolean isNegative() {
+        return this.amount.compareTo(BigDecimal.ZERO) < 0;
+    }
 }

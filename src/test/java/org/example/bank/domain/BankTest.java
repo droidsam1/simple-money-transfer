@@ -8,6 +8,7 @@ import org.example.bank.domain.account.Account;
 import org.example.bank.domain.account.AccountId;
 import org.example.bank.domain.account.MutableAccount;
 import org.example.bank.domain.exceptions.AccountNotFoundException;
+import org.example.bank.domain.exceptions.NegativeTransferAmountException;
 import org.example.bank.domain.money.Money;
 import org.example.bank.domain.strategy.OptimisticLockTransferStrategy;
 import org.example.bank.domain.strategy.PessimisticLockTransferStrategy;
@@ -129,6 +130,19 @@ class BankTest {
         Assertions.assertEquals(originalBalance, this.bank.getBalance(c.id()));
     }
 
+    @Test
+    void shouldNotAllowTransfersWithNegativeAmounts() {
+        var accountA = createAccountWithBalance("A", euros(100));
+        this.bank.registerAccount(accountA);
+        var accountB = createAccountWithBalance("B", euros(100));
+        this.bank.registerAccount(accountB);
+        var negativeAmount = euros(-1);
+
+        Assertions.assertThrows(
+                NegativeTransferAmountException.class,
+                () -> this.bank.transfer(negativeAmount, accountA.id(), accountB.id())
+        );
+    }
 
     @RepeatedTest(10)
     void compareTransferMethodsEfficiency(RepetitionInfo repetitionInfo) {
