@@ -9,8 +9,10 @@ public class SerializedTransferStrategy implements TransferStrategy {
 
     @Override
     public void transfer(Map<AccountId, Account> accounts, Money amount, AccountId origin, AccountId destiny) {
-        accounts.computeIfPresent(origin, (accountId, account) -> account.withdraw(amount));
-        accounts.computeIfPresent(destiny, (accountId, account) -> account.deposit(amount));
+        synchronized (this) {
+            accounts.computeIfPresent(origin, (accountId, account) -> account.withdraw(amount));
+            accounts.computeIfPresent(destiny, (accountId, account) -> account.deposit(amount));
+        }
     }
 
 }
