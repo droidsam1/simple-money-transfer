@@ -2,6 +2,7 @@ package org.example.bank.domain.account;
 
 import org.example.bank.domain.exceptions.BalanceMisMatchException;
 import org.example.bank.domain.exceptions.InsufficientFundsException;
+import org.example.bank.domain.exceptions.NegativeTransferAmountException;
 import org.example.bank.domain.money.Money;
 
 public final class MutableAccount implements Account {
@@ -21,8 +22,15 @@ public final class MutableAccount implements Account {
     @Override
     public MutableAccount withdraw(Money amount) {
         validateEnoughFunds(amount);
+        validateNonNegativeWithdraw(amount);
         this.balance = this.balance.subtract(amount);
         return this;
+    }
+
+    private void validateNonNegativeWithdraw(Money amount) {
+        if (amount.isNegative()) {
+            throw new NegativeTransferAmountException();
+        }
     }
 
     private void validateEnoughFunds(Money amount) {

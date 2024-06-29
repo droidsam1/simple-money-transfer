@@ -4,7 +4,6 @@ import org.example.bank.domain.account.Account;
 import org.example.bank.domain.account.AccountId;
 import org.example.bank.domain.account.repository.AccountRepository;
 import org.example.bank.domain.exceptions.AccountNotFoundException;
-import org.example.bank.domain.exceptions.NegativeTransferAmountException;
 import org.example.bank.domain.money.Money;
 import org.example.bank.infraestructure.account.repository.inmemory.InMemoryConcurrentDataStructureAccountRepository;
 
@@ -29,10 +28,6 @@ public class Bank {
     }
 
     public void transfer(Money amount, AccountId origin, AccountId destiny) {
-        if (amount.isNegative()) {
-            throw new NegativeTransferAmountException();
-        }
-
         var originAccount = accountRepository.getAccount(origin);
         var destinyAccount = accountRepository.getAccount(destiny);
         if (originAccount.isEmpty() || destinyAccount.isEmpty()) {

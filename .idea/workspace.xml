@@ -4,14 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="add: insufficient funds validation&#10;refactor: replace compareAndSet with compareAndSubtract and compareAndAdd to push validation logic into Account">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/exceptions/InsufficientFundsException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/account/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/account/Account.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/account/ImmutableAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/account/ImmutableAccount.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/account/MutableAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/account/MutableAccount.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/strategy/OptimisticLockTransferStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/strategy/OptimisticLockTransferStrategy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/bank/domain/BankTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/bank/domain/BankTest.java" afterDir="false" />
+    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="refactor: push validation logic to Account">
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/a/e/ae21d75acd1e4d83cefd02f7305afb96227589d6" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -222,7 +216,23 @@
       <option name="project" value="LOCAL" />
       <updated>1719673381868</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="add: insufficient funds validation&#10;refactor: replace compareAndSet with compareAndSubtract and compareAndAdd to push validation logic into Account">
+      <option name="closed" value="true" />
+      <created>1719674578871</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1719674578871</updated>
+    </task>
+    <task id="LOCAL-00008" summary="refactor: push validation logic to Account">
+      <option name="closed" value="true" />
+      <created>1719674723989</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1719674723989</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -234,7 +244,8 @@
     <MESSAGE value="fix: push synchronization to account class so OptimisticLock does not lock in advance" />
     <MESSAGE value="add: validation, does not allow negative transfers" />
     <MESSAGE value="add: insufficient funds validation&#10;refactor: replace compareAndSet with compareAndSubtract and compareAndAdd to push validation logic into Account" />
-    <option name="LAST_COMMIT_MESSAGE" value="add: insufficient funds validation&#10;refactor: replace compareAndSet with compareAndSubtract and compareAndAdd to push validation logic into Account" />
+    <MESSAGE value="refactor: push validation logic to Account" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor: push validation logic to Account" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
