@@ -12,5 +12,7 @@ public interface Account {
 
     AccountId id();
 
-    void compareAndSetBalance(Money originBalance, Money newValue);
+    void compareAndSubtract(Money originBalance, Money moneyToSubtract);
+
+    void compareAndAdd(Money originBalance, Money moneyToAdd);
 }

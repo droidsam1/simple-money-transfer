@@ -26,8 +26,12 @@ public record ImmutableAccount(AccountId id, Money balance) implements Account {
         );
     }
 
-    @Override public void compareAndSetBalance(Money originBalance, Money newValue) {
-        throw new UnsupportedOperationException("ImmutableAccount does not support compareAndSetBalance");
+    @Override public void compareAndSubtract(Money originBalance, Money moneyToSubtract) {
+        throw new UnsupportedOperationException("ImmutableAccount does not support compareAndSubtract");
+    }
+
+    @Override public void compareAndAdd(Money originBalance, Money moneyToAdd) {
+        throw new UnsupportedOperationException("ImmutableAccount does not support compareAndAdd");
     }
 
 }

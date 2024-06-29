@@ -4,11 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="fix: push synchronization to account class so OptimisticLock does not lock in advance">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/exceptions/NegativeTransferAmountException.java" afterDir="false" />
+    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="add: insufficient funds validation&#10;refactor: replace compareAndSet with compareAndSubtract and compareAndAdd to push validation logic into Account">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/exceptions/InsufficientFundsException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/Bank.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/Bank.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/money/Money.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/money/Money.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/account/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/account/Account.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/account/ImmutableAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/account/ImmutableAccount.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/account/MutableAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/account/MutableAccount.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/strategy/OptimisticLockTransferStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/strategy/OptimisticLockTransferStrategy.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/org/example/bank/domain/BankTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/bank/domain/BankTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -53,6 +55,7 @@
     "JUnit.All in simple-bank.executor": "Run",
     "JUnit.BankTest.compareTransferMethodsEfficiency.executor": "Run",
     "JUnit.BankTest.executor": "Run",
+    "JUnit.BankTest.shouldNotAllowTransfersWhenDepositorHasInsufficientFunds.executor": "Run",
     "JUnit.BankTest.shouldNotAllowTransfersWithNegativeAmounts.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
@@ -64,6 +67,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
+      <recent name="org.example.bank.domain.exceptions" />
       <recent name="org.example.bank.infraestructure.account.repository" />
       <recent name="org.example.bank.domain.account.repository" />
     </key>
@@ -111,6 +115,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="BankTest.shouldNotAllowTransfersWhenDepositorHasInsufficientFunds" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="simple-bank" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.bank.domain.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.bank.domain" />
+      <option name="MAIN_CLASS_NAME" value="org.example.bank.domain.BankTest" />
+      <option name="METHOD_NAME" value="shouldNotAllowTransfersWhenDepositorHasInsufficientFunds" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="BankTest.shouldNotAllowTransfersWithNegativeAmounts" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="simple-bank" />
       <extension name="coverage">
@@ -130,6 +150,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.BankTest" />
+        <item itemvalue="JUnit.BankTest.shouldNotAllowTransfersWhenDepositorHasInsufficientFunds" />
         <item itemvalue="JUnit.BankTest.shouldNotAllowTransfersWithNegativeAmounts" />
         <item itemvalue="JUnit.BankTest.compareTransferMethodsEfficiency" />
         <item itemvalue="JUnit.All in simple-bank" />
@@ -193,7 +214,15 @@
       <option name="project" value="LOCAL" />
       <updated>1719673012324</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="add: validation, does not allow negative transfers">
+      <option name="closed" value="true" />
+      <created>1719673381868</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1719673381868</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -203,7 +232,9 @@
     <MESSAGE value="refactor: extract account existence validation to domain&#10;add: get account method to repository" />
     <MESSAGE value="fix: serialized strategy to rely on synchronized block instead of atomic internal reference, the latter gets better performance but it is not a pure serialization" />
     <MESSAGE value="fix: push synchronization to account class so OptimisticLock does not lock in advance" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: push synchronization to account class so OptimisticLock does not lock in advance" />
+    <MESSAGE value="add: validation, does not allow negative transfers" />
+    <MESSAGE value="add: insufficient funds validation&#10;refactor: replace compareAndSet with compareAndSubtract and compareAndAdd to push validation logic into Account" />
+    <option name="LAST_COMMIT_MESSAGE" value="add: insufficient funds validation&#10;refactor: replace compareAndSet with compareAndSubtract and compareAndAdd to push validation logic into Account" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -8,6 +8,7 @@ import org.example.bank.domain.account.Account;
 import org.example.bank.domain.account.AccountId;
 import org.example.bank.domain.account.MutableAccount;
 import org.example.bank.domain.exceptions.AccountNotFoundException;
+import org.example.bank.domain.exceptions.InsufficientFundsException;
 import org.example.bank.domain.exceptions.NegativeTransferAmountException;
 import org.example.bank.domain.money.Money;
 import org.example.bank.domain.strategy.OptimisticLockTransferStrategy;
@@ -130,8 +131,10 @@ class BankTest {
         Assertions.assertEquals(originalBalance, this.bank.getBalance(c.id()));
     }
 
-    @Test
-    void shouldNotAllowTransfersWithNegativeAmounts() {
+    @ParameterizedTest
+    @ArgumentsSource(TransferStrategyProvider.class)
+    void shouldNotAllowTransfersWithNegativeAmounts(TransferStrategy strategy) {
+        this.bank = new Bank(new InMemoryAccountRepository(strategy));
         var accountA = createAccountWithBalance("A", euros(100));
         this.bank.registerAccount(accountA);
         var accountB = createAccountWithBalance("B", euros(100));
@@ -140,6 +143,22 @@ class BankTest {
 
         Assertions.assertThrows(
                 NegativeTransferAmountException.class,
+                () -> this.bank.transfer(negativeAmount, accountA.id(), accountB.id())
+        );
+    }
+
+    @ParameterizedTest
+    @ArgumentsSource(TransferStrategyProvider.class)
+    void shouldNotAllowTransfersWhenDepositorHasInsufficientFunds(TransferStrategy strategy) {
+        this.bank = new Bank(new InMemoryAccountRepository(strategy));
+        var accountA = createAccountWithBalance("A", euros(0));
+        this.bank.registerAccount(accountA);
+        var accountB = createAccountWithBalance("B", euros(0));
+        this.bank.registerAccount(accountB);
+        var negativeAmount = euros(1);
+
+        Assertions.assertThrows(
+                InsufficientFundsException.class,
                 () -> this.bank.transfer(negativeAmount, accountA.id(), accountB.id())
         );
     }
