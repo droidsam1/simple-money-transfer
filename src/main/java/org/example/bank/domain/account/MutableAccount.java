@@ -31,7 +31,7 @@ public final class MutableAccount implements Account {
         return id;
     }
 
-    @Override public void compareAndSetBalance(Money originBalance, Money newValue) {
+    @Override public synchronized void compareAndSetBalance(Money originBalance, Money newValue) {
         if (!balance.equals(originBalance)) {
             throw new BalanceMisMatchException();
         }

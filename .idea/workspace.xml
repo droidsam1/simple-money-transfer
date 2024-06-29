@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="refactor: extract account existence validation to domain&#10;add: get account method to repository">
+    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="fix: serialized strategy to rely on synchronized block instead of atomic internal reference, the latter gets better performance but it is not a pure serialization">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/account/MutableAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/account/MutableAccount.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/strategy/SerializedTransferStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/strategy/SerializedTransferStrategy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/strategy/OptimisticLockTransferStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/strategy/OptimisticLockTransferStrategy.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -157,7 +157,15 @@
       <option name="project" value="LOCAL" />
       <updated>1719608161619</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="fix: serialized strategy to rely on synchronized block instead of atomic internal reference, the latter gets better performance but it is not a pure serialization">
+      <option name="closed" value="true" />
+      <created>1719671868233</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1719671868233</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -165,7 +173,8 @@
     <MESSAGE value="refactor: introduce repository pattern&#10;add: inmemory concurrent hash map implementation" />
     <MESSAGE value="refactor: introduce repository pattern&#10;add: inmemory concurrent hash map implementation&#10;refactor: strengthen concurrency in comparative test" />
     <MESSAGE value="refactor: extract account existence validation to domain&#10;add: get account method to repository" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor: extract account existence validation to domain&#10;add: get account method to repository" />
+    <MESSAGE value="fix: serialized strategy to rely on synchronized block instead of atomic internal reference, the latter gets better performance but it is not a pure serialization" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: serialized strategy to rely on synchronized block instead of atomic internal reference, the latter gets better performance but it is not a pure serialization" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

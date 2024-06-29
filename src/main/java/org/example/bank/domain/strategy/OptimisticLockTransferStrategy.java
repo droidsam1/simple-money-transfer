@@ -12,16 +12,12 @@ public class OptimisticLockTransferStrategy implements TransferStrategy {
         var originAccount = accounts.get(origin);
         var destinyAccount = accounts.get(destiny);
         retry(() -> {
-            synchronized (originAccount) {
                 var originBalance = originAccount.balance();
                 originAccount.compareAndSetBalance(originBalance, originBalance.subtract(amount));
-            }
         });
         retry(() -> {
-            synchronized (destinyAccount) {
                 var originBalance = destinyAccount.balance();
                 destinyAccount.compareAndSetBalance(originBalance, originBalance.add(amount));
-            }
         });
     }
 
