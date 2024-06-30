@@ -23,7 +23,7 @@ public class OptimisticLockTransferStrategy implements TransferStrategy {
                 operation.run();
                 break;
             } catch (BalanceMisMatchException e) {
-                // The loop will continue because success is still false
+                // The loop will continue until balance is consistent
             }
         }
     }
