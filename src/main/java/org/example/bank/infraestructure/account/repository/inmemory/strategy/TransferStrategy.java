@@ -1,4 +1,4 @@
-package org.example.bank.domain.strategy;
+package org.example.bank.infraestructure.account.repository.inmemory.strategy;
 
 import java.util.Map;
 import org.example.bank.domain.account.Account;

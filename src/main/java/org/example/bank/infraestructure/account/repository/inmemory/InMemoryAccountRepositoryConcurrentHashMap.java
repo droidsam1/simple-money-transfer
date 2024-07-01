@@ -1,6 +1,5 @@
 package org.example.bank.infraestructure.account.repository.inmemory;
 
-import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import org.example.bank.domain.account.Account;
@@ -9,11 +8,11 @@ import org.example.bank.domain.account.repository.AccountRepository;
 import org.example.bank.domain.exceptions.AccountNotFoundException;
 import org.example.bank.domain.money.Money;
 
-public class InMemoryConcurrentDataStructureAccountRepository implements AccountRepository {
+public class InMemoryAccountRepositoryConcurrentHashMap implements AccountRepository {
 
-    private final Map<AccountId, Account> accounts;
+    private final ConcurrentHashMap<AccountId, Account> accounts;
 
-    public InMemoryConcurrentDataStructureAccountRepository() {
+    public InMemoryAccountRepositoryConcurrentHashMap() {
         accounts = new ConcurrentHashMap<>();
     }
 
@@ -41,5 +40,10 @@ public class InMemoryConcurrentDataStructureAccountRepository implements Account
 
     @Override public Optional<Account> getAccount(AccountId id) {
         return Optional.ofNullable(accounts.get(id));
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
     }
 }

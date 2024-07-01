@@ -1,9 +1,9 @@
-package org.example.bank.domain.strategy;
+package org.example.bank.infraestructure.account.repository.inmemory.strategy;
 
 import java.util.Map;
+import java.util.function.BooleanSupplier;
 import org.example.bank.domain.account.Account;
 import org.example.bank.domain.account.AccountId;
-import org.example.bank.domain.exceptions.BalanceMisMatchException;
 import org.example.bank.domain.money.Money;
 
 public class OptimisticLockTransferStrategy implements TransferStrategy {
@@ -17,14 +17,8 @@ public class OptimisticLockTransferStrategy implements TransferStrategy {
     }
 
     //Just a simple retry loop
-    private void retry(Runnable operation) {
-        while (true) {
-            try {
-                operation.run();
-                break;
-            } catch (BalanceMisMatchException e) {
-                // The loop will continue until balance is consistent
-            }
+    private void retry(BooleanSupplier operation) {
+        while (!operation.getAsBoolean()) {
         }
     }
 }

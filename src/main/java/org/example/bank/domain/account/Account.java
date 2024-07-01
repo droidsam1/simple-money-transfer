@@ -12,7 +12,7 @@ public interface Account {
 
     AccountId id();
 
-    void compareAndSubtract(Money originBalance, Money moneyToSubtract);
+    boolean compareAndSubtract(Money originBalance, Money moneyToSubtract);
 
-    void compareAndAdd(Money originBalance, Money moneyToAdd);
+    boolean compareAndAdd(Money originBalance, Money moneyToAdd);
 }

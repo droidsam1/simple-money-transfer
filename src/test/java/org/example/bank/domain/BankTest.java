@@ -6,17 +6,16 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Stream;
 import org.example.bank.domain.account.Account;
 import org.example.bank.domain.account.AccountId;
-import org.example.bank.domain.account.MutableAccount;
+import org.example.bank.domain.account.ReadWriteLockAccount;
 import org.example.bank.domain.exceptions.AccountNotFoundException;
 import org.example.bank.domain.exceptions.InsufficientFundsException;
 import org.example.bank.domain.exceptions.NegativeTransferAmountException;
 import org.example.bank.domain.money.Money;
-import org.example.bank.domain.strategy.OptimisticLockTransferStrategy;
-import org.example.bank.domain.strategy.PessimisticLockTransferStrategy;
-import org.example.bank.domain.strategy.SerializedTransferStrategy;
-import org.example.bank.domain.strategy.TransferStrategy;
 import org.example.bank.infraestructure.account.repository.inmemory.InMemoryAccountRepository;
-import org.example.bank.infraestructure.account.repository.inmemory.InMemoryConcurrentDataStructureAccountRepository;
+import org.example.bank.infraestructure.account.repository.inmemory.InMemoryAccountRepositoryConcurrentHashMap;
+import org.example.bank.infraestructure.account.repository.inmemory.strategy.OptimisticLockTransferStrategy;
+import org.example.bank.infraestructure.account.repository.inmemory.strategy.PessimisticLockTransferStrategy;
+import org.example.bank.infraestructure.account.repository.inmemory.strategy.SerializedTransferStrategy;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
@@ -60,106 +59,101 @@ class BankTest {
     }
 
     @ParameterizedTest
-    @ArgumentsSource(TransferStrategyProvider.class)
-    void shouldTransferMoney(TransferStrategy strategy) {
+    @ArgumentsSource(BankProvider.class)
+    void shouldTransferMoney(Bank bankInstance) {
         var a = createAccountWithBalance("A", euros(100));
         var b = createAccountWithBalance("B", euros(100));
-        this.bank = new Bank(new InMemoryAccountRepository(strategy));
-        this.bank.registerAccount(a);
-        this.bank.registerAccount(b);
+        bankInstance.registerAccount(a);
+        bankInstance.registerAccount(b);
 
-        bank.transfer(euros(50), a.id(), b.id());
+        bankInstance.transfer(euros(50), a.id(), b.id());
 
-        Assertions.assertEquals(euros(50), this.bank.getBalance(a.id()));
-        Assertions.assertEquals(euros(150), this.bank.getBalance(b.id()));
+        Assertions.assertEquals(euros(50), bankInstance.getBalance(a.id()));
+        Assertions.assertEquals(euros(150), bankInstance.getBalance(b.id()));
     }
 
     @ParameterizedTest
-    @ArgumentsSource(TransferStrategyProvider.class)
-    void shouldSupportConcurrentlyTransfers(TransferStrategy strategy) {
+    @ArgumentsSource(BankProvider.class)
+    void shouldSupportConcurrentlyTransfers(Bank bankInstance) {
         var originalBalance = euros(20_000);
         var a = createAccountWithBalance("A", originalBalance);
         var b = createAccountWithBalance("B", originalBalance);
-        this.bank = new Bank(new InMemoryAccountRepository(strategy));
-        this.bank.registerAccount(a);
-        this.bank.registerAccount(b);
+        bankInstance.registerAccount(a);
+        bankInstance.registerAccount(b);
 
         int numberOfTransfers = 10_000;
         var futures = new ArrayList<CompletableFuture<Void>>();
         for (int i = 0; i < numberOfTransfers; i++) {
-            futures.add(CompletableFuture.runAsync(() -> bank.transfer(euros(1), a.id(), b.id())));
+            futures.add(CompletableFuture.runAsync(() -> bankInstance.transfer(euros(1), a.id(), b.id())));
         }
         futures.forEach(CompletableFuture::join);
 
-        Assertions.assertEquals(originalBalance.subtract(numberOfTransfers), this.bank.getBalance(a.id()));
-        Assertions.assertEquals(originalBalance.add(numberOfTransfers), this.bank.getBalance(b.id()));
+        Assertions.assertEquals(originalBalance.subtract(numberOfTransfers), bankInstance.getBalance(a.id()));
+        Assertions.assertEquals(originalBalance.add(numberOfTransfers), bankInstance.getBalance(b.id()));
     }
 
     @ParameterizedTest
-    @ArgumentsSource(TransferStrategyProvider.class)
-    void shouldSupportConcurrentlyTransfersWhenMoreThanTwoAccountsAreMakingConcurrentTransfers(TransferStrategy strategy) {
+    @ArgumentsSource(BankProvider.class)
+    void shouldSupportConcurrentlyTransfersWhenMoreThanTwoAccountsAreMakingConcurrentTransfers(Bank bankInstance) {
         var originalBalance = euros(20_000);
         var a = createAccountWithBalance("A", originalBalance);
         var b = createAccountWithBalance("B", originalBalance);
         var c = createAccountWithBalance("AA", originalBalance);
-        this.bank = new Bank(new InMemoryAccountRepository(strategy));
 
-        this.bank.registerAccount(a);
-        this.bank.registerAccount(b);
-        this.bank.registerAccount(c);
+        bankInstance.registerAccount(a);
+        bankInstance.registerAccount(b);
+        bankInstance.registerAccount(c);
 
         int numberOfTransfers = 10_000;
         // move money from A to B
         var futures = new ArrayList<CompletableFuture<Void>>();
         for (int i = 0; i < numberOfTransfers; i++) {
             futures.add(CompletableFuture.runAsync(() -> {
-                bank.transfer(euros(1), a.id(), b.id());
-                bank.transfer(euros(1), c.id(), a.id());
+                bankInstance.transfer(euros(1), a.id(), b.id());
+                bankInstance.transfer(euros(1), c.id(), a.id());
             }));
         }
         // move money from B to A
         for (int i = 0; i < numberOfTransfers; i++) {
             futures.add(CompletableFuture.runAsync(() -> {
-                bank.transfer(euros(1), b.id(), a.id());
-                bank.transfer(euros(1), a.id(), c.id());
+                bankInstance.transfer(euros(1), b.id(), a.id());
+                bankInstance.transfer(euros(1), a.id(), c.id());
             }));
         }
         futures.forEach(CompletableFuture::join);
 
-        Assertions.assertEquals(this.bank.getBalance(a.id()), this.bank.getBalance(b.id()));
-        Assertions.assertEquals(originalBalance, this.bank.getBalance(a.id()));
-        Assertions.assertEquals(originalBalance, this.bank.getBalance(c.id()));
+        Assertions.assertEquals(bankInstance.getBalance(a.id()), bankInstance.getBalance(b.id()));
+        Assertions.assertEquals(originalBalance, bankInstance.getBalance(a.id()));
+        Assertions.assertEquals(originalBalance, bankInstance.getBalance(c.id()));
     }
 
     @ParameterizedTest
-    @ArgumentsSource(TransferStrategyProvider.class)
-    void shouldNotAllowTransfersWithNegativeAmounts(TransferStrategy strategy) {
-        this.bank = new Bank(new InMemoryAccountRepository(strategy));
+    @ArgumentsSource(BankProvider.class)
+    void shouldNotAllowTransfersWithNegativeAmounts(Bank bankInstance) {
         var accountA = createAccountWithBalance("A", euros(100));
-        this.bank.registerAccount(accountA);
+        bankInstance.registerAccount(accountA);
         var accountB = createAccountWithBalance("B", euros(100));
-        this.bank.registerAccount(accountB);
+        bankInstance.registerAccount(accountB);
         var negativeAmount = euros(-1);
 
         Assertions.assertThrows(
                 NegativeTransferAmountException.class,
-                () -> this.bank.transfer(negativeAmount, accountA.id(), accountB.id())
+                () -> bankInstance.transfer(negativeAmount, accountA.id(), accountB.id())
         );
     }
 
     @ParameterizedTest
-    @ArgumentsSource(TransferStrategyProvider.class)
-    void shouldNotAllowTransfersWhenDepositorHasInsufficientFunds(TransferStrategy strategy) {
-        this.bank = new Bank(new InMemoryAccountRepository(strategy));
+    @ArgumentsSource(BankProvider.class)
+    void shouldNotAllowTransfersWhenDepositorHasInsufficientFunds(Bank bankInstance) {
         var accountA = createAccountWithBalance("A", euros(0));
-        this.bank.registerAccount(accountA);
+        bankInstance.registerAccount(accountA);
         var accountB = createAccountWithBalance("B", euros(0));
-        this.bank.registerAccount(accountB);
+        bankInstance.registerAccount(accountB);
         var negativeAmount = euros(1);
 
         Assertions.assertThrows(
                 InsufficientFundsException.class,
-                () -> this.bank.transfer(negativeAmount, accountA.id(), accountB.id())
+                () -> bankInstance.transfer(negativeAmount, accountA.id(), accountB.id())
         );
     }
 
@@ -170,7 +164,7 @@ class BankTest {
         this.bank.registerAccount(a);
         this.bank.registerAccount(b);
 
-        int numberOfTransfers = 1000;
+        int numberOfTransfers = 1_000;
 
         long totalConcurrentHashMap = 0;
         long totalSerializedTransferTime = 0;
@@ -180,7 +174,7 @@ class BankTest {
         // Measure serializedTransfer
         long start = System.nanoTime();
         for (int i = 0; i < numberOfTransfers; i++) {
-            concurrentlyTransfer(new Bank(new InMemoryConcurrentDataStructureAccountRepository()), numberOfTransfers);
+            concurrentlyTransfer(new Bank(new InMemoryAccountRepositoryConcurrentHashMap()), numberOfTransfers);
         }
         long end = System.nanoTime();
         long concurrentHashMapTransferTime = end - start;
@@ -284,7 +278,7 @@ class BankTest {
     }
 
     private Account createAccountWithBalance(String id, Money balance) {
-        return new MutableAccount(id, balance);
+        return new ReadWriteLockAccount(id, balance);
     }
 
 
@@ -296,15 +290,15 @@ class BankTest {
         return new Money(ThreadLocalRandom.current().nextInt(0, 1000), "EUR");
     }
 
-
-    static class TransferStrategyProvider implements ArgumentsProvider {
+    static class BankProvider implements ArgumentsProvider {
 
         @Override
         public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
             return Stream.of(
-                    Arguments.of(new SerializedTransferStrategy()),
-                    Arguments.of(new OptimisticLockTransferStrategy()),
-                    Arguments.of(new PessimisticLockTransferStrategy())
+                    Arguments.of(new Bank(new InMemoryAccountRepository(new OptimisticLockTransferStrategy()))),
+                    Arguments.of(new Bank(new InMemoryAccountRepository(new PessimisticLockTransferStrategy()))),
+                    Arguments.of(new Bank(new InMemoryAccountRepository(new SerializedTransferStrategy()))),
+                    Arguments.of(new Bank(new InMemoryAccountRepositoryConcurrentHashMap()))
             );
         }
     }

@@ -8,7 +8,7 @@ import org.example.bank.domain.account.AccountId;
 import org.example.bank.domain.account.repository.AccountRepository;
 import org.example.bank.domain.exceptions.AccountNotFoundException;
 import org.example.bank.domain.money.Money;
-import org.example.bank.domain.strategy.TransferStrategy;
+import org.example.bank.infraestructure.account.repository.inmemory.strategy.TransferStrategy;
 
 public class InMemoryAccountRepository implements AccountRepository {
 
@@ -16,7 +16,7 @@ public class InMemoryAccountRepository implements AccountRepository {
     private final TransferStrategy transferStrategy;
 
     public InMemoryAccountRepository(TransferStrategy transferStrategy) {
-        accounts = new HashMap<>();
+        this.accounts = new HashMap<>();
         this.transferStrategy = transferStrategy;
     }
 
@@ -36,7 +36,13 @@ public class InMemoryAccountRepository implements AccountRepository {
         this.transferStrategy.transfer(accounts, amount, origin, destiny);
     }
 
-    @Override public Optional<Account> getAccount(AccountId id) {
+    @Override
+    public Optional<Account> getAccount(AccountId id) {
         return Optional.ofNullable(accounts.get(id));
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName() + "." + this.transferStrategy.getClass().getSimpleName();
     }
 }

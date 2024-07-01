@@ -5,14 +5,14 @@ import org.example.bank.domain.account.AccountId;
 import org.example.bank.domain.account.repository.AccountRepository;
 import org.example.bank.domain.exceptions.AccountNotFoundException;
 import org.example.bank.domain.money.Money;
-import org.example.bank.infraestructure.account.repository.inmemory.InMemoryConcurrentDataStructureAccountRepository;
+import org.example.bank.infraestructure.account.repository.inmemory.InMemoryAccountRepositoryConcurrentHashMap;
 
 public class Bank {
 
     private final AccountRepository accountRepository;
 
     public Bank() {
-        this.accountRepository = new InMemoryConcurrentDataStructureAccountRepository();
+        this.accountRepository = new InMemoryAccountRepositoryConcurrentHashMap();
     }
 
     public Bank(AccountRepository repository) {
@@ -34,5 +34,12 @@ public class Bank {
             throw new AccountNotFoundException();
         }
         accountRepository.transfer(amount, origin, destiny);
+    }
+
+    @Override
+    public String toString() {
+        return "Bank{" +
+               "accountRepository=" + accountRepository +
+               '}';
     }
 }

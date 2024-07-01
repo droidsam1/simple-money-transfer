@@ -5,7 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="refactor: push validation logic to Account">
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/a/e/ae21d75acd1e4d83cefd02f7305afb96227589d6" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/account/ReadWriteLockAccount.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/Bank.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/Bank.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/account/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/account/Account.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/account/MutableAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/account/LockFreeAccount.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/strategy/OptimisticLockTransferStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/infraestructure/account/repository/inmemory/strategy/OptimisticLockTransferStrategy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/strategy/PessimisticLockTransferStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/infraestructure/account/repository/inmemory/strategy/PessimisticLockTransferStrategy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/strategy/SerializedTransferStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/infraestructure/account/repository/inmemory/strategy/SerializedTransferStrategy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/strategy/TransferStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/infraestructure/account/repository/inmemory/strategy/TransferStrategy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/infraestructure/account/repository/inmemory/InMemoryAccountRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/infraestructure/account/repository/inmemory/InMemoryAccountRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/infraestructure/account/repository/inmemory/InMemoryConcurrentDataStructureAccountRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/infraestructure/account/repository/inmemory/InMemoryAccountRepositoryConcurrentHashMap.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/bank/domain/BankTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/bank/domain/BankTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,6 +68,9 @@
     "SONARLINT_PRECOMMIT_ANALYSIS": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.3954023",
     "settings.editor.selected.configurable": "reference.settingsdialog.IDE.editor.colors.Console Font"
   }
 }]]></component>
@@ -66,6 +81,8 @@
       <recent name="org.example.bank.domain.account.repository" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="org.example.bank.infraestructure.account.repository.inmemory" />
+      <recent name="org.example.bank.domain.account" />
       <recent name="org.example.bank.infraestructure.account.repository" />
     </key>
   </component>
@@ -167,6 +184,7 @@
       <option name="presentableId" value="Default" />
       <updated>1719605402858</updated>
       <workItem from="1719605403978" duration="2778000" />
+      <workItem from="1719843560265" duration="5989000" />
     </task>
     <task id="LOCAL-00001" summary="refactor: introduce repository pattern&#10;add: inmemory concurrent hash map implementation">
       <option name="closed" value="true" />
