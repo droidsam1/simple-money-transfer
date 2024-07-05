@@ -4,7 +4,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="refactor: move transfer strategy synchronization to infra&#10;misc: playing around with readWriteLock/lockFree account models" />
+    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="start over">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/Account.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/AccountId.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/Bank.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/Money.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/exceptions/AccountAlreadyRegisteredException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/exceptions/CurrencyMistMatchException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/exceptions/InsufficientFundsException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/exceptions/InvalidTransferAmountException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/exceptions/NegativeBalanceAccountRegistrationException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/exceptions/UnknownAccountException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/bank/BankTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/bank/MoneyTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -14,6 +33,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
+        <option value="JUnit5 Test Class" />
+        <option value="Record" />
         <option value="Class" />
       </list>
     </option>
@@ -45,14 +66,19 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "JUnit.All in simple-bank.executor": "Run",
+    "JUnit.BankTest (1).executor": "Run",
     "JUnit.BankTest.compareTransferMethodsEfficiency.executor": "Run",
     "JUnit.BankTest.executor": "Run",
     "JUnit.BankTest.shouldNotAllowTransfersWhenDepositorHasInsufficientFunds.executor": "Run",
     "JUnit.BankTest.shouldNotAllowTransfersWithNegativeAmounts.executor": "Run",
+    "JUnit.MoneyTest.executor": "Run",
+    "JUnit.org.example.bank in simple-bank.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "SONARLINT_PRECOMMIT_ANALYSIS": "true",
-    "git-widget-placeholder": "main",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "git-widget-placeholder": "001",
     "kotlin-language-version-configured": "true",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
@@ -62,9 +88,17 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
+      <recent name="org.example.bank.exceptions" />
+      <recent name="org.example.bank" />
       <recent name="org.example.bank.domain.exceptions" />
       <recent name="org.example.bank.infraestructure.account.repository" />
       <recent name="org.example.bank.domain.account.repository" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="org.example.bank" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="org.example.bank.infraestructure.account.repository.inmemory" />
@@ -72,11 +106,18 @@
       <recent name="org.example.bank.infraestructure.account.repository" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.BankTest">
-    <configuration name="All in simple-bank" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.org.example.bank in simple-bank">
+    <configuration name="BankTest (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="simple-bank" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="TEST_OBJECT" value="package" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.bank.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.bank" />
+      <option name="MAIN_CLASS_NAME" value="org.example.bank.BankTest" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -92,22 +133,6 @@
       <option name="PACKAGE_NAME" value="org.example.bank.domain" />
       <option name="MAIN_CLASS_NAME" value="org.example.bank.domain.BankTest" />
       <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="BankTest.compareTransferMethodsEfficiency" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="simple-bank" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.example.bank.domain.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="org.example.bank.domain" />
-      <option name="MAIN_CLASS_NAME" value="org.example.bank.domain.BankTest" />
-      <option name="METHOD_NAME" value="compareTransferMethodsEfficiency(org.junit.jupiter.api.RepetitionInfo)" />
-      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -128,29 +153,42 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="BankTest.shouldNotAllowTransfersWithNegativeAmounts" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="MoneyTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="simple-bank" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.example.bank.domain.*" />
+          <option name="PATTERN" value="org.example.bank.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="org.example.bank.domain" />
-      <option name="MAIN_CLASS_NAME" value="org.example.bank.domain.BankTest" />
-      <option name="METHOD_NAME" value="shouldNotAllowTransfersWithNegativeAmounts" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="PACKAGE_NAME" value="org.example.bank" />
+      <option name="MAIN_CLASS_NAME" value="org.example.bank.MoneyTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="org.example.bank in simple-bank" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="simple-bank" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.bank.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.bank" />
+      <option name="TEST_OBJECT" value="package" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.org.example.bank in simple-bank" />
+        <item itemvalue="JUnit.MoneyTest" />
+        <item itemvalue="JUnit.BankTest (1)" />
         <item itemvalue="JUnit.BankTest" />
         <item itemvalue="JUnit.BankTest.shouldNotAllowTransfersWhenDepositorHasInsufficientFunds" />
-        <item itemvalue="JUnit.BankTest.shouldNotAllowTransfersWithNegativeAmounts" />
-        <item itemvalue="JUnit.BankTest.compareTransferMethodsEfficiency" />
-        <item itemvalue="JUnit.All in simple-bank" />
       </list>
     </recent_temporary>
   </component>
@@ -171,6 +209,7 @@
       <updated>1719605402858</updated>
       <workItem from="1719605403978" duration="2778000" />
       <workItem from="1719843560265" duration="6526000" />
+      <workItem from="1720194542806" duration="3953000" />
     </task>
     <task id="LOCAL-00001" summary="refactor: introduce repository pattern&#10;add: inmemory concurrent hash map implementation">
       <option name="closed" value="true" />
@@ -244,7 +283,15 @@
       <option name="project" value="LOCAL" />
       <updated>1719849686313</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="start over">
+      <option name="closed" value="true" />
+      <created>1720194599129</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1720194599129</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -258,7 +305,8 @@
     <MESSAGE value="add: insufficient funds validation&#10;refactor: replace compareAndSet with compareAndSubtract and compareAndAdd to push validation logic into Account" />
     <MESSAGE value="refactor: push validation logic to Account" />
     <MESSAGE value="refactor: move transfer strategy synchronization to infra&#10;misc: playing around with readWriteLock/lockFree account models" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor: move transfer strategy synchronization to infra&#10;misc: playing around with readWriteLock/lockFree account models" />
+    <MESSAGE value="start over" />
+    <option name="LAST_COMMIT_MESSAGE" value="start over" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
