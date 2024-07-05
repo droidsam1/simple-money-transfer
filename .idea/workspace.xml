@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="start over">
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/bank/AccountTest.java" afterDir="false" />
+    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="add account manual transfer (without intermediate bank)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/Account.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/bank/AccountTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/bank/AccountTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,29 +48,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;JUnit.All in simple-bank.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.BankTest (1).executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.BankTest.compareTransferMethodsEfficiency.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.BankTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.BankTest.shouldNotAllowTransfersWhenDepositorHasInsufficientFunds.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.BankTest.shouldNotAllowTransfersWithNegativeAmounts.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.MoneyTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.org.example.bank in simple-bank.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;001&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.3954023&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.IDE.editor.colors.Console Font&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "JUnit.AccountTest.shouldConcurrentlyTransferWithIntermediateMethod.executor": "Run",
+    "JUnit.All in simple-bank.executor": "Run",
+    "JUnit.BankTest (1).executor": "Run",
+    "JUnit.BankTest.compareTransferMethodsEfficiency.executor": "Run",
+    "JUnit.BankTest.executor": "Run",
+    "JUnit.BankTest.shouldNotAllowTransfersWhenDepositorHasInsufficientFunds.executor": "Run",
+    "JUnit.BankTest.shouldNotAllowTransfersWithNegativeAmounts.executor": "Run",
+    "JUnit.MoneyTest.executor": "Run",
+    "JUnit.org.example.bank in simple-bank.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "git-widget-placeholder": "001",
+    "kotlin-language-version-configured": "true",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.3954023",
+    "settings.editor.selected.configurable": "reference.settingsdialog.IDE.editor.colors.Console Font"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="org.example.bank.exceptions" />
@@ -90,7 +92,23 @@
       <recent name="org.example.bank.infraestructure.account.repository" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.org.example.bank in simple-bank">
+  <component name="RunManager" selected="JUnit.BankTest (1)">
+    <configuration name="AccountTest.shouldConcurrentlyTransferWithIntermediateMethod" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="simple-bank" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.bank.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.bank" />
+      <option name="MAIN_CLASS_NAME" value="org.example.bank.AccountTest" />
+      <option name="METHOD_NAME" value="shouldConcurrentlyTransferWithIntermediateMethod" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="BankTest (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="simple-bank" />
       <extension name="coverage">
@@ -117,22 +135,6 @@
       <option name="PACKAGE_NAME" value="org.example.bank.domain" />
       <option name="MAIN_CLASS_NAME" value="org.example.bank.domain.BankTest" />
       <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="BankTest.shouldNotAllowTransfersWhenDepositorHasInsufficientFunds" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="simple-bank" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.example.bank.domain.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="org.example.bank.domain" />
-      <option name="MAIN_CLASS_NAME" value="org.example.bank.domain.BankTest" />
-      <option name="METHOD_NAME" value="shouldNotAllowTransfersWhenDepositorHasInsufficientFunds" />
-      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -168,11 +170,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.BankTest (1)" />
+        <item itemvalue="JUnit.AccountTest.shouldConcurrentlyTransferWithIntermediateMethod" />
         <item itemvalue="JUnit.org.example.bank in simple-bank" />
         <item itemvalue="JUnit.MoneyTest" />
-        <item itemvalue="JUnit.BankTest (1)" />
         <item itemvalue="JUnit.BankTest" />
-        <item itemvalue="JUnit.BankTest.shouldNotAllowTransfersWhenDepositorHasInsufficientFunds" />
       </list>
     </recent_temporary>
   </component>
@@ -275,7 +277,15 @@
       <option name="project" value="LOCAL" />
       <updated>1720194599129</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="add account manual transfer (without intermediate bank)">
+      <option name="closed" value="true" />
+      <created>1720199177165</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1720199177165</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -290,7 +300,8 @@
     <MESSAGE value="refactor: push validation logic to Account" />
     <MESSAGE value="refactor: move transfer strategy synchronization to infra&#10;misc: playing around with readWriteLock/lockFree account models" />
     <MESSAGE value="start over" />
-    <option name="LAST_COMMIT_MESSAGE" value="start over" />
+    <MESSAGE value="add account manual transfer (without intermediate bank)" />
+    <option name="LAST_COMMIT_MESSAGE" value="add account manual transfer (without intermediate bank)" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

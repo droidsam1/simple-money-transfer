@@ -87,4 +87,25 @@ public final class Account {
                 this.balance().currency()
         ));
     }
+
+    public boolean compareAndDeposit(Money expectedValue, Money amountToDeposit) {
+        validateSameCurrency(amountToDeposit);
+
+        return this.balance.compareAndSet(expectedValue, new Money(
+                expectedValue.amount().add(amountToDeposit.amount()),
+                this.balance().currency()
+        ));
+    }
+
+    public boolean compareAndWithdraw(Money expectedValue, Money amountToWithdraw) {
+        if (this.balance().amount().compareTo(amountToWithdraw.amount()) < 0) {
+            throw new InsufficientFundsException();
+        }
+        validateSameCurrency(amountToWithdraw);
+
+        return this.balance.compareAndSet(expectedValue, new Money(
+                expectedValue.amount().subtract(amountToWithdraw.amount()),
+                this.balance().currency()
+        ));
+    }
 }
