@@ -15,8 +15,17 @@ public class Bank {
     private final Map<AccountId, Account> accounts;
     private final ReentrantLock lock = new ReentrantLock();
 
+    //Testing purposes only
+    private final Runnable inBetweenTransferBehaviour;
+
     public Bank() {
+        this(() -> {
+        });
+    }
+
+    public Bank(Runnable inBetweenTransferBehaviour) {
         this.accounts = new ConcurrentHashMap<>();
+        this.inBetweenTransferBehaviour = inBetweenTransferBehaviour;
     }
 
     public void register(Account newClient) {
@@ -45,13 +54,38 @@ public class Bank {
         if (fromAccount == null || toAccount == null) {
             throw new UnknownAccountException();
         }
+        var withdrawHasSuccess = false;
+        var depositHasSuccess = false;
 
         lock.lock();
         try {
-            fromAccount.withdraw(amount);
-            toAccount.deposit(amount);
+            inBetweenTransferBehaviour.run();
+            withdrawHasSuccess = fromAccount.withdraw(amount);
+            inBetweenTransferBehaviour.run();
+            depositHasSuccess = toAccount.deposit(amount);
+            inBetweenTransferBehaviour.run();
+        } catch (Exception e) {
+            // log exception
+            rollback(amount, withdrawHasSuccess, fromAccount, depositHasSuccess, toAccount);
         } finally {
             lock.unlock();
+        }
+    }
+
+    private static void rollback(
+            Money amount,
+            boolean withdrawHasSuccess,
+            Account fromAccount,
+            boolean depositHasSuccess,
+            Account toAccount
+    ) {
+
+        //rollback
+        if (withdrawHasSuccess) {
+            fromAccount.deposit(amount);
+        }
+        if (depositHasSuccess) {
+            toAccount.withdraw(amount);
         }
     }
 }

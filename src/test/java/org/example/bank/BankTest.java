@@ -9,10 +9,13 @@ import java.util.ArrayList;
 import java.util.Currency;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.atomic.AtomicInteger;
 import org.example.bank.exceptions.InvalidTransferAmountException;
 import org.example.bank.exceptions.UnknownAccountException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 class BankTest {
@@ -102,16 +105,16 @@ class BankTest {
 
     @Test
     void shouldConcurrentlyTransfer() {
-        Money initialBalance = dollars("1000");
-        Account johnDoe = new Account("John Doe", initialBalance);
-        Account janeDoe = new Account("Jane Doe", initialBalance);
-        Account jackDoe = new Account("Jack Doe", initialBalance);
+        int initialBalance = 1_000;
+        Account johnDoe = new Account("John Doe", dollars(String.valueOf(initialBalance)));
+        Account janeDoe = new Account("Jane Doe", dollars(String.valueOf(initialBalance)));
+        Account jackDoe = new Account("Jack Doe", dollars(String.valueOf(initialBalance)));
         this.bank.register(johnDoe);
         this.bank.register(janeDoe);
         this.bank.register(jackDoe);
 
         List<CompletableFuture<Void>> transfers = new ArrayList<>();
-        for (int i = 0; i < 1_000; i++) {
+        for (int i = 0; i < initialBalance; i++) {
             transfers.add(CompletableFuture.runAsync(() -> this.bank.transfer(
                     johnDoe.id(),
                     janeDoe.id(),
@@ -130,10 +133,42 @@ class BankTest {
         }
         transfers.forEach(CompletableFuture::join);
 
+        Assertions.assertEquals(dollars(String.valueOf(initialBalance)), this.bank.getBalance(johnDoe.id()));
+        Assertions.assertEquals(dollars(String.valueOf(initialBalance)), this.bank.getBalance(janeDoe.id()));
+        Assertions.assertEquals(dollars(String.valueOf(initialBalance)), this.bank.getBalance(jackDoe.id()));
+    }
+
+
+    @RepeatedTest(1000)
+    void shouldTransferBeAtomic() {
+        AtomicInteger beforeBetweenOrAfter = new AtomicInteger(ThreadLocalRandom.current().nextInt(1, 3));
+        this.bank = new Bank(forceTransferToFailRandomly(beforeBetweenOrAfter));
+
+        Money initialBalance = dollars("1000");
+        Account johnDoe = new Account("John Doe", initialBalance);
+        Account janeDoe = new Account("Jane Doe", initialBalance);
+        this.bank.register(johnDoe);
+        this.bank.register(janeDoe);
+
+        Money transferAmount = dollars("500");
+        try {
+            this.bank.transfer(johnDoe.id(), janeDoe.id(), transferAmount);
+        } catch (Exception e) {
+            //ignore
+        }
+
         Assertions.assertEquals(initialBalance, this.bank.getBalance(johnDoe.id()));
         Assertions.assertEquals(initialBalance, this.bank.getBalance(janeDoe.id()));
-        Assertions.assertEquals(initialBalance, this.bank.getBalance(jackDoe.id()));
     }
+
+    private static Runnable forceTransferToFailRandomly(AtomicInteger failAfter) {
+        return () -> {
+            if (failAfter.decrementAndGet() == 0) {
+                throw new RuntimeException("In between transfer behaviour");
+            }
+        };
+    }
+
 
     private Money dollars(String amount) {
         return new Money(amount, "USD");

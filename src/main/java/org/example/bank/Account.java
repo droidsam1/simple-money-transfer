@@ -21,7 +21,7 @@ public final class Account {
         this(new AccountId(), name, balance);
     }
 
-    public void withdraw(Money amountToWithdraw) {
+    public boolean withdraw(Money amountToWithdraw) {
         if (this.balance().amount().compareTo(amountToWithdraw.amount()) < 0) {
             throw new InsufficientFundsException();
         }
@@ -32,6 +32,7 @@ public final class Account {
                               .subtract(amountToWithdraw.amount()),
                 currentBalance.currency()
         ));
+        return true;
     }
 
     private void validateSameCurrency(Money amountToWithdraw) {
@@ -79,13 +80,14 @@ public final class Account {
                "balance=" + balance + ']';
     }
 
-    public void deposit(Money amountToDeposit) {
+    public boolean deposit(Money amountToDeposit) {
         validateSameCurrency(amountToDeposit);
 
         this.balance.getAndUpdate(currentBalance -> new Money(
                 currentBalance.amount().add(amountToDeposit.amount()),
                 this.balance().currency()
         ));
+        return true;
     }
 
     public boolean compareAndDeposit(Money expectedValue, Money amountToDeposit) {

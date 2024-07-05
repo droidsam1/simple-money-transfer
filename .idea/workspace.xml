@@ -4,10 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="add account manual transfer (without intermediate bank)">
+    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="add: playing around with direct account transfer optimistic/pessimistic strategies">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/Account.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/bank/AccountTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/bank/AccountTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/Bank.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/Bank.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/bank/BankTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/bank/BankTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,6 +58,7 @@
     "JUnit.BankTest.executor": "Run",
     "JUnit.BankTest.shouldNotAllowTransfersWhenDepositorHasInsufficientFunds.executor": "Run",
     "JUnit.BankTest.shouldNotAllowTransfersWithNegativeAmounts.executor": "Run",
+    "JUnit.BankTest.shouldTransferBeAtomic.executor": "Run",
     "JUnit.MoneyTest.executor": "Run",
     "JUnit.org.example.bank in simple-bank.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -92,7 +94,7 @@
       <recent name="org.example.bank.infraestructure.account.repository" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.BankTest (1)">
+  <component name="RunManager" selected="JUnit.org.example.bank in simple-bank">
     <configuration name="AccountTest.shouldConcurrentlyTransferWithIntermediateMethod" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="simple-bank" />
       <extension name="coverage">
@@ -105,6 +107,14 @@
       <option name="MAIN_CLASS_NAME" value="org.example.bank.AccountTest" />
       <option name="METHOD_NAME" value="shouldConcurrentlyTransferWithIntermediateMethod" />
       <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="All in simple-bank" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="simple-bank" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -124,22 +134,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="BankTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="simple-bank" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.example.bank.domain.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="org.example.bank.domain" />
-      <option name="MAIN_CLASS_NAME" value="org.example.bank.domain.BankTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="MoneyTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="BankTest.shouldTransferBeAtomic" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="simple-bank" />
       <extension name="coverage">
         <pattern>
@@ -148,8 +143,9 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="org.example.bank" />
-      <option name="MAIN_CLASS_NAME" value="org.example.bank.MoneyTest" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="MAIN_CLASS_NAME" value="org.example.bank.BankTest" />
+      <option name="METHOD_NAME" value="shouldTransferBeAtomic" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -170,11 +166,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.org.example.bank in simple-bank" />
+        <item itemvalue="JUnit.BankTest.shouldTransferBeAtomic" />
+        <item itemvalue="JUnit.All in simple-bank" />
         <item itemvalue="JUnit.BankTest (1)" />
         <item itemvalue="JUnit.AccountTest.shouldConcurrentlyTransferWithIntermediateMethod" />
-        <item itemvalue="JUnit.org.example.bank in simple-bank" />
-        <item itemvalue="JUnit.MoneyTest" />
-        <item itemvalue="JUnit.BankTest" />
       </list>
     </recent_temporary>
   </component>
@@ -285,7 +281,15 @@
       <option name="project" value="LOCAL" />
       <updated>1720199177165</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="add: playing around with direct account transfer optimistic/pessimistic strategies">
+      <option name="closed" value="true" />
+      <created>1720200534133</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1720200534133</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -301,7 +305,8 @@
     <MESSAGE value="refactor: move transfer strategy synchronization to infra&#10;misc: playing around with readWriteLock/lockFree account models" />
     <MESSAGE value="start over" />
     <MESSAGE value="add account manual transfer (without intermediate bank)" />
-    <option name="LAST_COMMIT_MESSAGE" value="add account manual transfer (without intermediate bank)" />
+    <MESSAGE value="add: playing around with direct account transfer optimistic/pessimistic strategies" />
+    <option name="LAST_COMMIT_MESSAGE" value="add: playing around with direct account transfer optimistic/pessimistic strategies" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
