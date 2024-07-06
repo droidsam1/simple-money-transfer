@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicInteger;
+import org.example.bank.exceptions.InsufficientFundsException;
 import org.example.bank.exceptions.InvalidTransferAmountException;
 import org.example.bank.exceptions.UnknownAccountException;
 import org.junit.jupiter.api.Assertions;
@@ -138,6 +139,35 @@ class BankTest {
         Assertions.assertEquals(dollars(String.valueOf(initialBalance)), this.bank.getBalance(jackDoe.id()));
     }
 
+
+    @Test
+    void shouldBalanceBeCorrectInConcurrentScenario() {
+        final Account sharedAccount = new Account("Shared Account", new Money("1000", "USD"));
+        AtomicInteger totalDeposited = new AtomicInteger(0);
+        AtomicInteger totalWithdrawn = new AtomicInteger(0);
+        List<CompletableFuture<Void>> tasks = new ArrayList<>();
+
+        for (int i = 0; i < 10000; i++) {
+            CompletableFuture<Void> depositTask = CompletableFuture.runAsync(() -> {
+                sharedAccount.deposit(new Money("1", "USD"));
+                totalDeposited.addAndGet(1);
+            });
+            CompletableFuture<Void> withdrawTask = CompletableFuture.runAsync(() -> {
+                try {
+                    sharedAccount.withdraw(new Money("1", "USD"));
+                    totalWithdrawn.addAndGet(1);
+                } catch (InsufficientFundsException e) {
+                    // do nothing
+                }
+            });
+            tasks.add(depositTask);
+            tasks.add(withdrawTask);
+        }
+        CompletableFuture.allOf(tasks.toArray(new CompletableFuture[0])).join();
+
+        int expectedBalance = 1000 + totalDeposited.get() - totalWithdrawn.get();
+        assertEquals(dollars(String.valueOf(expectedBalance)), sharedAccount.balance());
+    }
 
     @RepeatedTest(1000)
     void shouldTransferBeAtomic() {

@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="add: playing around with direct account transfer optimistic/pessimistic strategies">
+    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="add: playing around with atomic transactions in transfer">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/Account.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/Bank.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/Bank.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/org/example/bank/BankTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/bank/BankTest.java" afterDir="false" />
     </list>
@@ -59,6 +58,7 @@
     "JUnit.BankTest.shouldNotAllowTransfersWhenDepositorHasInsufficientFunds.executor": "Run",
     "JUnit.BankTest.shouldNotAllowTransfersWithNegativeAmounts.executor": "Run",
     "JUnit.BankTest.shouldTransferBeAtomic.executor": "Run",
+    "JUnit.BankTest.testRaceConditions.executor": "Run",
     "JUnit.MoneyTest.executor": "Run",
     "JUnit.org.example.bank in simple-bank.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -94,23 +94,7 @@
       <recent name="org.example.bank.infraestructure.account.repository" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.org.example.bank in simple-bank">
-    <configuration name="AccountTest.shouldConcurrentlyTransferWithIntermediateMethod" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="simple-bank" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.example.bank.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="org.example.bank" />
-      <option name="MAIN_CLASS_NAME" value="org.example.bank.AccountTest" />
-      <option name="METHOD_NAME" value="shouldConcurrentlyTransferWithIntermediateMethod" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="JUnit.All in simple-bank">
     <configuration name="All in simple-bank" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="simple-bank" />
       <option name="PACKAGE_NAME" value="" />
@@ -150,6 +134,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="BankTest.testRaceConditions" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="simple-bank" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.bank.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.bank" />
+      <option name="MAIN_CLASS_NAME" value="org.example.bank.BankTest" />
+      <option name="METHOD_NAME" value="testRaceConditions" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="org.example.bank in simple-bank" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="simple-bank" />
       <extension name="coverage">
@@ -166,11 +166,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.All in simple-bank" />
+        <item itemvalue="JUnit.BankTest.testRaceConditions" />
         <item itemvalue="JUnit.org.example.bank in simple-bank" />
         <item itemvalue="JUnit.BankTest.shouldTransferBeAtomic" />
-        <item itemvalue="JUnit.All in simple-bank" />
         <item itemvalue="JUnit.BankTest (1)" />
-        <item itemvalue="JUnit.AccountTest.shouldConcurrentlyTransferWithIntermediateMethod" />
       </list>
     </recent_temporary>
   </component>
@@ -289,7 +289,15 @@
       <option name="project" value="LOCAL" />
       <updated>1720200534133</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="add: playing around with atomic transactions in transfer">
+      <option name="closed" value="true" />
+      <created>1720202371576</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1720202371576</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -306,7 +314,8 @@
     <MESSAGE value="start over" />
     <MESSAGE value="add account manual transfer (without intermediate bank)" />
     <MESSAGE value="add: playing around with direct account transfer optimistic/pessimistic strategies" />
-    <option name="LAST_COMMIT_MESSAGE" value="add: playing around with direct account transfer optimistic/pessimistic strategies" />
+    <MESSAGE value="add: playing around with atomic transactions in transfer" />
+    <option name="LAST_COMMIT_MESSAGE" value="add: playing around with atomic transactions in transfer" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -57,6 +57,13 @@ public class Bank {
         var withdrawHasSuccess = false;
         var depositHasSuccess = false;
 
+        transferOptimistic(amount, withdrawHasSuccess, fromAccount, depositHasSuccess, toAccount);
+    }
+
+    private void transferPessimistic(
+            Money amount, boolean withdrawHasSuccess, Account fromAccount, boolean depositHasSuccess, Account toAccount
+    ) {
+
         lock.lock();
         try {
             inBetweenTransferBehaviour.run();
@@ -69,6 +76,30 @@ public class Bank {
             rollback(amount, withdrawHasSuccess, fromAccount, depositHasSuccess, toAccount);
         } finally {
             lock.unlock();
+        }
+    }
+
+    private void transferOptimistic(
+            Money amount,
+            boolean withdrawHasSuccess,
+            Account fromAccount,
+            boolean depositHasSuccess,
+            Account toAccount
+    ) {
+        try {
+            inBetweenTransferBehaviour.run();
+
+            while (!(withdrawHasSuccess = fromAccount.compareAndWithdraw(fromAccount.balance(), amount))) {
+
+            }
+            inBetweenTransferBehaviour.run();
+            while (!(depositHasSuccess = toAccount.compareAndDeposit(toAccount.balance(), amount))) {
+
+            }
+            inBetweenTransferBehaviour.run();
+        } catch (Exception e) {
+            // log exception
+            rollback(amount, withdrawHasSuccess, fromAccount, depositHasSuccess, toAccount);
         }
     }
 
