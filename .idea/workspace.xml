@@ -5,18 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="refactor: push validation logic to Account">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/account/ReadWriteLockAccount.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/infraestructure/account/repository/inmemory/strategy/IndependentPessimisticLockTransferStrategy.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/Bank.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/Bank.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/account/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/account/Account.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/account/MutableAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/account/LockFreeAccount.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/strategy/OptimisticLockTransferStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/infraestructure/account/repository/inmemory/strategy/OptimisticLockTransferStrategy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/strategy/PessimisticLockTransferStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/infraestructure/account/repository/inmemory/strategy/PessimisticLockTransferStrategy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/strategy/SerializedTransferStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/infraestructure/account/repository/inmemory/strategy/SerializedTransferStrategy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/strategy/TransferStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/infraestructure/account/repository/inmemory/strategy/TransferStrategy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/infraestructure/account/repository/inmemory/InMemoryAccountRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/infraestructure/account/repository/inmemory/InMemoryAccountRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/infraestructure/account/repository/inmemory/InMemoryConcurrentDataStructureAccountRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/infraestructure/account/repository/inmemory/InMemoryAccountRepositoryConcurrentHashMap.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/account/AccountId.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/account/AccountId.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/infraestructure/account/repository/inmemory/strategy/PessimisticLockTransferStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/infraestructure/account/repository/inmemory/strategy/PessimisticLockTransferStrategy.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/org/example/bank/domain/BankTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/bank/domain/BankTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -63,6 +55,8 @@
     "JUnit.BankTest.executor": "Run",
     "JUnit.BankTest.shouldNotAllowTransfersWhenDepositorHasInsufficientFunds.executor": "Run",
     "JUnit.BankTest.shouldNotAllowTransfersWithNegativeAmounts.executor": "Run",
+    "JUnit.BankTest.shouldTransferMoneyWhenCornerCaseOfSameCompare.executor": "Run",
+    "JUnit.BankTest.shouldTransferMoneyWhenLockOrderingFailsToDetermineWithAccountToLockFirst.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "SONARLINT_PRECOMMIT_ANALYSIS": "true",
@@ -81,20 +75,13 @@
       <recent name="org.example.bank.domain.account.repository" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="org.example.bank.infraestructure.account.repository.inmemory.strategy" />
       <recent name="org.example.bank.infraestructure.account.repository.inmemory" />
       <recent name="org.example.bank.domain.account" />
       <recent name="org.example.bank.infraestructure.account.repository" />
     </key>
   </component>
   <component name="RunManager" selected="JUnit.BankTest">
-    <configuration name="All in simple-bank" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="simple-bank" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="TEST_OBJECT" value="package" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="BankTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="simple-bank" />
       <extension name="coverage">
@@ -106,22 +93,6 @@
       <option name="PACKAGE_NAME" value="org.example.bank.domain" />
       <option name="MAIN_CLASS_NAME" value="org.example.bank.domain.BankTest" />
       <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="BankTest.compareTransferMethodsEfficiency" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="simple-bank" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.example.bank.domain.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="org.example.bank.domain" />
-      <option name="MAIN_CLASS_NAME" value="org.example.bank.domain.BankTest" />
-      <option name="METHOD_NAME" value="compareTransferMethodsEfficiency(org.junit.jupiter.api.RepetitionInfo)" />
-      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -158,13 +129,45 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="BankTest.shouldTransferMoneyWhenCornerCaseOfSameCompare" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="simple-bank" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.bank.domain.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.bank.domain" />
+      <option name="MAIN_CLASS_NAME" value="org.example.bank.domain.BankTest" />
+      <option name="METHOD_NAME" value="shouldTransferMoneyWhenCornerCaseOfSameCompare(org.example.bank.domain.Bank)" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BankTest.shouldTransferMoneyWhenLockOrderingFailsToDetermineWithAccountToLockFirst" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="simple-bank" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.bank.domain.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.bank.domain" />
+      <option name="MAIN_CLASS_NAME" value="org.example.bank.domain.BankTest" />
+      <option name="METHOD_NAME" value="shouldTransferMoneyWhenLockOrderingFailsToDetermineWithAccountToLockFirst(org.example.bank.domain.Bank)" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.BankTest" />
+        <item itemvalue="JUnit.BankTest.shouldTransferMoneyWhenLockOrderingFailsToDetermineWithAccountToLockFirst" />
+        <item itemvalue="JUnit.BankTest.shouldTransferMoneyWhenCornerCaseOfSameCompare" />
         <item itemvalue="JUnit.BankTest.shouldNotAllowTransfersWhenDepositorHasInsufficientFunds" />
         <item itemvalue="JUnit.BankTest.shouldNotAllowTransfersWithNegativeAmounts" />
-        <item itemvalue="JUnit.BankTest.compareTransferMethodsEfficiency" />
-        <item itemvalue="JUnit.All in simple-bank" />
       </list>
     </recent_temporary>
   </component>

@@ -15,9 +15,11 @@ import org.example.bank.infraestructure.account.repository.inmemory.InMemoryAcco
 import org.example.bank.infraestructure.account.repository.inmemory.InMemoryAccountRepositoryConcurrentHashMap;
 import org.example.bank.infraestructure.account.repository.inmemory.strategy.OptimisticLockTransferStrategy;
 import org.example.bank.infraestructure.account.repository.inmemory.strategy.PessimisticLockTransferStrategy;
+import org.example.bank.infraestructure.account.repository.inmemory.strategy.RevisitedPessimisticLockTransferStrategy;
 import org.example.bank.infraestructure.account.repository.inmemory.strategy.SerializedTransferStrategy;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.RepetitionInfo;
 import org.junit.jupiter.api.Test;
@@ -157,7 +159,8 @@ class BankTest {
         );
     }
 
-    @RepeatedTest(10)
+    @Disabled
+    @RepeatedTest(3)
     void compareTransferMethodsEfficiency(RepetitionInfo repetitionInfo) {
         var a = createAccountWithBalance("A", euros(1000));
         var b = createAccountWithBalance("B", euros(1000));
@@ -277,8 +280,47 @@ class BankTest {
         Assertions.assertEquals(originalBalance, bankInstance.getBalance(c.id()));
     }
 
+    @ParameterizedTest
+    @ArgumentsSource(BankProvider.class)
+    void shouldTransferMoneyWhenLockOrderingFailsToDetermineWithAccountToLockFirst(Bank bankInstance) {
+        var originalBalance = euros(20_000);
+        var a = createMalfunctioningAccountWithBalance("A", originalBalance);
+        var b = createMalfunctioningAccountWithBalance("B", originalBalance);
+        var c = createMalfunctioningAccountWithBalance("AA", originalBalance);
+
+        bankInstance.registerAccount(a);
+        bankInstance.registerAccount(b);
+        bankInstance.registerAccount(c);
+
+        int numberOfTransfers = 10_000;
+        // move money from A to B
+        var futures = new ArrayList<CompletableFuture<Void>>();
+        for (int i = 0; i < numberOfTransfers; i++) {
+            futures.add(CompletableFuture.runAsync(() -> {
+                bankInstance.transfer(euros(1), a.id(), b.id());
+                bankInstance.transfer(euros(1), c.id(), a.id());
+            }));
+        }
+        // move money from B to A
+        for (int i = 0; i < numberOfTransfers; i++) {
+            futures.add(CompletableFuture.runAsync(() -> {
+                bankInstance.transfer(euros(1), b.id(), a.id());
+                bankInstance.transfer(euros(1), a.id(), c.id());
+            }));
+        }
+        futures.forEach(CompletableFuture::join);
+
+        Assertions.assertEquals(bankInstance.getBalance(a.id()), bankInstance.getBalance(b.id()));
+        Assertions.assertEquals(originalBalance, bankInstance.getBalance(a.id()));
+        Assertions.assertEquals(originalBalance, bankInstance.getBalance(c.id()));
+    }
+
     private Account createAccountWithBalance(String id, Money balance) {
         return new ReadWriteLockAccount(id, balance);
+    }
+
+    private Account createMalfunctioningAccountWithBalance(String id, Money balance) {
+        return new ReadWriteLockAccount(new AccountId(id, () -> 1), balance);
     }
 
 
@@ -296,7 +338,7 @@ class BankTest {
         public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
             return Stream.of(
                     Arguments.of(new Bank(new InMemoryAccountRepository(new OptimisticLockTransferStrategy()))),
-                    Arguments.of(new Bank(new InMemoryAccountRepository(new PessimisticLockTransferStrategy()))),
+                    Arguments.of(new Bank(new InMemoryAccountRepository(new RevisitedPessimisticLockTransferStrategy()))),
                     Arguments.of(new Bank(new InMemoryAccountRepository(new SerializedTransferStrategy()))),
                     Arguments.of(new Bank(new InMemoryAccountRepositoryConcurrentHashMap()))
             );

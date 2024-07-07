@@ -5,6 +5,10 @@ import org.example.bank.domain.account.Account;
 import org.example.bank.domain.account.AccountId;
 import org.example.bank.domain.money.Money;
 
+/**
+ * Pessimistic lock transfer strategy: This can lead to deadlocks, but it is a simple way to avoid them. See
+ * {@link RevisitedPessimisticLockTransferStrategy} for a more robust solution.
+ */
 public class PessimisticLockTransferStrategy implements TransferStrategy {
 
     @Override
