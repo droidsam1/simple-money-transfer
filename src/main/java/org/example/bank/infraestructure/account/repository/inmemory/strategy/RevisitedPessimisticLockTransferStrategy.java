@@ -8,6 +8,7 @@ import java.util.concurrent.locks.ReentrantLock;
 import java.util.stream.Stream;
 import org.example.bank.domain.account.Account;
 import org.example.bank.domain.account.AccountId;
+import org.example.bank.domain.exceptions.AccountNotFoundException;
 import org.example.bank.domain.money.Money;
 
 /**
@@ -26,6 +27,9 @@ public class RevisitedPessimisticLockTransferStrategy implements TransferStrateg
     public void transfer(Map<AccountId, Account> accounts, Money amount, AccountId origin, AccountId destiny) {
         var originAccount = accounts.get(origin);
         var destinyAccount = accounts.get(destiny);
+        if (originAccount == null || destinyAccount == null) {
+            throw new AccountNotFoundException();
+        }
 
         locks.putIfAbsent(origin, new ReentrantLock());
         locks.putIfAbsent(destiny, new ReentrantLock());
