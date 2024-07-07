@@ -5,8 +5,9 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Stream;
 import org.example.bank.domain.account.Account;
-import org.example.bank.domain.account.AccountId;
+import org.example.bank.domain.account.MalfunctioningHashcodeAccountId;
 import org.example.bank.domain.account.ReadWriteLockAccount;
+import org.example.bank.domain.account.SimpleAccountId;
 import org.example.bank.domain.exceptions.AccountNotFoundException;
 import org.example.bank.domain.exceptions.InsufficientFundsException;
 import org.example.bank.domain.exceptions.NegativeTransferAmountException;
@@ -19,7 +20,6 @@ import org.example.bank.infraestructure.account.repository.inmemory.strategy.Rev
 import org.example.bank.infraestructure.account.repository.inmemory.strategy.SerializedTransferStrategy;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.RepetitionInfo;
 import org.junit.jupiter.api.Test;
@@ -49,14 +49,14 @@ class BankTest {
         var initialBalance = randomMoney();
         this.bank.registerAccount(createAccountWithBalance("A", initialBalance));
 
-        var currentBalance = this.bank.getBalance(new AccountId("A"));
+        var currentBalance = this.bank.getBalance(new SimpleAccountId("A"));
 
         Assertions.assertEquals(initialBalance, currentBalance);
     }
 
     @Test
     void shouldThrowExceptionWhenAccountNotFound() {
-        var unregisteredAccount = new AccountId("A");
+        var unregisteredAccount = new SimpleAccountId("A");
         Assertions.assertThrows(AccountNotFoundException.class, () -> this.bank.getBalance(unregisteredAccount));
     }
 
@@ -159,7 +159,6 @@ class BankTest {
         );
     }
 
-    @Disabled
     @RepeatedTest(3)
     void compareTransferMethodsEfficiency(RepetitionInfo repetitionInfo) {
         var a = createAccountWithBalance("A", euros(1000));
@@ -320,7 +319,7 @@ class BankTest {
     }
 
     private Account createMalfunctioningAccountWithBalance(String id, Money balance) {
-        return new ReadWriteLockAccount(new AccountId(id, () -> 1), balance);
+        return new ReadWriteLockAccount(new MalfunctioningHashcodeAccountId(id), balance);
     }
 
 

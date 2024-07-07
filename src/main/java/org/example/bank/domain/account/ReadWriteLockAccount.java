@@ -17,7 +17,7 @@ public final class ReadWriteLockAccount implements Account {
     }
 
     public ReadWriteLockAccount(String id, Money balance) {
-        this(new AccountId(id), balance);
+        this(new SimpleAccountId(id), balance);
     }
 
     @Override
@@ -62,7 +62,7 @@ public final class ReadWriteLockAccount implements Account {
     }
 
     @Override
-    public  boolean compareAndSubtract(Money originBalance, Money moneyToSubtract) {
+    public boolean compareAndSubtract(Money originBalance, Money moneyToSubtract) {
         if (!balance().equals(originBalance)) {
             return false;
         }
@@ -71,7 +71,7 @@ public final class ReadWriteLockAccount implements Account {
     }
 
     @Override
-    public  boolean compareAndAdd(Money originBalance, Money moneyToAdd) {
+    public boolean compareAndAdd(Money originBalance, Money moneyToAdd) {
         if (!balance().equals(originBalance)) {
             return false;
         }
