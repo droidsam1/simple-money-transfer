@@ -4,16 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="add: timed implementation, around 50min, too slow">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/bank/Account.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/bank/AccountId.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/bank/Bank.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/bank/Money.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/bank/exceptions/AccountAlreadyRegisteredException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/bank/exceptions/AccountNotFoundException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/bank/exceptions/InsufficientFundsException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/example/simple/bank/BankTest.java" afterDir="false" />
+    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="wip: playing around with the concept of distributed locking mechanism">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/bank/distributed/GlobalLockManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/bank/distributed/LockManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/simple/bank/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/bank/Account.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/simple/bank/Bank.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/bank/Bank.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/example/simple/bank/BankTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/example/simple/bank/BankTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,12 +52,14 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "JUnit.All in simple-bank.executor": "Run",
-    "JUnit.BankTest (1).executor": "Coverage",
+    "JUnit.BankTest (1).executor": "Run",
     "JUnit.BankTest.compareTransferMethodsEfficiency.executor": "Run",
     "JUnit.BankTest.executor": "Run",
     "JUnit.BankTest.shouldLeadToIncorrectFinalBalanceDueToRaceCondition.executor": "Run",
     "JUnit.BankTest.shouldNotAllowTransfersWhenDepositorHasInsufficientFunds.executor": "Run",
     "JUnit.BankTest.shouldNotAllowTransfersWithNegativeAmounts.executor": "Run",
+    "JUnit.BankTest.shouldTransferFromMultipleAccounts.executor": "Run",
+    "JUnit.BankTest.shouldTransferFromMultipleAccountsAndMultipleBanks.executor": "Run",
     "JUnit.BankTest.shouldTransferMoneyWhenCornerCaseOfSameCompare.executor": "Run",
     "JUnit.BankTest.shouldTransferMoneyWhenLockOrderingFailsToDetermineWithAccountToLockFirst.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -93,7 +92,7 @@
       <recent name="org.example.bank.infraestructure.account.repository" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.BankTest.shouldLeadToIncorrectFinalBalanceDueToRaceCondition">
+  <component name="RunManager" selected="JUnit.BankTest (1)">
     <configuration name="BankTest (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="simple-bank" />
       <extension name="coverage">
@@ -140,33 +139,33 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="BankTest.shouldTransferMoneyWhenCornerCaseOfSameCompare" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="BankTest.shouldTransferFromMultipleAccounts" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="simple-bank" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.example.bank.domain.*" />
+          <option name="PATTERN" value="com.example.simple.bank.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="org.example.bank.domain" />
-      <option name="MAIN_CLASS_NAME" value="org.example.bank.domain.BankTest" />
-      <option name="METHOD_NAME" value="shouldTransferMoneyWhenCornerCaseOfSameCompare(org.example.bank.domain.Bank)" />
+      <option name="PACKAGE_NAME" value="com.example.simple.bank" />
+      <option name="MAIN_CLASS_NAME" value="com.example.simple.bank.BankTest" />
+      <option name="METHOD_NAME" value="shouldTransferFromMultipleAccounts" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="BankTest.shouldTransferMoneyWhenLockOrderingFailsToDetermineWithAccountToLockFirst" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="BankTest.shouldTransferFromMultipleAccountsAndMultipleBanks" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="simple-bank" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.example.bank.domain.*" />
+          <option name="PATTERN" value="com.example.simple.bank.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="org.example.bank.domain" />
-      <option name="MAIN_CLASS_NAME" value="org.example.bank.domain.BankTest" />
-      <option name="METHOD_NAME" value="shouldTransferMoneyWhenLockOrderingFailsToDetermineWithAccountToLockFirst(org.example.bank.domain.Bank)" />
+      <option name="PACKAGE_NAME" value="com.example.simple.bank" />
+      <option name="MAIN_CLASS_NAME" value="com.example.simple.bank.BankTest" />
+      <option name="METHOD_NAME" value="shouldTransferFromMultipleAccountsAndMultipleBanks" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -174,11 +173,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.BankTest.shouldLeadToIncorrectFinalBalanceDueToRaceCondition" />
         <item itemvalue="JUnit.BankTest (1)" />
+        <item itemvalue="JUnit.BankTest.shouldTransferFromMultipleAccountsAndMultipleBanks" />
+        <item itemvalue="JUnit.BankTest.shouldTransferFromMultipleAccounts" />
+        <item itemvalue="JUnit.BankTest.shouldLeadToIncorrectFinalBalanceDueToRaceCondition" />
         <item itemvalue="JUnit.BankTest" />
-        <item itemvalue="JUnit.BankTest.shouldTransferMoneyWhenLockOrderingFailsToDetermineWithAccountToLockFirst" />
-        <item itemvalue="JUnit.BankTest.shouldTransferMoneyWhenCornerCaseOfSameCompare" />
       </list>
     </recent_temporary>
   </component>
@@ -199,7 +198,7 @@
       <updated>1719605402858</updated>
       <workItem from="1719605403978" duration="2778000" />
       <workItem from="1719843560265" duration="5989000" />
-      <workItem from="1720441368011" duration="6205000" />
+      <workItem from="1720441368011" duration="7639000" />
     </task>
     <task id="LOCAL-00001" summary="refactor: introduce repository pattern&#10;add: inmemory concurrent hash map implementation">
       <option name="closed" value="true" />
@@ -297,7 +296,15 @@
       <option name="project" value="LOCAL" />
       <updated>1720444255699</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="add: timed implementation, around 50min, too slow">
+      <option name="closed" value="true" />
+      <created>1720449133221</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1720449133221</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -317,7 +324,8 @@
     <MESSAGE value="refactor: add missing validation" />
     <MESSAGE value="start over" />
     <MESSAGE value="add: timed implementation, around 50min, too slow" />
-    <option name="LAST_COMMIT_MESSAGE" value="add: timed implementation, around 50min, too slow" />
+    <MESSAGE value="wip: playing around with the concept of distributed locking mechanism" />
+    <option name="LAST_COMMIT_MESSAGE" value="wip: playing around with the concept of distributed locking mechanism" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

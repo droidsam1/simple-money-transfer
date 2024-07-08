@@ -22,6 +22,7 @@ public final class Account {
     public boolean withdraw(Money amount) {
         validateSameCurrency(amount.currency());
         this.balance.getAndUpdate(b -> {
+            introduceDelay();
             if (b.amount().compareTo(amount.amount()) < 0) {
                 throw new InsufficientFundsException();
             }
@@ -32,7 +33,10 @@ public final class Account {
 
     public boolean deposit(Money amount) {
         validateSameCurrency(amount.currency());
-        this.balance.getAndUpdate(b -> new Money(b.amount().add(amount.amount()), b.currency()));
+        this.balance.getAndUpdate(b -> {
+            introduceDelay();
+            return new Money(b.amount().add(amount.amount()), b.currency());
+        });
         return true;
     }
 
@@ -40,6 +44,13 @@ public final class Account {
         if (!balance.get().currency().equals(currency)) {
             throw new UnsupportedOperationException("Different currencies, not supported yet");
         }
+    }
+
+    private void introduceDelay() {
+        for (int i = 0; i < 1_000_000; i++) {
+            ;
+        }
+
     }
 
     public AccountId id() {
