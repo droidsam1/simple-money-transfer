@@ -4,9 +4,29 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="refactor: extract to another implementation of account id to introduce malfunctioning accounts id">
+    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="refactor: add missing validation">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/infraestructure/account/repository/inmemory/strategy/RevisitedPessimisticLockTransferStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/infraestructure/account/repository/inmemory/strategy/RevisitedPessimisticLockTransferStrategy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/Bank.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/account/Account.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/account/AccountId.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/account/LockFreeAccount.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/account/MalfunctioningHashcodeAccountId.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/account/ReadWriteLockAccount.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/account/SimpleAccountId.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/account/repository/AccountRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/exceptions/AccountNotFoundException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/exceptions/BalanceMisMatchException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/exceptions/InsufficientFundsException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/exceptions/NegativeTransferAmountException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/domain/money/Money.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/infraestructure/account/repository/inmemory/InMemoryAccountRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/infraestructure/account/repository/inmemory/InMemoryAccountRepositoryConcurrentHashMap.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/infraestructure/account/repository/inmemory/strategy/OptimisticLockTransferStrategy.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/infraestructure/account/repository/inmemory/strategy/PessimisticLockTransferStrategy.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/infraestructure/account/repository/inmemory/strategy/RevisitedPessimisticLockTransferStrategy.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/infraestructure/account/repository/inmemory/strategy/SerializedTransferStrategy.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/infraestructure/account/repository/inmemory/strategy/TransferStrategy.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/bank/domain/BankTest.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,12 +77,12 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "SONARLINT_PRECOMMIT_ANALYSIS": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "002",
     "kotlin-language-version-configured": "true",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.3954023",
-    "settings.editor.selected.configurable": "reference.settingsdialog.IDE.editor.colors.Console Font"
+    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -185,6 +205,7 @@
       <updated>1719605402858</updated>
       <workItem from="1719605403978" duration="2778000" />
       <workItem from="1719843560265" duration="5989000" />
+      <workItem from="1720441368011" duration="1312000" />
     </task>
     <task id="LOCAL-00001" summary="refactor: introduce repository pattern&#10;add: inmemory concurrent hash map implementation">
       <option name="closed" value="true" />
@@ -266,7 +287,15 @@
       <option name="project" value="LOCAL" />
       <updated>1720367587349</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="refactor: add missing validation">
+      <option name="closed" value="true" />
+      <created>1720367922958</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1720367922958</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -283,7 +312,8 @@
     <MESSAGE value="add: optimistic/pessimistic transfer implementation" />
     <MESSAGE value="add: a stronger implementation of the pessimistic lock strategy" />
     <MESSAGE value="refactor: extract to another implementation of account id to introduce malfunctioning accounts id" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor: extract to another implementation of account id to introduce malfunctioning accounts id" />
+    <MESSAGE value="refactor: add missing validation" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor: add missing validation" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
