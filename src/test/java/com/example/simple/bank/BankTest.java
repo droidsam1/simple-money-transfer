@@ -1,5 +1,7 @@
 package com.example.simple.bank;
 
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+
 import com.example.simple.bank.exceptions.AccountAlreadyRegisteredException;
 import com.example.simple.bank.exceptions.AccountNotFoundException;
 import com.example.simple.bank.exceptions.InsufficientFundsException;
@@ -132,7 +134,7 @@ class BankTest {
     }
 
     @RepeatedTest(10)
-    void shouldTransferFromMultipleAccountsAndMultipleBanks1() {
+    void shouldTransferFromMultipleAccountWithinASingleBankAndKeepConsistentBalanceAcrossMultipleBanks() {
         Money initialBalance = dollars("100000");
         Account john = new Account("John", initialBalance);
         Account jane = new Account("Jane", initialBalance);
@@ -210,7 +212,7 @@ class BankTest {
                 account1.balance().amount().add(account2.balance().amount()),
                 finalBalance1.amount().add(finalBalance2.amount())
         );
-        //        assertTrue(finalBalance1.amount().add(finalBalance2.amount()).compareTo(BigDecimal.valueOf(2000)) != 0);
+        assertNotEquals(finalBalance1.amount().add(finalBalance2.amount()), BigDecimal.valueOf(2000));
     }
 
 

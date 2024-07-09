@@ -31,6 +31,28 @@ public final class Account {
         return true;
     }
 
+    public boolean compareAndWithdraw(Money currentAmount, Money amount) {
+        validateSameCurrency(amount.currency());
+        if (currentAmount.amount().compareTo(amount.amount()) < 0) {
+            throw new InsufficientFundsException();
+        }
+        introduceDelay();
+        return this.balance.compareAndSet(
+                currentAmount,
+                new Money(currentAmount.amount().subtract(amount.amount()), currentAmount.currency())
+        );
+    }
+
+    public boolean compareAndDeposit(Money currentAmount, Money amount) {
+        validateSameCurrency(amount.currency());
+        introduceDelay();
+        return this.balance.compareAndSet(
+                currentAmount,
+                new Money(currentAmount.amount().add(amount.amount()), currentAmount.currency())
+        );
+    }
+
+
     public boolean deposit(Money amount) {
         validateSameCurrency(amount.currency());
         this.balance.getAndUpdate(b -> {
@@ -48,7 +70,7 @@ public final class Account {
 
     private void introduceDelay() {
         for (int i = 0; i < 1_000_000; i++) {
-            ;
+            // Introduce delay
         }
 
     }
@@ -61,22 +83,22 @@ public final class Account {
         return balance.get();
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == this) {
+    @Override public boolean equals(Object object) {
+        if (this == object) {
             return true;
         }
-        if (obj == null || obj.getClass() != this.getClass()) {
+        if (object == null || getClass() != object.getClass()) {
             return false;
         }
-        var that = (Account) obj;
-        return Objects.equals(this.id, that.id) &&
-               Objects.equals(this.balance, that.balance);
+
+        Account account = (Account) object;
+        return Objects.equals(id, account.id) && Objects.equals(balance.get(), account.balance.get());
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, balance);
+    @Override public int hashCode() {
+        int result = Objects.hashCode(id);
+        result = 31 * result + Objects.hashCode(balance.get());
+        return result;
     }
 
     @Override
