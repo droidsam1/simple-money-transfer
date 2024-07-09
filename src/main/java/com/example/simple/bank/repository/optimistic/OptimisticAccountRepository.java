@@ -13,10 +13,13 @@ import java.util.function.BooleanSupplier;
 
 public class OptimisticAccountRepository implements AccountRepository {
 
+    private final int maxRetryAttempts;
+
     private final Map<AccountId, Account> accountRepository;
 
     public OptimisticAccountRepository() {
         this.accountRepository = new ConcurrentHashMap<>();
+        this.maxRetryAttempts = 500;
     }
 
     @Override public void register(Account account) {
@@ -40,7 +43,9 @@ public class OptimisticAccountRepository implements AccountRepository {
         boolean withdrawal = false;
         try {
             withdrawal = retry(() -> fromAccount.compareAndWithdraw(fromAccount.balance(), amount));
-            retry(() -> toAccount.compareAndDeposit(toAccount.balance(), amount));
+            if (withdrawal) {
+                retry(() -> toAccount.compareAndDeposit(toAccount.balance(), amount));
+            }
         } catch (Exception exception) {
             //rollback: naive implementation
             if (withdrawal) {
@@ -50,10 +55,13 @@ public class OptimisticAccountRepository implements AccountRepository {
         }
     }
 
-    //Just a simple retry loop. Note: this is not a good implementation, is infinite and can cause a deadlock
+    //Just a simple retry loop
     private boolean retry(BooleanSupplier operation) {
+        int attempts = 0;
         while (!operation.getAsBoolean()) {
-            //do nothing, just retry
+            if (attempts++ >= maxRetryAttempts) {
+                return false;
+            }
         }
         return true;
     }
