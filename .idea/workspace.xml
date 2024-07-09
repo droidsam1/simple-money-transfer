@@ -4,11 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="wip: playing around with the concept of distributed locking mechanism">
+    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="add: global lock manager thread-safety by encapsulating lock handling">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/bank/repository/AccountRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/bank/repository/GlobalLockManagerAccountRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/simple/bank/Bank.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/bank/Bank.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/simple/bank/distributed/GlobalLockManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/bank/distributed/GlobalLockManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/simple/bank/distributed/LockManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/bank/distributed/LockManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -197,7 +197,7 @@
       <workItem from="1719605403978" duration="2778000" />
       <workItem from="1719843560265" duration="5989000" />
       <workItem from="1720441368011" duration="7639000" />
-      <workItem from="1720510795533" duration="713000" />
+      <workItem from="1720510795533" duration="1402000" />
     </task>
     <task id="LOCAL-00001" summary="refactor: introduce repository pattern&#10;add: inmemory concurrent hash map implementation">
       <option name="closed" value="true" />
@@ -311,7 +311,15 @@
       <option name="project" value="LOCAL" />
       <updated>1720454944351</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="add: global lock manager thread-safety by encapsulating lock handling">
+      <option name="closed" value="true" />
+      <created>1720511890279</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1720511890279</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -332,7 +340,8 @@
     <MESSAGE value="start over" />
     <MESSAGE value="add: timed implementation, around 50min, too slow" />
     <MESSAGE value="wip: playing around with the concept of distributed locking mechanism" />
-    <option name="LAST_COMMIT_MESSAGE" value="wip: playing around with the concept of distributed locking mechanism" />
+    <MESSAGE value="add: global lock manager thread-safety by encapsulating lock handling" />
+    <option name="LAST_COMMIT_MESSAGE" value="add: global lock manager thread-safety by encapsulating lock handling" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

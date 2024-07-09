@@ -2,49 +2,41 @@ package com.example.simple.bank;
 
 import com.example.simple.bank.distributed.GlobalLockManager;
 import com.example.simple.bank.distributed.LockManager;
-import com.example.simple.bank.exceptions.AccountAlreadyRegisteredException;
 import com.example.simple.bank.exceptions.AccountNotFoundException;
-import java.util.Map;
-import java.util.Optional;
-import java.util.concurrent.ConcurrentHashMap;
+import com.example.simple.bank.repository.AccountRepository;
+import com.example.simple.bank.repository.GlobalLockManagerAccountRepository;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class Bank {
 
-    private final Map<AccountId, Account> accountRepository;
+    private final AccountRepository accountRepository;
     private final ReentrantLock lock = new ReentrantLock();
     private final LockManager lockManager;
 
     public Bank() {
-        accountRepository = new ConcurrentHashMap<>();
+        accountRepository = new GlobalLockManagerAccountRepository();
         lockManager = GlobalLockManager.getInstance();
     }
 
     public void register(Account newAccount) {
-        this.accountRepository.compute(newAccount.id(), (id, account) -> {
-            if (account != null) {
-                throw new AccountAlreadyRegisteredException();
-            }
-            lockManager.registerLockFor(id);
-            return newAccount;
-        });
+        accountRepository.register(newAccount);
     }
 
     public Money getBalanceFor(AccountId id) {
-        return Optional.ofNullable(this.accountRepository.get(id))
-                       .map(Account::balance)
-                       .orElseThrow(AccountNotFoundException::new);
+        return this.accountRepository.get(id)
+                                     .map(Account::balance)
+                                     .orElseThrow(AccountNotFoundException::new);
     }
 
     public void transfer(AccountId from, AccountId to, Money amount) {
-        Account fromAccount = this.accountRepository.get(from);
-        Account toAccount = this.accountRepository.get(to);
+        var fromAccount = this.accountRepository.get(from);
+        var toAccount = this.accountRepository.get(to);
 
-        if (fromAccount == null || toAccount == null) {
+        if (fromAccount.isEmpty() || toAccount.isEmpty()) {
             throw new AccountNotFoundException();
         }
 
-        pessimisticInternalLocks(from, to, amount, fromAccount, toAccount);
+        pessimisticInternalLocks(from, to, amount, fromAccount.orElseThrow(), toAccount.orElseThrow());
         //        pessimisticSynchronized(fromAccount, toAccount, amount);
         //        pessimisticOneReentrantLock(amount, fromAccount, toAccount);
         //        optimistic(amount, fromAccount, toAccount);
