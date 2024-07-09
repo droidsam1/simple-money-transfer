@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="refactor: extract to another implementation of account id to introduce malfunctioning accounts id">
+    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="refactor: remove useless return value">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/infraestructure/account/repository/inmemory/strategy/RevisitedPessimisticLockTransferStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/infraestructure/account/repository/inmemory/strategy/RevisitedPessimisticLockTransferStrategy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/simple/bank/Bank.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/bank/Bank.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/example/simple/bank/BankTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/example/simple/bank/BankTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,8 +17,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -30,12 +31,12 @@
     &quot;assignee&quot;: &quot;droidsam1&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/droidsam1/simple-money-transfer.git&quot;,
-    &quot;accountId&quot;: &quot;86bd3edc-843a-40ad-b52e-b5739c3f1eb0&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "git@github.com:droidsam1/simple-money-transfer.git",
+    "accountId": "86bd3edc-843a-40ad-b52e-b5739c3f1eb0"
   }
-}</component>
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
 }</component>
@@ -48,28 +49,39 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "JUnit.All in simple-bank.executor": "Run",
+    "JUnit.BankTest (1).executor": "Run",
     "JUnit.BankTest.compareTransferMethodsEfficiency.executor": "Run",
     "JUnit.BankTest.executor": "Run",
+    "JUnit.BankTest.shouldFailTransferIfUnknownAccount.executor": "Run",
+    "JUnit.BankTest.shouldLeadToIncorrectFinalBalanceDueToRaceCondition.executor": "Run",
     "JUnit.BankTest.shouldNotAllowTransfersWhenDepositorHasInsufficientFunds.executor": "Run",
     "JUnit.BankTest.shouldNotAllowTransfersWithNegativeAmounts.executor": "Run",
+    "JUnit.BankTest.shouldTransferFromMultipleAccounts.executor": "Run",
+    "JUnit.BankTest.shouldTransferFromMultipleAccountsAndMultipleBanks.executor": "Run",
     "JUnit.BankTest.shouldTransferMoneyWhenCornerCaseOfSameCompare.executor": "Run",
     "JUnit.BankTest.shouldTransferMoneyWhenLockOrderingFailsToDetermineWithAccountToLockFirst.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "SONARLINT_PRECOMMIT_ANALYSIS": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "002",
     "kotlin-language-version-configured": "true",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.3954023",
-    "settings.editor.selected.configurable": "reference.settingsdialog.IDE.editor.colors.Console Font"
+    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.example.simple.bank.exceptions" />
+      <recent name="com.example.simple.bank" />
       <recent name="org.example.bank.domain.exceptions" />
       <recent name="org.example.bank.infraestructure.account.repository" />
       <recent name="org.example.bank.domain.account.repository" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.example.simple.bank.exceptions" />
+      <recent name="com.example.simple.bank" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="org.example.bank.domain.account" />
@@ -78,81 +90,81 @@
       <recent name="org.example.bank.infraestructure.account.repository" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.BankTest">
-    <configuration name="BankTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.BankTest (1)">
+    <configuration name="BankTest (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="simple-bank" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.example.bank.domain.*" />
+          <option name="PATTERN" value="com.example.simple.bank.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="org.example.bank.domain" />
-      <option name="MAIN_CLASS_NAME" value="org.example.bank.domain.BankTest" />
+      <option name="PACKAGE_NAME" value="com.example.simple.bank" />
+      <option name="MAIN_CLASS_NAME" value="com.example.simple.bank.BankTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="BankTest.shouldNotAllowTransfersWhenDepositorHasInsufficientFunds" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="BankTest.shouldFailTransferIfUnknownAccount" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="simple-bank" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.example.bank.domain.*" />
+          <option name="PATTERN" value="com.example.simple.bank.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="org.example.bank.domain" />
-      <option name="MAIN_CLASS_NAME" value="org.example.bank.domain.BankTest" />
-      <option name="METHOD_NAME" value="shouldNotAllowTransfersWhenDepositorHasInsufficientFunds" />
+      <option name="PACKAGE_NAME" value="com.example.simple.bank" />
+      <option name="MAIN_CLASS_NAME" value="com.example.simple.bank.BankTest" />
+      <option name="METHOD_NAME" value="shouldFailTransferIfUnknownAccount" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="BankTest.shouldNotAllowTransfersWithNegativeAmounts" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="BankTest.shouldLeadToIncorrectFinalBalanceDueToRaceCondition" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="simple-bank" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.example.bank.domain.*" />
+          <option name="PATTERN" value="com.example.simple.bank.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="org.example.bank.domain" />
-      <option name="MAIN_CLASS_NAME" value="org.example.bank.domain.BankTest" />
-      <option name="METHOD_NAME" value="shouldNotAllowTransfersWithNegativeAmounts" />
+      <option name="PACKAGE_NAME" value="com.example.simple.bank" />
+      <option name="MAIN_CLASS_NAME" value="com.example.simple.bank.BankTest" />
+      <option name="METHOD_NAME" value="shouldLeadToIncorrectFinalBalanceDueToRaceCondition" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="BankTest.shouldTransferMoneyWhenCornerCaseOfSameCompare" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="BankTest.shouldTransferFromMultipleAccounts" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="simple-bank" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.example.bank.domain.*" />
+          <option name="PATTERN" value="com.example.simple.bank.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="org.example.bank.domain" />
-      <option name="MAIN_CLASS_NAME" value="org.example.bank.domain.BankTest" />
-      <option name="METHOD_NAME" value="shouldTransferMoneyWhenCornerCaseOfSameCompare(org.example.bank.domain.Bank)" />
+      <option name="PACKAGE_NAME" value="com.example.simple.bank" />
+      <option name="MAIN_CLASS_NAME" value="com.example.simple.bank.BankTest" />
+      <option name="METHOD_NAME" value="shouldTransferFromMultipleAccounts" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="BankTest.shouldTransferMoneyWhenLockOrderingFailsToDetermineWithAccountToLockFirst" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="BankTest.shouldTransferFromMultipleAccountsAndMultipleBanks" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="simple-bank" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.example.bank.domain.*" />
+          <option name="PATTERN" value="com.example.simple.bank.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="org.example.bank.domain" />
-      <option name="MAIN_CLASS_NAME" value="org.example.bank.domain.BankTest" />
-      <option name="METHOD_NAME" value="shouldTransferMoneyWhenLockOrderingFailsToDetermineWithAccountToLockFirst(org.example.bank.domain.Bank)" />
+      <option name="PACKAGE_NAME" value="com.example.simple.bank" />
+      <option name="MAIN_CLASS_NAME" value="com.example.simple.bank.BankTest" />
+      <option name="METHOD_NAME" value="shouldTransferFromMultipleAccountsAndMultipleBanks" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -160,11 +172,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.BankTest" />
-        <item itemvalue="JUnit.BankTest.shouldTransferMoneyWhenLockOrderingFailsToDetermineWithAccountToLockFirst" />
-        <item itemvalue="JUnit.BankTest.shouldTransferMoneyWhenCornerCaseOfSameCompare" />
-        <item itemvalue="JUnit.BankTest.shouldNotAllowTransfersWhenDepositorHasInsufficientFunds" />
-        <item itemvalue="JUnit.BankTest.shouldNotAllowTransfersWithNegativeAmounts" />
+        <item itemvalue="JUnit.BankTest (1)" />
+        <item itemvalue="JUnit.BankTest.shouldTransferFromMultipleAccountsAndMultipleBanks" />
+        <item itemvalue="JUnit.BankTest.shouldTransferFromMultipleAccounts" />
+        <item itemvalue="JUnit.BankTest.shouldLeadToIncorrectFinalBalanceDueToRaceCondition" />
+        <item itemvalue="JUnit.BankTest.shouldFailTransferIfUnknownAccount" />
       </list>
     </recent_temporary>
   </component>
@@ -185,6 +197,8 @@
       <updated>1719605402858</updated>
       <workItem from="1719605403978" duration="2778000" />
       <workItem from="1719843560265" duration="5989000" />
+      <workItem from="1720441368011" duration="7639000" />
+      <workItem from="1720510795533" duration="12288000" />
     </task>
     <task id="LOCAL-00001" summary="refactor: introduce repository pattern&#10;add: inmemory concurrent hash map implementation">
       <option name="closed" value="true" />
@@ -266,7 +280,95 @@
       <option name="project" value="LOCAL" />
       <updated>1720367587349</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="refactor: add missing validation">
+      <option name="closed" value="true" />
+      <created>1720367922958</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1720367922958</updated>
+    </task>
+    <task id="LOCAL-00012" summary="start over">
+      <option name="closed" value="true" />
+      <created>1720444255699</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1720444255699</updated>
+    </task>
+    <task id="LOCAL-00013" summary="add: timed implementation, around 50min, too slow">
+      <option name="closed" value="true" />
+      <created>1720449133221</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1720449133221</updated>
+    </task>
+    <task id="LOCAL-00014" summary="wip: playing around with the concept of distributed locking mechanism">
+      <option name="closed" value="true" />
+      <created>1720454944351</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1720454944351</updated>
+    </task>
+    <task id="LOCAL-00015" summary="add: global lock manager thread-safety by encapsulating lock handling">
+      <option name="closed" value="true" />
+      <created>1720511890279</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1720511890279</updated>
+    </task>
+    <task id="LOCAL-00016" summary="add: repository abstraction">
+      <option name="closed" value="true" />
+      <created>1720512231778</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1720512231778</updated>
+    </task>
+    <task id="LOCAL-00017" summary="refactor: push transactional responsibility to repository">
+      <option name="closed" value="true" />
+      <created>1720514904076</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1720514904076</updated>
+    </task>
+    <task id="LOCAL-00018" summary="refactor: extracting the pessimistic strategies to their own repository implementations">
+      <option name="closed" value="true" />
+      <created>1720514983729</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1720514983729</updated>
+    </task>
+    <task id="LOCAL-00019" summary="refactor: extracting the optimistic strategy to its own repository implementation">
+      <option name="closed" value="true" />
+      <created>1720519629853</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1720519629853</updated>
+    </task>
+    <task id="LOCAL-00020" summary="refactor: optimistic approach to avoid livelock">
+      <option name="closed" value="true" />
+      <created>1720526685130</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1720526685130</updated>
+    </task>
+    <task id="LOCAL-00021" summary="refactor: remove useless return value">
+      <option name="closed" value="true" />
+      <created>1720526904135</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1720526904135</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -283,10 +385,38 @@
     <MESSAGE value="add: optimistic/pessimistic transfer implementation" />
     <MESSAGE value="add: a stronger implementation of the pessimistic lock strategy" />
     <MESSAGE value="refactor: extract to another implementation of account id to introduce malfunctioning accounts id" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor: extract to another implementation of account id to introduce malfunctioning accounts id" />
+    <MESSAGE value="refactor: add missing validation" />
+    <MESSAGE value="start over" />
+    <MESSAGE value="add: timed implementation, around 50min, too slow" />
+    <MESSAGE value="wip: playing around with the concept of distributed locking mechanism" />
+    <MESSAGE value="add: global lock manager thread-safety by encapsulating lock handling" />
+    <MESSAGE value="add: repository abstraction" />
+    <MESSAGE value="refactor: push transactional responsibility to repository" />
+    <MESSAGE value="refactor: extracting the pessimistic strategies to their own repository implementations" />
+    <MESSAGE value="refact" />
+    <MESSAGE value="refactor: extracting the optimistic strategy to its own repository implementation" />
+    <MESSAGE value="refactor: optimistic approach to avoid livelock" />
+    <MESSAGE value="refactor: remove useless return value" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor: remove useless return value" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/example/simple/bank/repository/pessimistic/SynchronizationOnAccountsAccountRepository.java</url>
+          <line>34</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
     <select />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/simple_money_transfer$BankTest__1_.ic" NAME="BankTest (1) Coverage Results" MODIFIED="1720447597721" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>com.example.simple.bank.*</FILTER>
+    </SUITE>
   </component>
 </project>
