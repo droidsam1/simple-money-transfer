@@ -5,6 +5,11 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import com.example.simple.bank.exceptions.AccountAlreadyRegisteredException;
 import com.example.simple.bank.exceptions.AccountNotFoundException;
 import com.example.simple.bank.exceptions.InsufficientFundsException;
+import com.example.simple.bank.repository.AccountRepository;
+import com.example.simple.bank.repository.optimistic.OptimisticAccountRepository;
+import com.example.simple.bank.repository.pessimistic.GlobalLockManagerAccountRepository;
+import com.example.simple.bank.repository.pessimistic.SingleLockAccountRepository;
+import com.example.simple.bank.repository.pessimistic.SynchronizationOnAccountsAccountRepository;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -15,104 +20,123 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Supplier;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.RepeatedTest;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class BankTest {
 
-    //SUT
-    private Bank bank;
-
-    @BeforeEach
-    public void setUp() {
-        this.bank = new Bank();
+    static Stream<Supplier<AccountRepository>> accountRepositoryProvider() {
+        return Stream.of(
+                OptimisticAccountRepository::new,
+                GlobalLockManagerAccountRepository::new,
+                SingleLockAccountRepository::new,
+                SynchronizationOnAccountsAccountRepository::new
+        );
     }
 
-    @Test
-    void shouldRegisterAccounts() {
+    @ParameterizedTest
+    @MethodSource("accountRepositoryProvider")
+    void shouldRegisterAccounts(Supplier<AccountRepository> repository) {
+        Bank bank = new Bank(repository.get());
         Account newAccount = new Account("name", randomAmountOfDollars());
 
-        Assertions.assertDoesNotThrow(() -> this.bank.register(newAccount));
+        Assertions.assertDoesNotThrow(() -> bank.register(newAccount));
     }
 
-    @Test
-    void shouldNotRegisterAccountsTwice() {
+    @ParameterizedTest
+    @MethodSource("accountRepositoryProvider")
+    void shouldNotRegisterAccountsTwice(Supplier<AccountRepository> repository) {
+        Bank bank = new Bank(repository.get());
         Account newAccount = new Account("name", randomAmountOfDollars());
 
-        this.bank.register(newAccount);
+        bank.register(newAccount);
 
-        Assertions.assertThrows(AccountAlreadyRegisteredException.class, () -> this.bank.register(newAccount));
+        Assertions.assertThrows(AccountAlreadyRegisteredException.class, () -> bank.register(newAccount));
     }
 
-    @Test
-    void shouldFetchAccountBalance() {
-        Account john = new Account("John", randomAmountOfDollars());
-        this.bank.register(john);
+    @ParameterizedTest
+    @MethodSource("accountRepositoryProvider")
+    void shouldFetchAccountBalance(Supplier<AccountRepository> repository) {
+        Bank bank = new Bank(repository.get());
 
-        Assertions.assertEquals(john.balance(), this.bank.getBalanceFor(john.id()));
+        Account john = new Account("John", randomAmountOfDollars());
+        bank.register(john);
+
+        Assertions.assertEquals(john.balance(), bank.getBalanceFor(john.id()));
     }
 
-    @Test
-    void shouldThrowExceptionWhenAccountNotFound() {
+    @ParameterizedTest
+    @MethodSource("accountRepositoryProvider")
+    void shouldThrowExceptionWhenAccountNotFound(Supplier<AccountRepository> repository) {
+        Bank bank = new Bank(repository.get());
         Account john = new Account("John", randomAmountOfDollars());
-        this.bank.register(john);
+        bank.register(john);
 
         AccountId unregisteredAccount = new AccountId("Jane");
-        Assertions.assertThrows(AccountNotFoundException.class, () -> this.bank.getBalanceFor(unregisteredAccount));
+        Assertions.assertThrows(AccountNotFoundException.class, () -> bank.getBalanceFor(unregisteredAccount));
     }
 
-    @Test
-    void shouldTransferMoneyBetweenAccounts() {
+    @ParameterizedTest
+    @MethodSource("accountRepositoryProvider")
+    void shouldTransferMoneyBetweenAccounts(Supplier<AccountRepository> repository) {
+        Bank bank = new Bank(repository.get());
         Account john = new Account("John", dollars("1000"));
         Account jane = new Account("Jane", dollars("1000"));
-        this.bank.register(john);
-        this.bank.register(jane);
+        bank.register(john);
+        bank.register(jane);
 
-        this.bank.transfer(john.id(), jane.id(), dollars("500"));
+        bank.transfer(john.id(), jane.id(), dollars("500"));
 
-        Assertions.assertEquals(dollars("500"), this.bank.getBalanceFor(john.id()));
-        Assertions.assertEquals(dollars("1500"), this.bank.getBalanceFor(jane.id()));
+        Assertions.assertEquals(dollars("500"), bank.getBalanceFor(john.id()));
+        Assertions.assertEquals(dollars("1500"), bank.getBalanceFor(jane.id()));
     }
 
-    @Test
-    void shouldFailTransferIfUnknownAccount() {
+    @ParameterizedTest
+    @MethodSource("accountRepositoryProvider")
+    void shouldFailTransferIfUnknownAccount(Supplier<AccountRepository> repository) {
+        Bank bank = new Bank(repository.get());
         Account john = new Account("John", randomAmountOfDollars());
-        this.bank.register(john);
+        bank.register(john);
 
         AccountId unregisteredAccount = new AccountId("Jane");
         Assertions.assertThrows(
                 AccountNotFoundException.class,
-                () -> this.bank.transfer(john.id(), unregisteredAccount, dollars("100"))
+                () -> bank.transfer(john.id(), unregisteredAccount, dollars("100"))
         );
     }
 
-    @Test
-    void shouldFailToTransferFromAccountWithInsufficientFunds() {
+    @ParameterizedTest
+    @MethodSource("accountRepositoryProvider")
+    void shouldFailToTransferFromAccountWithInsufficientFunds(Supplier<AccountRepository> repository) {
+        Bank bank = new Bank(repository.get());
         Account john = new Account("John", dollars("100"));
         Account jane = new Account("Jane", dollars("100"));
-        this.bank.register(john);
-        this.bank.register(jane);
+        bank.register(john);
+        bank.register(jane);
 
         Assertions.assertThrows(
                 InsufficientFundsException.class,
-                () -> this.bank.transfer(john.id(), jane.id(), dollars("200"))
+                () -> bank.transfer(john.id(), jane.id(), dollars("200"))
         );
     }
 
-    @RepeatedTest(10)
-    void shouldTransferFromMultipleAccountsAndMultipleBanks() {
+    @ParameterizedTest
+    @MethodSource("accountRepositoryProvider")
+    void shouldTransferFromMultipleAccountsAndMultipleBanks(Supplier<AccountRepository> repository) {
+        Bank bank = new Bank(repository.get());
         Money initialBalance = dollars("100000");
         Account john = new Account("John", initialBalance);
         Account jane = new Account("Jane", initialBalance);
         Account jack = new Account("Jack", initialBalance);
         Account justin = new Account("Justin", initialBalance);
-        this.bank.register(john);
-        this.bank.register(jane);
-        this.bank.register(jack);
+        bank.register(john);
+        bank.register(jane);
+        bank.register(jack);
 
-        Bank anotherBank = new Bank();
+        Bank anotherBank = new Bank(repository.get());
         anotherBank.register(jack);
         anotherBank.register(justin);
         anotherBank.register(john);
@@ -120,31 +144,33 @@ class BankTest {
         List<CompletableFuture<Void>> tasks = new ArrayList<>();
         for (int i = 0; i < initialBalance.amount().intValue(); i++) {
 
-            tasks.add(CompletableFuture.runAsync(() -> this.bank.transfer(john.id(), jane.id(), dollars("1"))));
-            tasks.add(CompletableFuture.runAsync(() -> this.bank.transfer(jane.id(), jack.id(), dollars("1"))));
+            tasks.add(CompletableFuture.runAsync(() -> bank.transfer(john.id(), jane.id(), dollars("1"))));
+            tasks.add(CompletableFuture.runAsync(() -> bank.transfer(jane.id(), jack.id(), dollars("1"))));
             tasks.add(CompletableFuture.runAsync(() -> anotherBank.transfer(jack.id(), justin.id(), dollars("1"))));
             tasks.add(CompletableFuture.runAsync(() -> anotherBank.transfer(justin.id(), john.id(), dollars("1"))));
         }
         tasks.forEach(CompletableFuture::join);
 
-        Assertions.assertEquals(initialBalance, this.bank.getBalanceFor(john.id()));
-        Assertions.assertEquals(initialBalance, this.bank.getBalanceFor(jane.id()));
-        Assertions.assertEquals(initialBalance, this.bank.getBalanceFor(jack.id()));
+        Assertions.assertEquals(initialBalance, bank.getBalanceFor(john.id()));
+        Assertions.assertEquals(initialBalance, bank.getBalanceFor(jane.id()));
+        Assertions.assertEquals(initialBalance, bank.getBalanceFor(jack.id()));
         Assertions.assertEquals(initialBalance, anotherBank.getBalanceFor(justin.id()));
     }
 
-    @RepeatedTest(10)
-    void shouldTransferFromMultipleAccountWithinASingleBankAndKeepConsistentBalanceAcrossMultipleBanks() {
+    @ParameterizedTest
+    @MethodSource("accountRepositoryProvider")
+    void shouldTransferFromMultipleAccountWithinASingleBankAndKeepConsistentBalanceAcrossMultipleBanks(Supplier<AccountRepository> repository) {
+        Bank bank = new Bank(repository.get());
         Money initialBalance = dollars("100000");
         Account john = new Account("John", initialBalance);
         Account jane = new Account("Jane", initialBalance);
         Account jack = new Account("Jack", initialBalance);
         Account justin = new Account("Justin", initialBalance);
-        this.bank.register(john);
-        this.bank.register(jane);
-        this.bank.register(jack);
+        bank.register(john);
+        bank.register(jane);
+        bank.register(jack);
 
-        Bank anotherBank = new Bank();
+        Bank anotherBank = new Bank(repository.get());
         anotherBank.register(jack);
         anotherBank.register(justin);
         anotherBank.register(john);
@@ -154,26 +180,28 @@ class BankTest {
                                                   .divide(BigDecimal.valueOf(2), RoundingMode.FLOOR)
                                                   .intValue();
         for (int i = 0; i < halfTheInitialBalance; i++) {
-            tasks.add(CompletableFuture.runAsync(() -> this.bank.transfer(john.id(), jack.id(), dollars("1"))));
-            tasks.add(CompletableFuture.runAsync(() -> this.bank.transfer(john.id(), jane.id(), dollars("1"))));
+            tasks.add(CompletableFuture.runAsync(() -> bank.transfer(john.id(), jack.id(), dollars("1"))));
+            tasks.add(CompletableFuture.runAsync(() -> bank.transfer(john.id(), jane.id(), dollars("1"))));
         }
         tasks.forEach(CompletableFuture::join);
-        Assertions.assertEquals(this.bank.getBalanceFor(john.id()), anotherBank.getBalanceFor(john.id()));
-        Assertions.assertEquals(dollars("0"), this.bank.getBalanceFor(john.id()));
+        Assertions.assertEquals(bank.getBalanceFor(john.id()), anotherBank.getBalanceFor(john.id()));
+        Assertions.assertEquals(dollars("0"), bank.getBalanceFor(john.id()));
         Assertions.assertEquals(
                 initialBalance.amount().add(BigDecimal.valueOf(halfTheInitialBalance)),
-                this.bank.getBalanceFor(jane.id()).amount()
+                bank.getBalanceFor(jane.id()).amount()
         );
         Assertions.assertEquals(
                 initialBalance.amount().add(BigDecimal.valueOf(halfTheInitialBalance)),
-                this.bank.getBalanceFor(jack.id()).amount()
+                bank.getBalanceFor(jack.id()).amount()
         );
-        Assertions.assertEquals(this.bank.getBalanceFor(jack.id()), anotherBank.getBalanceFor(jack.id()));
+        Assertions.assertEquals(bank.getBalanceFor(jack.id()), anotherBank.getBalanceFor(jack.id()));
     }
 
 
-    @RepeatedTest(10)
-    void shouldLeadToIncorrectFinalBalanceDueToRaceCondition() throws InterruptedException {
+    @ParameterizedTest
+    @MethodSource("accountRepositoryProvider")
+    void shouldLeadToIncorrectFinalBalanceDueToRaceCondition(Supplier<AccountRepository> repository) throws InterruptedException {
+        Bank bank = new Bank(repository.get());
         Account account1 = new Account("John", dollars("1000000"));
         Account account2 = new Account("jane", dollars("1000000"));
         bank.register(account1);

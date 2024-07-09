@@ -2,14 +2,13 @@ package com.example.simple.bank;
 
 import com.example.simple.bank.exceptions.AccountNotFoundException;
 import com.example.simple.bank.repository.AccountRepository;
-import com.example.simple.bank.repository.optimistic.OptimisticAccountRepository;
 
 public class Bank {
 
     private final AccountRepository accountRepository;
 
-    public Bank() {
-        accountRepository = new OptimisticAccountRepository();
+    public Bank(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
     }
 
     public void register(Account newAccount) {
@@ -22,7 +21,7 @@ public class Bank {
                                      .orElseThrow(AccountNotFoundException::new);
     }
 
-    public  void transfer(AccountId from, AccountId to, Money amount) {
+    public void transfer(AccountId from, AccountId to, Money amount) {
         this.accountRepository.transfer(from, to, amount);
     }
 }
