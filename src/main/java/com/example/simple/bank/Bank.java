@@ -7,7 +7,6 @@ import com.example.simple.bank.exceptions.AccountNotFoundException;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class Bank {
@@ -99,25 +98,10 @@ public class Bank {
             Account fromAccount,
             Account toAccount
     ) {
-
-        Lock fromLock = lockManager.getLockFor(from).orElseThrow();
-        Lock toLock = lockManager.getLockFor(to).orElseThrow();
-
-        // Ensure locks are always acquired in a consistent order to prevent deadlocks
-        if (fromAccount.id().toString().compareTo(toAccount.id().toString()) < 0) {
-            fromLock.lock();
-            toLock.lock();
-        } else {
-            toLock.lock();
-            fromLock.lock();
-        }
-
-        try {
+        lockManager.performAtomic(from, to, () -> {
             fromAccount.withdraw(amount);
             toAccount.deposit(amount);
-        } finally {
-            fromLock.unlock();
-            toLock.unlock();
-        }
+        });
+
     }
 }

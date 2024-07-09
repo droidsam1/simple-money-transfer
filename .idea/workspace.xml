@@ -5,12 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="wip: playing around with the concept of distributed locking mechanism">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/bank/distributed/GlobalLockManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/bank/distributed/LockManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/simple/bank/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/bank/Account.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/simple/bank/Bank.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/bank/Bank.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/example/simple/bank/BankTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/example/simple/bank/BankTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/simple/bank/distributed/GlobalLockManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/bank/distributed/GlobalLockManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/simple/bank/distributed/LockManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/bank/distributed/LockManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,12 +32,12 @@
     &quot;assignee&quot;: &quot;droidsam1&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/droidsam1/simple-money-transfer.git&quot;,
-    &quot;accountId&quot;: &quot;86bd3edc-843a-40ad-b52e-b5739c3f1eb0&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "git@github.com:droidsam1/simple-money-transfer.git",
+    "accountId": "86bd3edc-843a-40ad-b52e-b5739c3f1eb0"
   }
-}</component>
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
 }</component>
@@ -49,30 +47,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "JUnit.All in simple-bank.executor": "Run",
-    "JUnit.BankTest (1).executor": "Run",
-    "JUnit.BankTest.compareTransferMethodsEfficiency.executor": "Run",
-    "JUnit.BankTest.executor": "Run",
-    "JUnit.BankTest.shouldLeadToIncorrectFinalBalanceDueToRaceCondition.executor": "Run",
-    "JUnit.BankTest.shouldNotAllowTransfersWhenDepositorHasInsufficientFunds.executor": "Run",
-    "JUnit.BankTest.shouldNotAllowTransfersWithNegativeAmounts.executor": "Run",
-    "JUnit.BankTest.shouldTransferFromMultipleAccounts.executor": "Run",
-    "JUnit.BankTest.shouldTransferFromMultipleAccountsAndMultipleBanks.executor": "Run",
-    "JUnit.BankTest.shouldTransferMoneyWhenCornerCaseOfSameCompare.executor": "Run",
-    "JUnit.BankTest.shouldTransferMoneyWhenLockOrderingFailsToDetermineWithAccountToLockFirst.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
-    "git-widget-placeholder": "002",
-    "kotlin-language-version-configured": "true",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.3954023",
-    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;JUnit.All in simple-bank.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BankTest (1).executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BankTest.compareTransferMethodsEfficiency.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BankTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BankTest.shouldLeadToIncorrectFinalBalanceDueToRaceCondition.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BankTest.shouldNotAllowTransfersWhenDepositorHasInsufficientFunds.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BankTest.shouldNotAllowTransfersWithNegativeAmounts.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BankTest.shouldTransferFromMultipleAccounts.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BankTest.shouldTransferFromMultipleAccountsAndMultipleBanks.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BankTest.shouldTransferMoneyWhenCornerCaseOfSameCompare.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BankTest.shouldTransferMoneyWhenLockOrderingFailsToDetermineWithAccountToLockFirst.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;002&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.3954023&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;org.jetbrains.plugins.github.ui.GithubSettingsConfigurable&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="com.example.simple.bank.exceptions" />
@@ -199,6 +197,7 @@
       <workItem from="1719605403978" duration="2778000" />
       <workItem from="1719843560265" duration="5989000" />
       <workItem from="1720441368011" duration="7639000" />
+      <workItem from="1720510795533" duration="713000" />
     </task>
     <task id="LOCAL-00001" summary="refactor: introduce repository pattern&#10;add: inmemory concurrent hash map implementation">
       <option name="closed" value="true" />
@@ -304,7 +303,15 @@
       <option name="project" value="LOCAL" />
       <updated>1720449133221</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="wip: playing around with the concept of distributed locking mechanism">
+      <option name="closed" value="true" />
+      <created>1720454944351</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1720454944351</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
