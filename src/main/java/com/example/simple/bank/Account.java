@@ -19,7 +19,7 @@ public final class Account {
         this(new AccountId(name), new AtomicReference<>(initialBalance));
     }
 
-    public boolean withdraw(Money amount) {
+    public void withdraw(Money amount) {
         validateSameCurrency(amount.currency());
         this.balance.getAndUpdate(b -> {
             introduceDelay();
@@ -28,7 +28,6 @@ public final class Account {
             }
             return new Money(b.amount().subtract(amount.amount()), b.currency());
         });
-        return true;
     }
 
     public boolean compareAndWithdraw(Money currentAmount, Money amount) {
@@ -53,13 +52,12 @@ public final class Account {
     }
 
 
-    public boolean deposit(Money amount) {
+    public void deposit(Money amount) {
         validateSameCurrency(amount.currency());
         this.balance.getAndUpdate(b -> {
             introduceDelay();
             return new Money(b.amount().add(amount.amount()), b.currency());
         });
-        return true;
     }
 
     private void validateSameCurrency(Currency currency) {

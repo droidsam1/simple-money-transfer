@@ -172,7 +172,7 @@ class BankTest {
     }
 
 
-    @Test
+    @RepeatedTest(10)
     void shouldLeadToIncorrectFinalBalanceDueToRaceCondition() throws InterruptedException {
         Account account1 = new Account("John", dollars("1000000"));
         Account account2 = new Account("jane", dollars("1000000"));
