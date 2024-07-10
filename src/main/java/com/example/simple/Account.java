@@ -25,9 +25,39 @@ public class Account {
     }
 
     public void transferTo(Account beneficiary, Money transferAmount) {
+        optimisticApproach(beneficiary, transferAmount);
+        //        pessimisticApproach(beneficiary, transferAmount);
+    }
+
+    private void optimisticApproach(Account beneficiary, Money transferAmount) {
+        validateCurrency(transferAmount, this.balance());
+        validateTransferFundsArePositive(transferAmount);
+        validateEnoughFunds(transferAmount, this.balance());
+        while (true) {
+            var senderBalance = this.balance.get();
+            var beneficiaryBalance = beneficiary.balance.get();
+
+            if (this.balance.compareAndSet(senderBalance, senderBalance.subtract(transferAmount))) {
+                if (beneficiary.balance.compareAndSet(beneficiaryBalance, beneficiaryBalance.add(transferAmount))) {
+                    break;
+                } else {
+                    //rollback
+                    this.deposit(transferAmount);
+                }
+            }
+
+        }
+
+    }
+
+    private static void validateTransferFundsArePositive(Money transferAmount) {
         if (transferAmount.amount().compareTo(BigDecimal.ZERO) < 0) {
             throw new NegativeTransferAmountException();
         }
+    }
+
+    private void pessimisticApproach(Account beneficiary, Money transferAmount) {
+        validateTransferFundsArePositive(transferAmount);
         if (this.id().compareToIgnoreCase(beneficiary.id()) > 0) {
             synchronized (this) {
                 synchronized (beneficiary) {
@@ -47,22 +77,28 @@ public class Account {
 
     private void deposit(Money fundsToDeposit) {
         this.balance.updateAndGet(b -> {
-            if (!b.currency().equals(fundsToDeposit.currency())) {
-                throw new MisMatchCurrency();
-            }
+            validateCurrency(fundsToDeposit, b);
             return new Money(b.amount().add(fundsToDeposit.amount()), b.currency());
         });
     }
 
     private void withdrawn(Money fundsToWithdraw) {
         this.balance.updateAndGet(b -> {
-            if (b.amount().compareTo(fundsToWithdraw.amount()) < 0) {
-                throw new InsufficientFundsException();
-            }
-            if (!b.currency().equals(fundsToWithdraw.currency())) {
-                throw new MisMatchCurrency();
-            }
+            validateEnoughFunds(fundsToWithdraw, b);
+            validateCurrency(fundsToWithdraw, b);
             return new Money(b.amount().subtract(fundsToWithdraw.amount()), b.currency());
         });
+    }
+
+    private static void validateEnoughFunds(Money fundsToWithdraw, Money b) {
+        if (b.amount().compareTo(fundsToWithdraw.amount()) < 0) {
+            throw new InsufficientFundsException();
+        }
+    }
+
+    private static void validateCurrency(Money fundsToWithdraw, Money b) {
+        if (!b.currency().equals(fundsToWithdraw.currency())) {
+            throw new MisMatchCurrency();
+        }
     }
 }

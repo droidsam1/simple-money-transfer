@@ -5,13 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="timed attempt: 25min, no bank abstraction">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/Account.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/Money.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/exceptions/InsufficientFundsException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/exceptions/MisMatchCurrency.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/exceptions/NegativeTransferAmountException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/example/simple/MoneyTransferTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/simple/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/Account.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/simple/Money.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/Money.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/example/simple/MoneyTransferTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/example/simple/MoneyTransferTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,6 +63,7 @@
     "JUnit.BankTest.shouldTransferMoneyWhenCornerCaseOfSameCompare.executor": "Run",
     "JUnit.BankTest.shouldTransferMoneyWhenLockOrderingFailsToDetermineWithAccountToLockFirst.executor": "Run",
     "JUnit.MoneyTransferTest.executor": "Run",
+    "JUnit.MoneyTransferTest.testAccountTransferDeadlock.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "SONARLINT_PRECOMMIT_ANALYSIS": "true",
@@ -108,22 +106,6 @@
       <option name="PACKAGE_NAME" value="com.example.simple.bank" />
       <option name="MAIN_CLASS_NAME" value="com.example.simple.bank.BankTest" />
       <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="BankTest.shouldLeadToIncorrectFinalBalanceDueToRaceCondition" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="simple-bank" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.example.simple.bank.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.example.simple.bank" />
-      <option name="MAIN_CLASS_NAME" value="com.example.simple.bank.BankTest" />
-      <option name="METHOD_NAME" value="shouldLeadToIncorrectFinalBalanceDueToRaceCondition" />
-      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -175,13 +157,29 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="MoneyTransferTest.testAccountTransferDeadlock" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="simple-bank" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.simple.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.example.simple" />
+      <option name="MAIN_CLASS_NAME" value="com.example.simple.MoneyTransferTest" />
+      <option name="METHOD_NAME" value="testAccountTransferDeadlock" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.MoneyTransferTest" />
+        <item itemvalue="JUnit.MoneyTransferTest.testAccountTransferDeadlock" />
         <item itemvalue="JUnit.BankTest (1)" />
         <item itemvalue="JUnit.BankTest.shouldTransferFromMultipleAccountsAndMultipleBanks" />
         <item itemvalue="JUnit.BankTest.shouldTransferFromMultipleAccounts" />
-        <item itemvalue="JUnit.BankTest.shouldLeadToIncorrectFinalBalanceDueToRaceCondition" />
       </list>
     </recent_temporary>
   </component>
@@ -204,7 +202,7 @@
       <workItem from="1719843560265" duration="5989000" />
       <workItem from="1720441368011" duration="7639000" />
       <workItem from="1720510795533" duration="17917000" />
-      <workItem from="1720626458394" duration="1816000" />
+      <workItem from="1720626458394" duration="3259000" />
     </task>
     <task id="LOCAL-00001" summary="refactor: introduce repository pattern&#10;add: inmemory concurrent hash map implementation">
       <option name="closed" value="true" />
@@ -406,7 +404,15 @@
       <option name="project" value="LOCAL" />
       <updated>1720626521522</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="timed attempt: 25min, no bank abstraction">
+      <option name="closed" value="true" />
+      <created>1720628284212</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1720628284212</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -444,6 +450,15 @@
           <url>file://$PROJECT_DIR$/src/main/java/com/example/simple/bank/repository/pessimistic/SynchronizationOnAccountsAccountRepository.java</url>
           <line>34</line>
           <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/com/example/simple/Account.java</url>
+          <line>99</line>
+          <properties class="com.example.simple.Account" method="validateCurrency">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

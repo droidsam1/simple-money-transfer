@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 class MoneyTransferTest {
@@ -52,7 +53,7 @@ class MoneyTransferTest {
         Assertions.assertEquals(dollars(50), jane.balance());
     }
 
-    @Test
+    @RepeatedTest(1000)
     void shouldTransferMultipleAccounts() {
         int initialBalance = 1000;
         Account john = new Account("john", dollars(initialBalance));
@@ -74,7 +75,6 @@ class MoneyTransferTest {
         Assertions.assertEquals(dollars(initialBalance), jane.balance());
         Assertions.assertEquals(dollars(initialBalance), jack.balance());
     }
-
 
     private static Money dollars(int amount) {
         return new Money(amount, "USD");
