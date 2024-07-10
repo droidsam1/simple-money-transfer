@@ -4,7 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="timed implementation: 30 min, simplest without bank abstraction">
+    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="timed attempt: 25min, no bank abstraction">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/Account.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/Money.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/exceptions/InsufficientFundsException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/exceptions/MisMatchCurrency.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/exceptions/NegativeTransferAmountException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/example/simple/MoneyTransferTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -16,6 +22,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
+        <option value="Record" />
         <option value="Class" />
       </list>
     </option>
@@ -29,12 +36,12 @@
     &quot;assignee&quot;: &quot;droidsam1&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "git@github.com:droidsam1/simple-money-transfer.git",
-    "accountId": "86bd3edc-843a-40ad-b52e-b5739c3f1eb0"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;git@github.com:droidsam1/simple-money-transfer.git&quot;,
+    &quot;accountId&quot;: &quot;86bd3edc-843a-40ad-b52e-b5739c3f1eb0&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
 }</component>
@@ -62,7 +69,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "SONARLINT_PRECOMMIT_ANALYSIS": "true",
-    "git-widget-placeholder": "003",
+    "git-widget-placeholder": "004",
     "kotlin-language-version-configured": "true",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
@@ -197,6 +204,7 @@
       <workItem from="1719843560265" duration="5989000" />
       <workItem from="1720441368011" duration="7639000" />
       <workItem from="1720510795533" duration="17917000" />
+      <workItem from="1720626458394" duration="1816000" />
     </task>
     <task id="LOCAL-00001" summary="refactor: introduce repository pattern&#10;add: inmemory concurrent hash map implementation">
       <option name="closed" value="true" />
@@ -390,11 +398,18 @@
       <option name="project" value="LOCAL" />
       <updated>1720531800619</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="start over">
+      <option name="closed" value="true" />
+      <created>1720626521522</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1720626521522</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="refactor: introduce repository pattern&#10;add: inmemory concurrent hash map implementation&#10;refactor: strengthen concurrency in comparative test" />
     <MESSAGE value="refactor: extract account existence validation to domain&#10;add: get account method to repository" />
     <MESSAGE value="fix: serialized strategy to rely on synchronized block instead of atomic internal reference, the latter gets better performance but it is not a pure serialization" />
     <MESSAGE value="fix: push synchronization to account class so OptimisticLock does not lock in advance" />
@@ -417,9 +432,10 @@
     <MESSAGE value="refactor: optimistic approach to avoid livelock" />
     <MESSAGE value="refactor: remove useless return value" />
     <MESSAGE value="refactor: parameterized test for all implementations" />
-    <MESSAGE value="start over" />
     <MESSAGE value="timed implementation: 30 min, simplest without bank abstraction" />
-    <option name="LAST_COMMIT_MESSAGE" value="timed implementation: 30 min, simplest without bank abstraction" />
+    <MESSAGE value="start over" />
+    <MESSAGE value="timed attempt: 25min, no bank abstraction" />
+    <option name="LAST_COMMIT_MESSAGE" value="timed attempt: 25min, no bank abstraction" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
