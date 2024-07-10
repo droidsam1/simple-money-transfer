@@ -33,21 +33,23 @@ public class Account {
         validateCurrency(transferAmount, this.balance());
         validateTransferFundsArePositive(transferAmount);
         validateEnoughFunds(transferAmount, this.balance());
-        while (true) {
+        int maxAttempts = 10_000;
+        int attempt = 0;
+        while (attempt < maxAttempts) {
             var senderBalance = this.balance.get();
             var beneficiaryBalance = beneficiary.balance.get();
 
             if (this.balance.compareAndSet(senderBalance, senderBalance.subtract(transferAmount))) {
                 if (beneficiary.balance.compareAndSet(beneficiaryBalance, beneficiaryBalance.add(transferAmount))) {
-                    break;
+                    return;
                 } else {
-                    //rollback
+                    //rollback: naive implementation
                     this.deposit(transferAmount);
                 }
             }
-
+            attempt++;
         }
-
+        throw new IllegalStateException("Transfer fails");
     }
 
     private static void validateTransferFundsArePositive(Money transferAmount) {
@@ -76,17 +78,13 @@ public class Account {
     }
 
     private void deposit(Money fundsToDeposit) {
-        this.balance.updateAndGet(b -> {
-            validateCurrency(fundsToDeposit, b);
-            return new Money(b.amount().add(fundsToDeposit.amount()), b.currency());
-        });
+        this.balance.updateAndGet(b -> b.add(fundsToDeposit));
     }
 
     private void withdrawn(Money fundsToWithdraw) {
         this.balance.updateAndGet(b -> {
             validateEnoughFunds(fundsToWithdraw, b);
-            validateCurrency(fundsToWithdraw, b);
-            return new Money(b.amount().subtract(fundsToWithdraw.amount()), b.currency());
+            return b.subtract(fundsToWithdraw);
         });
     }
 
