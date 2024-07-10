@@ -4,28 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="refactor: parameterized test for all implementations">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/Account.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/Money.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/exceptions/CurrencyMismatchException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/exceptions/InsufficientFunds.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/example/simple/MoneyTransferTest.java" afterDir="false" />
+    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="timed implementation: 30 min, simplest without bank abstraction">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/simple/bank/Account.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/simple/bank/AccountId.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/simple/bank/Bank.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/simple/bank/Money.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/simple/bank/distributed/GlobalLockManager.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/simple/bank/distributed/LockManager.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/simple/bank/exceptions/AccountAlreadyRegisteredException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/simple/bank/exceptions/AccountNotFoundException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/simple/bank/exceptions/InsufficientFundsException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/simple/bank/repository/AccountRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/simple/bank/repository/optimistic/OptimisticAccountRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/simple/bank/repository/pessimistic/GlobalLockManagerAccountRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/simple/bank/repository/pessimistic/SingleLockAccountRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/simple/bank/repository/pessimistic/SynchronizationOnAccountsAccountRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/example/simple/bank/BankTest.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -216,7 +196,7 @@
       <workItem from="1719605403978" duration="2778000" />
       <workItem from="1719843560265" duration="5989000" />
       <workItem from="1720441368011" duration="7639000" />
-      <workItem from="1720510795533" duration="15780000" />
+      <workItem from="1720510795533" duration="17917000" />
     </task>
     <task id="LOCAL-00001" summary="refactor: introduce repository pattern&#10;add: inmemory concurrent hash map implementation">
       <option name="closed" value="true" />
@@ -394,11 +374,26 @@
       <option name="project" value="LOCAL" />
       <updated>1720527814079</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="start over">
+      <option name="closed" value="true" />
+      <created>1720531632084</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1720531632084</updated>
+    </task>
+    <task id="LOCAL-00024" summary="timed implementation: 30 min, simplest without bank abstraction">
+      <option name="closed" value="true" />
+      <created>1720531800619</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1720531800619</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="refactor: introduce repository pattern&#10;add: inmemory concurrent hash map implementation" />
     <MESSAGE value="refactor: introduce repository pattern&#10;add: inmemory concurrent hash map implementation&#10;refactor: strengthen concurrency in comparative test" />
     <MESSAGE value="refactor: extract account existence validation to domain&#10;add: get account method to repository" />
     <MESSAGE value="fix: serialized strategy to rely on synchronized block instead of atomic internal reference, the latter gets better performance but it is not a pure serialization" />
@@ -411,7 +406,6 @@
     <MESSAGE value="add: a stronger implementation of the pessimistic lock strategy" />
     <MESSAGE value="refactor: extract to another implementation of account id to introduce malfunctioning accounts id" />
     <MESSAGE value="refactor: add missing validation" />
-    <MESSAGE value="start over" />
     <MESSAGE value="add: timed implementation, around 50min, too slow" />
     <MESSAGE value="wip: playing around with the concept of distributed locking mechanism" />
     <MESSAGE value="add: global lock manager thread-safety by encapsulating lock handling" />
@@ -423,7 +417,9 @@
     <MESSAGE value="refactor: optimistic approach to avoid livelock" />
     <MESSAGE value="refactor: remove useless return value" />
     <MESSAGE value="refactor: parameterized test for all implementations" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor: parameterized test for all implementations" />
+    <MESSAGE value="start over" />
+    <MESSAGE value="timed implementation: 30 min, simplest without bank abstraction" />
+    <option name="LAST_COMMIT_MESSAGE" value="timed implementation: 30 min, simplest without bank abstraction" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
