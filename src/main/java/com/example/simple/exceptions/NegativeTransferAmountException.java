@@ -1,9 +1,9 @@
-package org.example.bank.domain.exceptions;
+package com.example.simple.exceptions;
 
 public class NegativeTransferAmountException extends IllegalArgumentException {
 
     public NegativeTransferAmountException() {
-        super("Amount must be positive");
+        super("Negative amount transfer exception");
     }
 
 }
