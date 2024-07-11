@@ -8,11 +8,11 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class Account {
 
-    private final String id;
+    private final AccountId id;
     private final AtomicReference<Money> balance;
 
     public Account(String id, Money balance) {
-        this.id = Objects.requireNonNull(id);
+        this.id = new AccountId(Objects.requireNonNull(id));
         this.balance = new AtomicReference<>(Objects.requireNonNull(balance));
     }
 
@@ -26,7 +26,9 @@ public class Account {
         validateEnoughFunds(balanceToTransfer);
 
         //atomic operation
-        optimisticTransferStrategy(beneficiary, balanceToTransfer);
+        pessimisticWithoutSynchronizingOnAccountsTransferStrategy(beneficiary, balanceToTransfer);
+//        pessimisticTransferStrategy(beneficiary, balanceToTransfer);
+//        optimisticTransferStrategy(beneficiary, balanceToTransfer);
     }
 
     private void optimisticTransferStrategy(Account beneficiary, Money balanceToTransfer) {
@@ -56,8 +58,15 @@ public class Account {
         }
     }
 
+    private void pessimisticWithoutSynchronizingOnAccountsTransferStrategy(
+            Account beneficiary,
+            Money balanceToTransfer
+    ) {
+        GlobalLockManager.getInstance().transfer(this, beneficiary, balanceToTransfer);
+    }
+
     private void pessimisticTransferStrategy(Account beneficiary, Money balanceToTransfer) {
-        if (this.id.compareToIgnoreCase(beneficiary.id) > 0) {
+        if (this.id().compareTo(beneficiary.id()) > 0) {
             synchronized (this) {
                 synchronized (beneficiary) {
                     this.withdraw(balanceToTransfer);
@@ -74,11 +83,11 @@ public class Account {
         }
     }
 
-    private void deposit(Money balanceToTransfer) {
+    public void deposit(Money balanceToTransfer) {
         this.balance.updateAndGet(b -> b.add(balanceToTransfer));
     }
 
-    private void withdraw(Money balanceToTransfer) {
+    public void withdraw(Money balanceToTransfer) {
         this.balance.updateAndGet(b -> b.subtract(balanceToTransfer));
     }
 
@@ -98,5 +107,9 @@ public class Account {
         if (!this.balance.get().currency().equals(balanceToTransfer.currency())) {
             throw new MisMatchCurrencyException();
         }
+    }
+
+    public AccountId id() {
+        return id;
     }
 }
