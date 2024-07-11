@@ -1,84 +1,94 @@
 package com.example.simple;
 
 import com.example.simple.exceptions.InsufficientFundsException;
-import com.example.simple.exceptions.NegativeTransferAmountException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ThreadLocalRandom;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 class MoneyTransferTest {
 
 
     @Test
-    void shouldRegisterAnAccount() {
-        Money anInitialBalance = dollars(100);
+    void shouldAccountHaveBalance() {
+        Money initialBalance = dollars(randomAmount());
 
-        Assertions.assertDoesNotThrow(() -> new Account("John", anInitialBalance));
+        Account john = new Account("John", initialBalance);
+
+        Assertions.assertEquals(initialBalance, john.balance());
     }
 
     @Test
-    void shouldAccountHaveABalance() {
-        Account john = new Account("john", dollars(1000));
-
-        Assertions.assertEquals(dollars(1000), john.balance());
+    void shouldNoCreateAccountsWithoutId() {
+        Assertions.assertThrows(NullPointerException.class, () -> new Account(null, dollars(randomAmount())));
     }
 
     @Test
-    void shouldNotTransferIfSenderHasNotEnoughFunds() {
-        Account john = new Account("john", dollars(50));
+    void shouldTransferFromAccountToAccount() {
+        Money initialBalance = dollars(50);
+        Account john = new Account("John", initialBalance);
         Account jane = new Account("Jane", dollars(0));
 
-        Assertions.assertThrows(InsufficientFundsException.class, () -> john.transferTo(jane, dollars(100)));
+        john.transfer(jane, dollars(10));
+
+        Assertions.assertEquals(dollars(10), jane.balance());
+        Assertions.assertEquals(dollars(40), john.balance());
     }
 
     @Test
-    void shouldFailWhenTransferFundsAreNegative() {
-        Account john = new Account("john", dollars(50));
+    void shouldNotTransferNegativeAmounts() {
+        Money initialBalance = dollars(50);
+        Account john = new Account("John", initialBalance);
         Account jane = new Account("Jane", dollars(0));
 
-        Assertions.assertThrows(NegativeTransferAmountException.class, () -> john.transferTo(jane, dollars(-1)));
+        Assertions.assertThrows(NegativeTransferException.class, () -> john.transfer(jane, dollars(-10)));
+
+        Assertions.assertEquals(dollars(0), jane.balance());
+        Assertions.assertEquals(dollars(50), john.balance());
     }
 
     @Test
-    void shouldTransferToAccount() {
-        Account john = new Account("john", dollars(50));
+    void shouldNotTransferWhenNotEnoughFunds() {
+        Money initialBalance = dollars(50);
+        Account john = new Account("John", initialBalance);
         Account jane = new Account("Jane", dollars(0));
 
-        john.transferTo(jane, dollars(50));
+        Assertions.assertThrows(InsufficientFundsException.class, () -> john.transfer(jane, dollars(100)));
 
-        Assertions.assertEquals(dollars(0), john.balance());
-        Assertions.assertEquals(dollars(50), jane.balance());
+        Assertions.assertEquals(dollars(0), jane.balance());
+        Assertions.assertEquals(dollars(50), john.balance());
     }
 
-    @RepeatedTest(1000)
-    void shouldTransferMultipleAccounts() {
-        int initialBalance = 1000;
-        Account john = new Account("john", dollars(initialBalance));
-        Account jane = new Account("Jane", dollars(initialBalance));
-        Account jack = new Account("Jack", dollars(initialBalance));
-        Account james = new Account("James", dollars(initialBalance));
+
+    @Test
+    void shouldTransferFromAccountToAccountConcurrently() {
+        Money initialBalance = dollars(5000);
+
+        Account john = new Account("John", initialBalance);
+        Account jane = new Account("Jane", initialBalance);
+        Account jack = new Account("Jack", initialBalance);
 
         List<CompletableFuture<Void>> transfersTasks = new ArrayList<>();
-        for (int i = 0; i < initialBalance; i++) {
-            transfersTasks.add(CompletableFuture.runAsync(() -> john.transferTo(jane, dollars(1))));
-            transfersTasks.add(CompletableFuture.runAsync(() -> john.transferTo(james, dollars(1))));
-            transfersTasks.add(CompletableFuture.runAsync(() -> jane.transferTo(jack, dollars(1))));
-            transfersTasks.add(CompletableFuture.runAsync(() -> jack.transferTo(john, dollars(1))));
-            transfersTasks.add(CompletableFuture.runAsync(() -> james.transferTo(john, dollars(1))));
+        for (int i = 0; i < 5000; i++) {
+            transfersTasks.add(CompletableFuture.runAsync(() -> john.transfer(jane, dollars(1))));
+            transfersTasks.add(CompletableFuture.runAsync(() -> jane.transfer(jack, dollars(1))));
+            transfersTasks.add(CompletableFuture.runAsync(() -> jack.transfer(john, dollars(1))));
         }
         transfersTasks.forEach(CompletableFuture::join);
 
-        Assertions.assertEquals(dollars(initialBalance), john.balance());
-        Assertions.assertEquals(dollars(initialBalance), jane.balance());
-        Assertions.assertEquals(dollars(initialBalance), jack.balance());
+        Assertions.assertEquals(initialBalance, jane.balance());
+        Assertions.assertEquals(initialBalance, john.balance());
+        Assertions.assertEquals(initialBalance, jack.balance());
     }
 
-    private static Money dollars(int amount) {
-        return new Money(amount, "USD");
+    private int randomAmount() {
+        return ThreadLocalRandom.current().nextInt(0, 1000);
     }
 
+    private Money dollars(int amount) {
+        return new Money(String.valueOf(amount), "USD");
+    }
 
 }

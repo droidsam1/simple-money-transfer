@@ -1,28 +1,28 @@
 package com.example.simple;
 
-import com.example.simple.exceptions.MisMatchCurrency;
+import com.example.simple.exceptions.MisMatchCurrencyException;
 import java.math.BigDecimal;
 import java.util.Currency;
 
 public record Money(BigDecimal amount, Currency currency) {
 
-    public Money(int amount, String currency) {
-        this(BigDecimal.valueOf(amount), Currency.getInstance(currency));
+    public Money(String amount, String currency) {
+        this(new BigDecimal(amount), Currency.getInstance(currency));
     }
 
-    public Money subtract(Money anAmount) {
-        validateCurrency(anAmount);
-        return new Money(this.amount.subtract(anAmount.amount()), this.currency);
+    public Money subtract(Money balanceToTransfer) {
+        validateCurrency(balanceToTransfer);
+        return new Money(amount.subtract(balanceToTransfer.amount()), currency);
     }
 
-    public Money add(Money anAmount) {
-        validateCurrency(anAmount);
-        return new Money(this.amount.add(anAmount.amount()), this.currency);
-    }
-
-    private void validateCurrency(Money another) {
-        if (!this.currency().equals(another.currency())) {
-            throw new MisMatchCurrency();
+    private void validateCurrency(Money balanceToTransfer) {
+        if (!this.currency().equals(balanceToTransfer.currency())) {
+            throw new MisMatchCurrencyException();
         }
+    }
+
+    public Money add(Money balanceToTransfer) {
+        validateCurrency(balanceToTransfer);
+        return new Money(amount.add(balanceToTransfer.amount()), currency);
     }
 }
