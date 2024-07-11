@@ -4,9 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="replace the transfer implementation by a lock free implementation">
+    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="add: simple mechanism to avoid livelock in optimistic implementation">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/simple/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/Account.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/simple/Account.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/simple/Money.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/simple/exceptions/InsufficientFundsException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/simple/exceptions/MisMatchCurrency.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/simple/exceptions/NegativeTransferAmountException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/example/simple/MoneyTransferTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/example/simple/MoneyTransferTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,7 +70,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "SONARLINT_PRECOMMIT_ANALYSIS": "true",
-    "git-widget-placeholder": "004",
+    "git-widget-placeholder": "005",
     "kotlin-language-version-configured": "true",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
@@ -200,7 +205,8 @@
       <workItem from="1719843560265" duration="5989000" />
       <workItem from="1720441368011" duration="7639000" />
       <workItem from="1720510795533" duration="17917000" />
-      <workItem from="1720626458394" duration="3722000" />
+      <workItem from="1720626458394" duration="4636000" />
+      <workItem from="1720707232576" duration="449000" />
     </task>
     <task id="LOCAL-00001" summary="refactor: introduce repository pattern&#10;add: inmemory concurrent hash map implementation">
       <option name="closed" value="true" />
@@ -418,11 +424,18 @@
       <option name="project" value="LOCAL" />
       <updated>1720629786111</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="add: simple mechanism to avoid livelock in optimistic implementation">
+      <option name="closed" value="true" />
+      <created>1720630275194</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1720630275194</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fix: serialized strategy to rely on synchronized block instead of atomic internal reference, the latter gets better performance but it is not a pure serialization" />
     <MESSAGE value="fix: push synchronization to account class so OptimisticLock does not lock in advance" />
     <MESSAGE value="add: validation, does not allow negative transfers" />
     <MESSAGE value="add: insufficient funds validation&#10;refactor: replace compareAndSet with compareAndSubtract and compareAndAdd to push validation logic into Account" />
@@ -447,7 +460,8 @@
     <MESSAGE value="start over" />
     <MESSAGE value="timed attempt: 25min, no bank abstraction" />
     <MESSAGE value="replace the transfer implementation by a lock free implementation" />
-    <option name="LAST_COMMIT_MESSAGE" value="replace the transfer implementation by a lock free implementation" />
+    <MESSAGE value="add: simple mechanism to avoid livelock in optimistic implementation" />
+    <option name="LAST_COMMIT_MESSAGE" value="add: simple mechanism to avoid livelock in optimistic implementation" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -456,15 +470,6 @@
           <url>file://$PROJECT_DIR$/src/main/java/com/example/simple/bank/repository/pessimistic/SynchronizationOnAccountsAccountRepository.java</url>
           <line>34</line>
           <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/main/java/com/example/simple/Account.java</url>
-          <line>96</line>
-          <properties class="com.example.simple.Account" method="validateCurrency">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
