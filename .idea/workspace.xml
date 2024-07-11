@@ -4,14 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="start over">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/Account.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/NegativeTransferException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/exceptions/InsufficientFundsException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/exceptions/MisMatchCurrencyException.java" afterDir="false" />
+    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="timed attempt: 25 min">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/simple/Money.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/Money.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/example/simple/MoneyTransferTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/example/simple/MoneyTransferTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/simple/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/Account.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,6 +62,7 @@
     "JUnit.BankTest.shouldTransferMoneyWhenLockOrderingFailsToDetermineWithAccountToLockFirst.executor": "Run",
     "JUnit.MoneyTransferTest.executor": "Run",
     "JUnit.MoneyTransferTest.shouldNotTransferNegativeAmounts.executor": "Run",
+    "JUnit.MoneyTransferTest.shouldTransferFromAccountToAccount.executor": "Run",
     "JUnit.MoneyTransferTest.testAccountTransferDeadlock.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
@@ -114,22 +110,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="BankTest.shouldTransferFromMultipleAccountsAndMultipleBanks" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="simple-bank" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.example.simple.bank.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.example.simple.bank" />
-      <option name="MAIN_CLASS_NAME" value="com.example.simple.bank.BankTest" />
-      <option name="METHOD_NAME" value="shouldTransferFromMultipleAccountsAndMultipleBanks" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="MoneyTransferTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="simple-bank" />
       <extension name="coverage">
@@ -161,6 +141,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="MoneyTransferTest.shouldTransferFromAccountToAccount" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="simple-bank" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.simple.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.example.simple" />
+      <option name="MAIN_CLASS_NAME" value="com.example.simple.MoneyTransferTest" />
+      <option name="METHOD_NAME" value="shouldTransferFromAccountToAccount" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="MoneyTransferTest.testAccountTransferDeadlock" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="simple-bank" />
       <extension name="coverage">
@@ -180,10 +176,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.MoneyTransferTest" />
+        <item itemvalue="JUnit.MoneyTransferTest.shouldTransferFromAccountToAccount" />
         <item itemvalue="JUnit.MoneyTransferTest.shouldNotTransferNegativeAmounts" />
         <item itemvalue="JUnit.MoneyTransferTest.testAccountTransferDeadlock" />
         <item itemvalue="JUnit.BankTest (1)" />
-        <item itemvalue="JUnit.BankTest.shouldTransferFromMultipleAccountsAndMultipleBanks" />
       </list>
     </recent_temporary>
   </component>
@@ -207,7 +203,7 @@
       <workItem from="1720441368011" duration="7639000" />
       <workItem from="1720510795533" duration="17917000" />
       <workItem from="1720626458394" duration="4636000" />
-      <workItem from="1720707232576" duration="1883000" />
+      <workItem from="1720707232576" duration="2554000" />
     </task>
     <task id="LOCAL-00001" summary="refactor: introduce repository pattern&#10;add: inmemory concurrent hash map implementation">
       <option name="closed" value="true" />
@@ -441,11 +437,18 @@
       <option name="project" value="LOCAL" />
       <updated>1720707710735</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="timed attempt: 25 min">
+      <option name="closed" value="true" />
+      <created>1720709219260</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1720709219260</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fix: push synchronization to account class so OptimisticLock does not lock in advance" />
     <MESSAGE value="add: validation, does not allow negative transfers" />
     <MESSAGE value="add: insufficient funds validation&#10;refactor: replace compareAndSet with compareAndSubtract and compareAndAdd to push validation logic into Account" />
     <MESSAGE value="refactor: push validation logic to Account" />
@@ -470,7 +473,8 @@
     <MESSAGE value="replace the transfer implementation by a lock free implementation" />
     <MESSAGE value="add: simple mechanism to avoid livelock in optimistic implementation" />
     <MESSAGE value="start over" />
-    <option name="LAST_COMMIT_MESSAGE" value="start over" />
+    <MESSAGE value="timed attempt: 25 min" />
+    <option name="LAST_COMMIT_MESSAGE" value="timed attempt: 25 min" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
