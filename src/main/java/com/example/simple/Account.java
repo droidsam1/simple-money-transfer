@@ -37,7 +37,7 @@ public class Account {
         validateSenderHasEnoughFunds(transferFunds);
 
         optimistic(beneficiary, transferFunds);
-        //        pessimisticTransfer(beneficiary, transferFunds);
+//                pessimisticTransfer(beneficiary, transferFunds);
     }
 
     private void optimistic(Account beneficiary, Money transferFunds) {

@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="add a concurrent test, 3 min">
+    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="add alternative optimistic transfer approach, 9min">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/simple/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/Account.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/com/example/simple/MoneyTransferTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/example/simple/MoneyTransferTest.java" afterDir="false" />
@@ -207,7 +207,7 @@
       <workItem from="1720510795533" duration="17917000" />
       <workItem from="1720626458394" duration="4636000" />
       <workItem from="1720707232576" duration="5048000" />
-      <workItem from="1720854163984" duration="2240000" />
+      <workItem from="1720854163984" duration="2841000" />
     </task>
     <task id="LOCAL-00001" summary="refactor: introduce repository pattern&#10;add: inmemory concurrent hash map implementation">
       <option name="closed" value="true" />
@@ -489,11 +489,18 @@
       <option name="project" value="LOCAL" />
       <updated>1720855908914</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="add alternative optimistic transfer approach, 9min">
+      <option name="closed" value="true" />
+      <created>1720856474061</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1720856474061</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add: optimistic/pessimistic transfer implementation" />
     <MESSAGE value="add: a stronger implementation of the pessimistic lock strategy" />
     <MESSAGE value="refactor: extract to another implementation of account id to introduce malfunctioning accounts id" />
     <MESSAGE value="refactor: add missing validation" />
@@ -518,7 +525,8 @@
     <MESSAGE value="start over" />
     <MESSAGE value="timed attempt: 22 min" />
     <MESSAGE value="add a concurrent test, 3 min" />
-    <option name="LAST_COMMIT_MESSAGE" value="add a concurrent test, 3 min" />
+    <MESSAGE value="add alternative optimistic transfer approach, 9min" />
+    <option name="LAST_COMMIT_MESSAGE" value="add alternative optimistic transfer approach, 9min" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -86,6 +86,53 @@ class MoneyTransferTest {
         Assertions.assertEquals(dollars(1000), jack.balance());
     }
 
+    @Test
+    void shouldTransferMoneyConcurrentlyWithRetries() {
+        Account john = new Account("John", dollars(1000));
+        Account jane = new Account("Jane", dollars(1000));
+        Account jack = new Account("Jack", dollars(1000));
+
+        List<CompletableFuture<Void>> transferTasks = new ArrayList<>();
+        for (int i = 0; i < 2_000_000; i++) {
+            transferTasks.add(CompletableFuture.runAsync(() -> {
+                while (true) {
+                    try {
+                        john.transfer(jane, dollars(100));
+                        return;
+                    } catch (Exception exception) {
+
+                    }
+                }
+            }));
+            transferTasks.add(CompletableFuture.runAsync(() -> {
+                while (true) {
+                    try {
+                        jane.transfer(jack, dollars(100));
+                        return;
+                    } catch (Exception exception) {
+
+                    }
+                }
+            }));
+            transferTasks.add(CompletableFuture.runAsync(() -> {
+                while (true) {
+                    try {
+                        jack.transfer(john, dollars(100));
+                        return;
+                    } catch (Exception exception) {
+
+                    }
+                }
+            }));
+
+        }
+        transferTasks.forEach(CompletableFuture::join);
+
+        Assertions.assertEquals(dollars(1000), john.balance());
+        Assertions.assertEquals(dollars(1000), jane.balance());
+        Assertions.assertEquals(dollars(1000), jack.balance());
+    }
+
 
     private static Money dollars(int amount) {
         return new Money(String.valueOf(amount), "USD");
