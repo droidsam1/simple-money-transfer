@@ -4,15 +4,16 @@ import com.example.simple.exceptions.InsufficientFundsException;
 import com.example.simple.exceptions.MismatchCurrencyException;
 import com.example.simple.exceptions.NegativeTransferAmountException;
 import java.math.BigDecimal;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class Account {
 
     private final AccountId id;
-    private Money balance;
+    private final AtomicReference<Money> balance;
 
     public Account(AccountId id, Money balance) {
         this.id = id;
-        this.balance = balance;
+        this.balance = new AtomicReference<>(balance);
     }
 
     public Account(String id, Money balance) {
@@ -20,7 +21,7 @@ public class Account {
     }
 
     public Money balance() {
-        return balance;
+        return balance.get();
     }
 
     public AccountId id() {
@@ -35,6 +36,30 @@ public class Account {
         validatePositiveAmount(transferFunds);
         validateSenderHasEnoughFunds(transferFunds);
 
+        optimistic(beneficiary, transferFunds);
+        //        pessimisticTransfer(beneficiary, transferFunds);
+    }
+
+    private void optimistic(Account beneficiary, Money transferFunds) {
+        while (true) {
+            Money expectedBalanceSender = this.balance.get();
+            Money expectedBalanceReceiver = beneficiary.balance.get();
+
+            if (this.balance.compareAndSet(expectedBalanceSender, this.balance.get().subtract(transferFunds))) {
+                if (beneficiary.balance.compareAndSet(
+                        expectedBalanceReceiver,
+                        beneficiary.balance.get().add(transferFunds)
+                )) {
+                    return;
+                } else {
+                    //rollback
+                    this.deposit(transferFunds);
+                }
+            }
+        }
+    }
+
+    private void pessimisticTransfer(Account beneficiary, Money transferFunds) {
         if (this.id().compareTo(beneficiary.id) > 0) {
             synchronized (this) {
                 synchronized (beneficiary) {
@@ -53,11 +78,14 @@ public class Account {
     }
 
     private void deposit(Money transferFunds) {
-        this.balance = this.balance.add(transferFunds);
+        this.balance.updateAndGet(b -> b.add(transferFunds));
     }
 
     private void withdraw(Money transferFunds) {
-        this.balance = this.balance.subtract(transferFunds);
+        this.balance.updateAndGet(b -> {
+            validateSenderHasEnoughFunds(transferFunds);
+            return b.subtract(transferFunds);
+        });
     }
 
     private void validateSenderHasEnoughFunds(Money transferFunds) {

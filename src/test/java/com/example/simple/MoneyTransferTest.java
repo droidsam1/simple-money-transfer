@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 class MoneyTransferTest {
@@ -65,14 +66,14 @@ class MoneyTransferTest {
         Assertions.assertEquals(dollars(0), jane.balance());
     }
 
-    @Test
+    @RepeatedTest(1000)
     void shouldTransferMoneyConcurrently() {
         Account john = new Account("John", dollars(1000));
         Account jane = new Account("Jane", dollars(1000));
         Account jack = new Account("Jack", dollars(1000));
 
         List<CompletableFuture<Void>> transferTasks = new ArrayList<>();
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 2000; i++) {
             transferTasks.add(CompletableFuture.runAsync(() -> john.transfer(jane, dollars(1))));
             transferTasks.add(CompletableFuture.runAsync(() -> jane.transfer(jack, dollars(1))));
             transferTasks.add(CompletableFuture.runAsync(() -> jack.transfer(john, dollars(1))));
