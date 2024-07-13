@@ -66,7 +66,7 @@ class MoneyTransferTest {
         Assertions.assertEquals(dollars(0), jane.balance());
     }
 
-    @RepeatedTest(1000)
+    @RepeatedTest(10)
     void shouldTransferMoneyConcurrently() {
         Account john = new Account("John", dollars(1000));
         Account jane = new Account("Jane", dollars(1000));

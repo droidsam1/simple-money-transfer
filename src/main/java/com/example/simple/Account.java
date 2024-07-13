@@ -10,6 +10,7 @@ public class Account {
 
     private final AccountId id;
     private final AtomicReference<Money> balance;
+    private final GlobalLockManager lockManager = GlobalLockManager.getInstance();
 
     public Account(AccountId id, Money balance) {
         this.id = id;
@@ -36,8 +37,13 @@ public class Account {
         validatePositiveAmount(transferFunds);
         validateSenderHasEnoughFunds(transferFunds);
 
-        optimistic(beneficiary, transferFunds);
-//                pessimisticTransfer(beneficiary, transferFunds);
+//                optimistic(beneficiary, transferFunds);
+//                        pessimisticTransfer(beneficiary, transferFunds);
+        pessimisticGlobalLock(beneficiary, transferFunds);
+    }
+
+    private void pessimisticGlobalLock(Account beneficiary, Money transferFunds) {
+        this.lockManager.transfer(this, beneficiary, transferFunds);
     }
 
     private void optimistic(Account beneficiary, Money transferFunds) {
@@ -77,11 +83,11 @@ public class Account {
         }
     }
 
-    private void deposit(Money transferFunds) {
+    public void deposit(Money transferFunds) {
         this.balance.updateAndGet(b -> b.add(transferFunds));
     }
 
-    private void withdraw(Money transferFunds) {
+    public void withdraw(Money transferFunds) {
         this.balance.updateAndGet(b -> {
             validateSenderHasEnoughFunds(transferFunds);
             return b.subtract(transferFunds);
