@@ -4,7 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="add: global lock manager to avoid locking directly on accounts">
+    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="start over">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/Account.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/Money.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/exceptions/InsufficientFundsException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/exceptions/MismatchCurrencyException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/exceptions/NegativeTransferAmountException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/example/simple/MoneyTransferTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -16,8 +22,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
-        <option value="Class" />
         <option value="Record" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -66,7 +72,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "SONARLINT_PRECOMMIT_ANALYSIS": "true",
-    "git-widget-placeholder": "005",
+    "git-widget-placeholder": "006",
     "kotlin-language-version-configured": "true",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
@@ -93,22 +99,7 @@
       <recent name="org.example.bank.infraestructure.account.repository" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.MoneyTransferTest">
-    <configuration name="BankTest (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="simple-bank" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.example.simple.bank.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.example.simple.bank" />
-      <option name="MAIN_CLASS_NAME" value="com.example.simple.bank.BankTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="JUnit.MoneyTransferTest.shouldTransferMoneyFromDifferentAccount">
     <configuration name="MoneyTransferTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="simple-bank" />
       <extension name="coverage">
@@ -156,6 +147,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="MoneyTransferTest.shouldTransferMoneyFromDifferentAccount" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="simple-bank" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.simple.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.example.simple" />
+      <option name="MAIN_CLASS_NAME" value="com.example.simple.MoneyTransferTest" />
+      <option name="METHOD_NAME" value="shouldTransferMoneyFromDifferentAccount" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="MoneyTransferTest.testAccountTransferDeadlock" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="simple-bank" />
       <extension name="coverage">
@@ -174,11 +181,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.MoneyTransferTest.shouldTransferMoneyFromDifferentAccount" />
         <item itemvalue="JUnit.MoneyTransferTest" />
         <item itemvalue="JUnit.MoneyTransferTest.shouldTransferFromAccountToAccount" />
         <item itemvalue="JUnit.MoneyTransferTest.shouldNotTransferNegativeAmounts" />
         <item itemvalue="JUnit.MoneyTransferTest.testAccountTransferDeadlock" />
-        <item itemvalue="JUnit.BankTest (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -203,6 +210,7 @@
       <workItem from="1720510795533" duration="17917000" />
       <workItem from="1720626458394" duration="4636000" />
       <workItem from="1720707232576" duration="5048000" />
+      <workItem from="1720854163984" duration="1366000" />
     </task>
     <task id="LOCAL-00001" summary="refactor: introduce repository pattern&#10;add: inmemory concurrent hash map implementation">
       <option name="closed" value="true" />
@@ -460,7 +468,15 @@
       <option name="project" value="LOCAL" />
       <updated>1720711292080</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="start over">
+      <option name="closed" value="true" />
+      <created>1720854394906</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1720854394906</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -485,11 +501,11 @@
     <MESSAGE value="timed attempt: 25min, no bank abstraction" />
     <MESSAGE value="replace the transfer implementation by a lock free implementation" />
     <MESSAGE value="add: simple mechanism to avoid livelock in optimistic implementation" />
-    <MESSAGE value="start over" />
     <MESSAGE value="timed attempt: 25 min" />
     <MESSAGE value="timed attempt to refactor by an optimistic approach" />
     <MESSAGE value="add: global lock manager to avoid locking directly on accounts" />
-    <option name="LAST_COMMIT_MESSAGE" value="add: global lock manager to avoid locking directly on accounts" />
+    <MESSAGE value="start over" />
+    <option name="LAST_COMMIT_MESSAGE" value="start over" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
