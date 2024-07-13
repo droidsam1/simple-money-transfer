@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="timed attempt to refactor by an optimistic approach">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/AccountId.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/GlobalLockManager.java" afterDir="false" />
+    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="add: global lock manager to avoid locking directly on accounts">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/simple/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/Account.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -205,7 +202,7 @@
       <workItem from="1720441368011" duration="7639000" />
       <workItem from="1720510795533" duration="17917000" />
       <workItem from="1720626458394" duration="4636000" />
-      <workItem from="1720707232576" duration="3984000" />
+      <workItem from="1720707232576" duration="5048000" />
     </task>
     <task id="LOCAL-00001" summary="refactor: introduce repository pattern&#10;add: inmemory concurrent hash map implementation">
       <option name="closed" value="true" />
@@ -455,11 +452,18 @@
       <option name="project" value="LOCAL" />
       <updated>1720709803025</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="add: global lock manager to avoid locking directly on accounts">
+      <option name="closed" value="true" />
+      <created>1720711292080</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1720711292080</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add: insufficient funds validation&#10;refactor: replace compareAndSet with compareAndSubtract and compareAndAdd to push validation logic into Account" />
     <MESSAGE value="refactor: push validation logic to Account" />
     <MESSAGE value="refactor: move transfer strategy synchronization to infra&#10;misc: playing around with readWriteLock/lockFree account models" />
     <MESSAGE value="add: optimistic/pessimistic transfer implementation" />
@@ -484,7 +488,8 @@
     <MESSAGE value="start over" />
     <MESSAGE value="timed attempt: 25 min" />
     <MESSAGE value="timed attempt to refactor by an optimistic approach" />
-    <option name="LAST_COMMIT_MESSAGE" value="timed attempt to refactor by an optimistic approach" />
+    <MESSAGE value="add: global lock manager to avoid locking directly on accounts" />
+    <option name="LAST_COMMIT_MESSAGE" value="add: global lock manager to avoid locking directly on accounts" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
