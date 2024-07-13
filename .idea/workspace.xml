@@ -4,14 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="start over">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/Account.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/Money.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/exceptions/InsufficientFundsException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/exceptions/MismatchCurrencyException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/exceptions/NegativeTransferAmountException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/example/simple/MoneyTransferTest.java" afterDir="false" />
+    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="timed attempt: 22 min">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/example/simple/MoneyTransferTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/example/simple/MoneyTransferTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,6 +63,7 @@
     "JUnit.MoneyTransferTest.executor": "Run",
     "JUnit.MoneyTransferTest.shouldNotTransferNegativeAmounts.executor": "Run",
     "JUnit.MoneyTransferTest.shouldTransferFromAccountToAccount.executor": "Run",
+    "JUnit.MoneyTransferTest.shouldTransferMoneyFromDifferentAccount.executor": "Run",
     "JUnit.MoneyTransferTest.testAccountTransferDeadlock.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
@@ -99,7 +95,7 @@
       <recent name="org.example.bank.infraestructure.account.repository" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.MoneyTransferTest.shouldTransferMoneyFromDifferentAccount">
+  <component name="RunManager" selected="JUnit.MoneyTransferTest">
     <configuration name="MoneyTransferTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="simple-bank" />
       <extension name="coverage">
@@ -181,8 +177,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.MoneyTransferTest.shouldTransferMoneyFromDifferentAccount" />
         <item itemvalue="JUnit.MoneyTransferTest" />
+        <item itemvalue="JUnit.MoneyTransferTest.shouldTransferMoneyFromDifferentAccount" />
         <item itemvalue="JUnit.MoneyTransferTest.shouldTransferFromAccountToAccount" />
         <item itemvalue="JUnit.MoneyTransferTest.shouldNotTransferNegativeAmounts" />
         <item itemvalue="JUnit.MoneyTransferTest.testAccountTransferDeadlock" />
@@ -210,7 +206,7 @@
       <workItem from="1720510795533" duration="17917000" />
       <workItem from="1720626458394" duration="4636000" />
       <workItem from="1720707232576" duration="5048000" />
-      <workItem from="1720854163984" duration="1366000" />
+      <workItem from="1720854163984" duration="1699000" />
     </task>
     <task id="LOCAL-00001" summary="refactor: introduce repository pattern&#10;add: inmemory concurrent hash map implementation">
       <option name="closed" value="true" />
@@ -476,11 +472,18 @@
       <option name="project" value="LOCAL" />
       <updated>1720854394906</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="timed attempt: 22 min">
+      <option name="closed" value="true" />
+      <created>1720855717033</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1720855717033</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="refactor: push validation logic to Account" />
     <MESSAGE value="refactor: move transfer strategy synchronization to infra&#10;misc: playing around with readWriteLock/lockFree account models" />
     <MESSAGE value="add: optimistic/pessimistic transfer implementation" />
     <MESSAGE value="add: a stronger implementation of the pessimistic lock strategy" />
@@ -505,7 +508,8 @@
     <MESSAGE value="timed attempt to refactor by an optimistic approach" />
     <MESSAGE value="add: global lock manager to avoid locking directly on accounts" />
     <MESSAGE value="start over" />
-    <option name="LAST_COMMIT_MESSAGE" value="start over" />
+    <MESSAGE value="timed attempt: 22 min" />
+    <option name="LAST_COMMIT_MESSAGE" value="timed attempt: 22 min" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -514,6 +518,11 @@
           <url>file://$PROJECT_DIR$/src/main/java/com/example/simple/bank/repository/pessimistic/SynchronizationOnAccountsAccountRepository.java</url>
           <line>34</line>
           <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/example/simple/Account.java</url>
+          <line>30</line>
+          <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
