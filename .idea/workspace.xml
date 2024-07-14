@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="timed attemp: 10min, no concurrent transfer">
+    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="timed attempt: +4 min for synchronize transfer method (pessimistic approach)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/simple/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/Account.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/simple/AccountId.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/AccountId.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/example/simple/MoneyTransferTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/example/simple/MoneyTransferTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -211,7 +209,7 @@
       <workItem from="1720707232576" duration="5048000" />
       <workItem from="1720854163984" duration="5998000" />
       <workItem from="1720871044586" duration="2394000" />
-      <workItem from="1720959455111" duration="2603000" />
+      <workItem from="1720959455111" duration="2866000" />
     </task>
     <task id="LOCAL-00001" summary="refactor: introduce repository pattern&#10;add: inmemory concurrent hash map implementation">
       <option name="closed" value="true" />
@@ -549,11 +547,18 @@
       <option name="project" value="LOCAL" />
       <updated>1720963403049</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="timed attempt: +4 min for synchronize transfer method (pessimistic approach)">
+      <option name="closed" value="true" />
+      <created>1720963638647</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1720963638647</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add: global lock manager thread-safety by encapsulating lock handling" />
     <MESSAGE value="add: repository abstraction" />
     <MESSAGE value="refactor: push transactional responsibility to repository" />
     <MESSAGE value="refactor: extracting the pessimistic strategies to their own repository implementations" />
@@ -578,7 +583,8 @@
     <MESSAGE value="timed attempt: 12min unfinished" />
     <MESSAGE value="start over" />
     <MESSAGE value="timed attemp: 10min, no concurrent transfer" />
-    <option name="LAST_COMMIT_MESSAGE" value="timed attemp: 10min, no concurrent transfer" />
+    <MESSAGE value="timed attempt: +4 min for synchronize transfer method (pessimistic approach)" />
+    <option name="LAST_COMMIT_MESSAGE" value="timed attempt: +4 min for synchronize transfer method (pessimistic approach)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
