@@ -18,9 +18,22 @@ public class Account {
 
     public void transfer(Account recipient, Money transferFunds) {
 
-        this.withdraw(transferFunds);
-        recipient.deposit(transferFunds);
+        if (this.id.compareTo(recipient.id) > 0) {
+            synchronized (this) {
+                synchronized (recipient) {
+                    this.withdraw(transferFunds);
+                    recipient.deposit(transferFunds);
+                }
+            }
 
+        } else {
+            synchronized (recipient) {
+                synchronized (this) {
+                    this.withdraw(transferFunds);
+                    recipient.deposit(transferFunds);
+                }
+            }
+        }
     }
 
     private void withdraw(Money transferFunds) {
