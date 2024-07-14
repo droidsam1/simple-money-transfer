@@ -8,6 +8,7 @@
       <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/Account.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/AccountId.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/Money.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/exceptions/InsufficientFundsException.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/exceptions/MisMatchCurrencyException.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/test/java/com/example/simple/MoneyTransferTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
@@ -100,7 +101,7 @@
       <recent name="org.example.bank.infraestructure.account.repository" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.MoneyTransferTest.shouldAccountsHaveAnInitialBalance">
+  <component name="RunManager" selected="JUnit.MoneyTransferTest">
     <configuration name="MoneyTransferTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="simple-bank" />
       <extension name="coverage">
@@ -182,8 +183,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.MoneyTransferTest.shouldAccountsHaveAnInitialBalance" />
         <item itemvalue="JUnit.MoneyTransferTest" />
+        <item itemvalue="JUnit.MoneyTransferTest.shouldAccountsHaveAnInitialBalance" />
         <item itemvalue="JUnit.MoneyTransferTest.shouldTransferMoneyFromDifferentAccount" />
         <item itemvalue="JUnit.MoneyTransferTest.shouldTransferFromAccountToAccount" />
         <item itemvalue="JUnit.MoneyTransferTest.shouldNotTransferNegativeAmounts" />
@@ -213,7 +214,7 @@
       <workItem from="1720707232576" duration="5048000" />
       <workItem from="1720854163984" duration="5998000" />
       <workItem from="1720871044586" duration="2394000" />
-      <workItem from="1720959455111" duration="1677000" />
+      <workItem from="1720959455111" duration="2315000" />
     </task>
     <task id="LOCAL-00001" summary="refactor: introduce repository pattern&#10;add: inmemory concurrent hash map implementation">
       <option name="closed" value="true" />
@@ -527,11 +528,26 @@
       <option name="project" value="LOCAL" />
       <updated>1720959516833</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="timed attempt: 12min unfinished">
+      <option name="closed" value="true" />
+      <created>1720962720195</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1720962720195</updated>
+    </task>
+    <task id="LOCAL-00041" summary="start over">
+      <option name="closed" value="true" />
+      <created>1720962740764</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1720962740764</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add: timed implementation, around 50min, too slow" />
     <MESSAGE value="wip: playing around with the concept of distributed locking mechanism" />
     <MESSAGE value="add: global lock manager thread-safety by encapsulating lock handling" />
     <MESSAGE value="add: repository abstraction" />
@@ -555,6 +571,7 @@
     <MESSAGE value="add convoluted test concurrent with retries" />
     <MESSAGE value="add convoluted test concurrent with retries, 10min" />
     <MESSAGE value="add another pessimistic approach with a global lock manager, 10 min" />
+    <MESSAGE value="timed attempt: 12min unfinished" />
     <MESSAGE value="start over" />
     <option name="LAST_COMMIT_MESSAGE" value="start over" />
   </component>
