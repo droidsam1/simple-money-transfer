@@ -21,7 +21,7 @@ public record Money(BigDecimal amount, Currency currency) {
         }
     }
 
-    public Money deposit(Money funds) {
+    public Money add(Money funds) {
         validateSameCurrency(funds);
         return new Money(amount.add(funds.amount), this.currency);
     }
