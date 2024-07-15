@@ -1,8 +1,8 @@
-package org.example.bank.domain.exceptions;
+package com.example.simple.exceptions;
 
 public class InsufficientFundsException extends IllegalStateException {
 
     public InsufficientFundsException() {
-        super("Insufficient funds");
+        super("Insufficient Funds");
     }
 }
