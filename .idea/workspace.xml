@@ -4,7 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="timed attempt: +5min to refactor to an optimistic transfer approach">
+    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="start over">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/Account.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/AccountId.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/Money.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/exceptions/InsufficientFundsException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/exceptions/MismatchCurrencyException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/exceptions/NegativeAmountTransferException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/example/simple/MoneyTransferTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -68,7 +75,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "SONARLINT_PRECOMMIT_ANALYSIS": "true",
-    "git-widget-placeholder": "009",
+    "git-widget-placeholder": "010",
     "kotlin-language-version-configured": "true",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
@@ -211,14 +218,7 @@
       <workItem from="1720959455111" duration="4364000" />
       <workItem from="1721065835126" duration="2925000" />
       <workItem from="1721203839660" duration="3817000" />
-    </task>
-    <task id="LOCAL-00003" summary="refactor: extract account existence validation to domain&#10;add: get account method to repository">
-      <option name="closed" value="true" />
-      <created>1719608161619</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1719608161619</updated>
+      <workItem from="1721238511456" duration="758000" />
     </task>
     <task id="LOCAL-00004" summary="fix: serialized strategy to rely on synchronized block instead of atomic internal reference, the latter gets better performance but it is not a pure serialization">
       <option name="closed" value="true" />
@@ -604,7 +604,15 @@
       <option name="project" value="LOCAL" />
       <updated>1721206716585</updated>
     </task>
-    <option name="localTasksCounter" value="52" />
+    <task id="LOCAL-00052" summary="start over">
+      <option name="closed" value="true" />
+      <created>1721238583050</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1721238583051</updated>
+    </task>
+    <option name="localTasksCounter" value="53" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -628,12 +636,12 @@
     <MESSAGE value="timed attempt: +4 min for optimistic transfer approach" />
     <MESSAGE value="timed attempt: 17 min for transfer + pessimistic approach impl" />
     <MESSAGE value="timed attempt: +3 min for optimistic impl" />
-    <MESSAGE value="start over" />
     <MESSAGE value="timed attempt: first approach, not thread-safe" />
     <MESSAGE value="timed attempt: 11 min first approach, not thread-safe" />
     <MESSAGE value="timed attempt: +4 min for a concurrent pessimistic transfer approach" />
     <MESSAGE value="timed attempt: +5min to refactor to an optimistic transfer approach" />
-    <option name="LAST_COMMIT_MESSAGE" value="timed attempt: +5min to refactor to an optimistic transfer approach" />
+    <MESSAGE value="start over" />
+    <option name="LAST_COMMIT_MESSAGE" value="start over" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
