@@ -23,18 +23,19 @@ public class Account {
     public void transfer(Account recipient, Money funds) {
         validateFundsArePositive(funds);
 
-        while (true) {
-            Money expectedSenderBalance = this.balance.get();
-            Money expectedRecipientBalance = recipient.getBalance();
-
-            if (this.balance.compareAndSet(expectedSenderBalance, expectedSenderBalance.subtract(funds))) {
-                if (recipient.balance.compareAndSet(expectedRecipientBalance, expectedRecipientBalance.add(funds))) {
-                    break;
-                } else {
-                    //rollback
-                    this.deposit(funds);
-                }
-            }
+        if (this.id.compareTo(recipient.id) > 0) {
+            GlobalLockManager.getInstance().getLock(this.id).lock();
+            GlobalLockManager.getInstance().getLock(recipient.id).lock();
+        } else {
+            GlobalLockManager.getInstance().getLock(recipient.id).lock();
+            GlobalLockManager.getInstance().getLock(this.id).lock();
+        }
+        try {
+            this.withdraw(funds);
+            recipient.deposit(funds);
+        } finally {
+            GlobalLockManager.getInstance().getLock(recipient.id).unlock();
+            GlobalLockManager.getInstance().getLock(this.id).unlock();
         }
     }
 
