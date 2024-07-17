@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="refactor: extract to another implementation of account id to introduce malfunctioning accounts id">
+    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="timed attempt: +7 min to refactor to global lock manager">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/infraestructure/account/repository/inmemory/strategy/RevisitedPessimisticLockTransferStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/infraestructure/account/repository/inmemory/strategy/RevisitedPessimisticLockTransferStrategy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/simple/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/Account.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/simple/GlobalLockManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/GlobalLockManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,8 +17,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Record" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -32,7 +34,7 @@
 }</component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/droidsam1/simple-money-transfer.git&quot;,
+    &quot;url&quot;: &quot;git@github.com:droidsam1/simple-money-transfer.git&quot;,
     &quot;accountId&quot;: &quot;86bd3edc-843a-40ad-b52e-b5739c3f1eb0&quot;
   }
 }</component>
@@ -48,28 +50,45 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "JUnit.All in simple-bank.executor": "Run",
+    "JUnit.BankTest (1).executor": "Run",
     "JUnit.BankTest.compareTransferMethodsEfficiency.executor": "Run",
     "JUnit.BankTest.executor": "Run",
+    "JUnit.BankTest.shouldFailTransferIfUnknownAccount.executor": "Run",
+    "JUnit.BankTest.shouldLeadToIncorrectFinalBalanceDueToRaceCondition.executor": "Run",
     "JUnit.BankTest.shouldNotAllowTransfersWhenDepositorHasInsufficientFunds.executor": "Run",
     "JUnit.BankTest.shouldNotAllowTransfersWithNegativeAmounts.executor": "Run",
+    "JUnit.BankTest.shouldTransferFromMultipleAccounts.executor": "Run",
+    "JUnit.BankTest.shouldTransferFromMultipleAccountsAndMultipleBanks.executor": "Run",
     "JUnit.BankTest.shouldTransferMoneyWhenCornerCaseOfSameCompare.executor": "Run",
     "JUnit.BankTest.shouldTransferMoneyWhenLockOrderingFailsToDetermineWithAccountToLockFirst.executor": "Run",
+    "JUnit.MoneyTransferTest.executor": "Run",
+    "JUnit.MoneyTransferTest.shouldAccountsHaveAnInitialBalance.executor": "Run",
+    "JUnit.MoneyTransferTest.shouldNotTransferNegativeAmounts.executor": "Run",
+    "JUnit.MoneyTransferTest.shouldTransferFromAccountToAccount.executor": "Run",
+    "JUnit.MoneyTransferTest.shouldTransferMoneyFromDifferentAccount.executor": "Run",
+    "JUnit.MoneyTransferTest.testAccountTransferDeadlock.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "SONARLINT_PRECOMMIT_ANALYSIS": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "010",
     "kotlin-language-version-configured": "true",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.3954023",
-    "settings.editor.selected.configurable": "reference.settingsdialog.IDE.editor.colors.Console Font"
+    "settings.editor.selected.configurable": "settings.codegpt.services.codegpt"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.example.simple.exceptions" />
+      <recent name="com.example.simple" />
+      <recent name="com.example.simple.bank.exceptions" />
+      <recent name="com.example.simple.bank" />
       <recent name="org.example.bank.domain.exceptions" />
-      <recent name="org.example.bank.infraestructure.account.repository" />
-      <recent name="org.example.bank.domain.account.repository" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.example.simple.bank.exceptions" />
+      <recent name="com.example.simple.bank" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="org.example.bank.domain.account" />
@@ -78,81 +97,81 @@
       <recent name="org.example.bank.infraestructure.account.repository" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.BankTest">
-    <configuration name="BankTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.MoneyTransferTest">
+    <configuration name="MoneyTransferTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="simple-bank" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.example.bank.domain.*" />
+          <option name="PATTERN" value="com.example.simple.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="org.example.bank.domain" />
-      <option name="MAIN_CLASS_NAME" value="org.example.bank.domain.BankTest" />
+      <option name="PACKAGE_NAME" value="com.example.simple" />
+      <option name="MAIN_CLASS_NAME" value="com.example.simple.MoneyTransferTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="BankTest.shouldNotAllowTransfersWhenDepositorHasInsufficientFunds" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="MoneyTransferTest.shouldAccountsHaveAnInitialBalance" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="simple-bank" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.example.bank.domain.*" />
+          <option name="PATTERN" value="com.example.simple.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="org.example.bank.domain" />
-      <option name="MAIN_CLASS_NAME" value="org.example.bank.domain.BankTest" />
-      <option name="METHOD_NAME" value="shouldNotAllowTransfersWhenDepositorHasInsufficientFunds" />
+      <option name="PACKAGE_NAME" value="com.example.simple" />
+      <option name="MAIN_CLASS_NAME" value="com.example.simple.MoneyTransferTest" />
+      <option name="METHOD_NAME" value="shouldAccountsHaveAnInitialBalance" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="BankTest.shouldNotAllowTransfersWithNegativeAmounts" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="MoneyTransferTest.shouldNotTransferNegativeAmounts" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="simple-bank" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.example.bank.domain.*" />
+          <option name="PATTERN" value="com.example.simple.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="org.example.bank.domain" />
-      <option name="MAIN_CLASS_NAME" value="org.example.bank.domain.BankTest" />
-      <option name="METHOD_NAME" value="shouldNotAllowTransfersWithNegativeAmounts" />
+      <option name="PACKAGE_NAME" value="com.example.simple" />
+      <option name="MAIN_CLASS_NAME" value="com.example.simple.MoneyTransferTest" />
+      <option name="METHOD_NAME" value="shouldNotTransferNegativeAmounts" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="BankTest.shouldTransferMoneyWhenCornerCaseOfSameCompare" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="MoneyTransferTest.shouldTransferFromAccountToAccount" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="simple-bank" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.example.bank.domain.*" />
+          <option name="PATTERN" value="com.example.simple.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="org.example.bank.domain" />
-      <option name="MAIN_CLASS_NAME" value="org.example.bank.domain.BankTest" />
-      <option name="METHOD_NAME" value="shouldTransferMoneyWhenCornerCaseOfSameCompare(org.example.bank.domain.Bank)" />
+      <option name="PACKAGE_NAME" value="com.example.simple" />
+      <option name="MAIN_CLASS_NAME" value="com.example.simple.MoneyTransferTest" />
+      <option name="METHOD_NAME" value="shouldTransferFromAccountToAccount" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="BankTest.shouldTransferMoneyWhenLockOrderingFailsToDetermineWithAccountToLockFirst" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="MoneyTransferTest.shouldTransferMoneyFromDifferentAccount" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="simple-bank" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.example.bank.domain.*" />
+          <option name="PATTERN" value="com.example.simple.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="org.example.bank.domain" />
-      <option name="MAIN_CLASS_NAME" value="org.example.bank.domain.BankTest" />
-      <option name="METHOD_NAME" value="shouldTransferMoneyWhenLockOrderingFailsToDetermineWithAccountToLockFirst(org.example.bank.domain.Bank)" />
+      <option name="PACKAGE_NAME" value="com.example.simple" />
+      <option name="MAIN_CLASS_NAME" value="com.example.simple.MoneyTransferTest" />
+      <option name="METHOD_NAME" value="shouldTransferMoneyFromDifferentAccount" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -160,11 +179,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.BankTest" />
-        <item itemvalue="JUnit.BankTest.shouldTransferMoneyWhenLockOrderingFailsToDetermineWithAccountToLockFirst" />
-        <item itemvalue="JUnit.BankTest.shouldTransferMoneyWhenCornerCaseOfSameCompare" />
-        <item itemvalue="JUnit.BankTest.shouldNotAllowTransfersWhenDepositorHasInsufficientFunds" />
-        <item itemvalue="JUnit.BankTest.shouldNotAllowTransfersWithNegativeAmounts" />
+        <item itemvalue="JUnit.MoneyTransferTest" />
+        <item itemvalue="JUnit.MoneyTransferTest.shouldAccountsHaveAnInitialBalance" />
+        <item itemvalue="JUnit.MoneyTransferTest.shouldTransferMoneyFromDifferentAccount" />
+        <item itemvalue="JUnit.MoneyTransferTest.shouldTransferFromAccountToAccount" />
+        <item itemvalue="JUnit.MoneyTransferTest.shouldNotTransferNegativeAmounts" />
       </list>
     </recent_temporary>
   </component>
@@ -185,62 +204,16 @@
       <updated>1719605402858</updated>
       <workItem from="1719605403978" duration="2778000" />
       <workItem from="1719843560265" duration="5989000" />
-    </task>
-    <task id="LOCAL-00001" summary="refactor: introduce repository pattern&#10;add: inmemory concurrent hash map implementation">
-      <option name="closed" value="true" />
-      <created>1719607755036</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1719607755036</updated>
-    </task>
-    <task id="LOCAL-00002" summary="refactor: introduce repository pattern&#10;add: inmemory concurrent hash map implementation&#10;refactor: strengthen concurrency in comparative test">
-      <option name="closed" value="true" />
-      <created>1719607794550</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1719607794550</updated>
-    </task>
-    <task id="LOCAL-00003" summary="refactor: extract account existence validation to domain&#10;add: get account method to repository">
-      <option name="closed" value="true" />
-      <created>1719608161619</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1719608161619</updated>
-    </task>
-    <task id="LOCAL-00004" summary="fix: serialized strategy to rely on synchronized block instead of atomic internal reference, the latter gets better performance but it is not a pure serialization">
-      <option name="closed" value="true" />
-      <created>1719671868233</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1719671868233</updated>
-    </task>
-    <task id="LOCAL-00005" summary="fix: push synchronization to account class so OptimisticLock does not lock in advance">
-      <option name="closed" value="true" />
-      <created>1719673012324</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1719673012324</updated>
-    </task>
-    <task id="LOCAL-00006" summary="add: validation, does not allow negative transfers">
-      <option name="closed" value="true" />
-      <created>1719673381868</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1719673381868</updated>
-    </task>
-    <task id="LOCAL-00007" summary="add: insufficient funds validation&#10;refactor: replace compareAndSet with compareAndSubtract and compareAndAdd to push validation logic into Account">
-      <option name="closed" value="true" />
-      <created>1719674578871</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1719674578871</updated>
+      <workItem from="1720441368011" duration="7639000" />
+      <workItem from="1720510795533" duration="17917000" />
+      <workItem from="1720626458394" duration="4636000" />
+      <workItem from="1720707232576" duration="5048000" />
+      <workItem from="1720854163984" duration="5998000" />
+      <workItem from="1720871044586" duration="2394000" />
+      <workItem from="1720959455111" duration="4364000" />
+      <workItem from="1721065835126" duration="2925000" />
+      <workItem from="1721203839660" duration="3817000" />
+      <workItem from="1721238511456" duration="2023000" />
     </task>
     <task id="LOCAL-00008" summary="refactor: push validation logic to Account">
       <option name="closed" value="true" />
@@ -266,27 +239,423 @@
       <option name="project" value="LOCAL" />
       <updated>1720367587349</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="refactor: add missing validation">
+      <option name="closed" value="true" />
+      <created>1720367922958</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1720367922958</updated>
+    </task>
+    <task id="LOCAL-00012" summary="start over">
+      <option name="closed" value="true" />
+      <created>1720444255699</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1720444255699</updated>
+    </task>
+    <task id="LOCAL-00013" summary="add: timed implementation, around 50min, too slow">
+      <option name="closed" value="true" />
+      <created>1720449133221</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1720449133221</updated>
+    </task>
+    <task id="LOCAL-00014" summary="wip: playing around with the concept of distributed locking mechanism">
+      <option name="closed" value="true" />
+      <created>1720454944351</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1720454944351</updated>
+    </task>
+    <task id="LOCAL-00015" summary="add: global lock manager thread-safety by encapsulating lock handling">
+      <option name="closed" value="true" />
+      <created>1720511890279</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1720511890279</updated>
+    </task>
+    <task id="LOCAL-00016" summary="add: repository abstraction">
+      <option name="closed" value="true" />
+      <created>1720512231778</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1720512231778</updated>
+    </task>
+    <task id="LOCAL-00017" summary="refactor: push transactional responsibility to repository">
+      <option name="closed" value="true" />
+      <created>1720514904076</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1720514904076</updated>
+    </task>
+    <task id="LOCAL-00018" summary="refactor: extracting the pessimistic strategies to their own repository implementations">
+      <option name="closed" value="true" />
+      <created>1720514983729</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1720514983729</updated>
+    </task>
+    <task id="LOCAL-00019" summary="refactor: extracting the optimistic strategy to its own repository implementation">
+      <option name="closed" value="true" />
+      <created>1720519629853</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1720519629853</updated>
+    </task>
+    <task id="LOCAL-00020" summary="refactor: optimistic approach to avoid livelock">
+      <option name="closed" value="true" />
+      <created>1720526685130</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1720526685130</updated>
+    </task>
+    <task id="LOCAL-00021" summary="refactor: remove useless return value">
+      <option name="closed" value="true" />
+      <created>1720526904135</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1720526904135</updated>
+    </task>
+    <task id="LOCAL-00022" summary="refactor: parameterized test for all implementations">
+      <option name="closed" value="true" />
+      <created>1720527814078</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1720527814079</updated>
+    </task>
+    <task id="LOCAL-00023" summary="start over">
+      <option name="closed" value="true" />
+      <created>1720531632084</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1720531632084</updated>
+    </task>
+    <task id="LOCAL-00024" summary="timed implementation: 30 min, simplest without bank abstraction">
+      <option name="closed" value="true" />
+      <created>1720531800619</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1720531800619</updated>
+    </task>
+    <task id="LOCAL-00025" summary="start over">
+      <option name="closed" value="true" />
+      <created>1720626521522</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1720626521522</updated>
+    </task>
+    <task id="LOCAL-00026" summary="timed attempt: 25min, no bank abstraction">
+      <option name="closed" value="true" />
+      <created>1720628284212</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1720628284212</updated>
+    </task>
+    <task id="LOCAL-00027" summary="replace the transfer implementation by a lock free implementation">
+      <option name="closed" value="true" />
+      <created>1720629786111</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1720629786111</updated>
+    </task>
+    <task id="LOCAL-00028" summary="add: simple mechanism to avoid livelock in optimistic implementation">
+      <option name="closed" value="true" />
+      <created>1720630275194</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1720630275194</updated>
+    </task>
+    <task id="LOCAL-00029" summary="start over">
+      <option name="closed" value="true" />
+      <created>1720707710735</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1720707710735</updated>
+    </task>
+    <task id="LOCAL-00030" summary="timed attempt: 25 min">
+      <option name="closed" value="true" />
+      <created>1720709219260</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1720709219260</updated>
+    </task>
+    <task id="LOCAL-00031" summary="timed attempt to refactor by an optimistic approach">
+      <option name="closed" value="true" />
+      <created>1720709803025</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1720709803025</updated>
+    </task>
+    <task id="LOCAL-00032" summary="add: global lock manager to avoid locking directly on accounts">
+      <option name="closed" value="true" />
+      <created>1720711292080</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1720711292080</updated>
+    </task>
+    <task id="LOCAL-00033" summary="start over">
+      <option name="closed" value="true" />
+      <created>1720854394906</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1720854394906</updated>
+    </task>
+    <task id="LOCAL-00034" summary="timed attempt: 22 min">
+      <option name="closed" value="true" />
+      <created>1720855717033</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1720855717033</updated>
+    </task>
+    <task id="LOCAL-00035" summary="add a concurrent test, 3 min">
+      <option name="closed" value="true" />
+      <created>1720855908914</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1720855908914</updated>
+    </task>
+    <task id="LOCAL-00036" summary="add alternative optimistic transfer approach, 9min">
+      <option name="closed" value="true" />
+      <created>1720856474061</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1720856474061</updated>
+    </task>
+    <task id="LOCAL-00037" summary="add convoluted test concurrent with retries, 10min">
+      <option name="closed" value="true" />
+      <created>1720857050688</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1720857050688</updated>
+    </task>
+    <task id="LOCAL-00038" summary="add another pessimistic approach with a global lock manager, 10 min">
+      <option name="closed" value="true" />
+      <created>1720857762413</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1720857762413</updated>
+    </task>
+    <task id="LOCAL-00039" summary="start over">
+      <option name="closed" value="true" />
+      <created>1720959516833</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1720959516833</updated>
+    </task>
+    <task id="LOCAL-00040" summary="timed attempt: 12min unfinished">
+      <option name="closed" value="true" />
+      <created>1720962720195</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1720962720195</updated>
+    </task>
+    <task id="LOCAL-00041" summary="start over">
+      <option name="closed" value="true" />
+      <created>1720962740764</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1720962740764</updated>
+    </task>
+    <task id="LOCAL-00042" summary="timed attemp: 10min, no concurrent transfer">
+      <option name="closed" value="true" />
+      <created>1720963403049</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1720963403049</updated>
+    </task>
+    <task id="LOCAL-00043" summary="timed attempt: +4 min for synchronize transfer method (pessimistic approach)">
+      <option name="closed" value="true" />
+      <created>1720963638647</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1720963638647</updated>
+    </task>
+    <task id="LOCAL-00044" summary="timed attempt: +4 min for optimistic transfer approach">
+      <option name="closed" value="true" />
+      <created>1720963922862</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1720963922862</updated>
+    </task>
+    <task id="LOCAL-00045" summary="timed attempt: 17 min for transfer + pessimistic approach impl">
+      <option name="closed" value="true" />
+      <created>1721071331278</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1721071331278</updated>
+    </task>
+    <task id="LOCAL-00046" summary="timed attempt: +3 min for optimistic impl">
+      <option name="closed" value="true" />
+      <created>1721071550215</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1721071550215</updated>
+    </task>
+    <task id="LOCAL-00047" summary="start over">
+      <option name="closed" value="true" />
+      <created>1721205437245</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1721205437245</updated>
+    </task>
+    <task id="LOCAL-00048" summary="timed attempt: first approach, not thread-safe">
+      <option name="closed" value="true" />
+      <created>1721206118323</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1721206118323</updated>
+    </task>
+    <task id="LOCAL-00049" summary="timed attempt: 11 min first approach, not thread-safe">
+      <option name="closed" value="true" />
+      <created>1721206141767</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1721206141767</updated>
+    </task>
+    <task id="LOCAL-00050" summary="timed attempt: +4 min for a concurrent pessimistic transfer approach">
+      <option name="closed" value="true" />
+      <created>1721206390158</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1721206390158</updated>
+    </task>
+    <task id="LOCAL-00051" summary="timed attempt: +5min to refactor to an optimistic transfer approach">
+      <option name="closed" value="true" />
+      <created>1721206716585</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1721206716585</updated>
+    </task>
+    <task id="LOCAL-00052" summary="start over">
+      <option name="closed" value="true" />
+      <created>1721238583050</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1721238583051</updated>
+    </task>
+    <task id="LOCAL-00053" summary="timed attempt: 10 min to implement transfer without concurrency control">
+      <option name="closed" value="true" />
+      <created>1721239299985</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1721239299985</updated>
+    </task>
+    <task id="LOCAL-00054" summary="timed attempt: +5 min to implement pessimistic transfer approach">
+      <option name="closed" value="true" />
+      <created>1721239602989</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1721239602989</updated>
+    </task>
+    <task id="LOCAL-00055" summary="timed attempt: +4 min to implement optimistic transfer approach">
+      <option name="closed" value="true" />
+      <created>1721239852164</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1721239852164</updated>
+    </task>
+    <task id="LOCAL-00056" summary="timed attempt: +7 min to refactor to global lock manager">
+      <option name="closed" value="true" />
+      <created>1721240303782</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1721240303782</updated>
+    </task>
+    <option name="localTasksCounter" value="57" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="remove useless methods" />
-    <MESSAGE value="refactor: introduce repository pattern&#10;add: inmemory concurrent hash map implementation" />
-    <MESSAGE value="refactor: introduce repository pattern&#10;add: inmemory concurrent hash map implementation&#10;refactor: strengthen concurrency in comparative test" />
-    <MESSAGE value="refactor: extract account existence validation to domain&#10;add: get account method to repository" />
-    <MESSAGE value="fix: serialized strategy to rely on synchronized block instead of atomic internal reference, the latter gets better performance but it is not a pure serialization" />
-    <MESSAGE value="fix: push synchronization to account class so OptimisticLock does not lock in advance" />
-    <MESSAGE value="add: validation, does not allow negative transfers" />
-    <MESSAGE value="add: insufficient funds validation&#10;refactor: replace compareAndSet with compareAndSubtract and compareAndAdd to push validation logic into Account" />
-    <MESSAGE value="refactor: push validation logic to Account" />
-    <MESSAGE value="refactor: move transfer strategy synchronization to infra&#10;misc: playing around with readWriteLock/lockFree account models" />
-    <MESSAGE value="add: optimistic/pessimistic transfer implementation" />
-    <MESSAGE value="add: a stronger implementation of the pessimistic lock strategy" />
-    <MESSAGE value="refactor: extract to another implementation of account id to introduce malfunctioning accounts id" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor: extract to another implementation of account id to introduce malfunctioning accounts id" />
+    <MESSAGE value="add: simple mechanism to avoid livelock in optimistic implementation" />
+    <MESSAGE value="timed attempt: 25 min" />
+    <MESSAGE value="timed attempt to refactor by an optimistic approach" />
+    <MESSAGE value="add: global lock manager to avoid locking directly on accounts" />
+    <MESSAGE value="timed attempt: 22 min" />
+    <MESSAGE value="add a concurrent test, 3 min" />
+    <MESSAGE value="add alternative optimistic transfer approach, 9min" />
+    <MESSAGE value="add convoluted test concurrent with retries" />
+    <MESSAGE value="add convoluted test concurrent with retries, 10min" />
+    <MESSAGE value="add another pessimistic approach with a global lock manager, 10 min" />
+    <MESSAGE value="timed attempt: 12min unfinished" />
+    <MESSAGE value="timed attemp: 10min, no concurrent transfer" />
+    <MESSAGE value="timed attempt: +4 min for synchronize transfer method (pessimistic approach)" />
+    <MESSAGE value="timed attempt: +4 min for optimistic transfer approach" />
+    <MESSAGE value="timed attempt: 17 min for transfer + pessimistic approach impl" />
+    <MESSAGE value="timed attempt: +3 min for optimistic impl" />
+    <MESSAGE value="timed attempt: first approach, not thread-safe" />
+    <MESSAGE value="timed attempt: 11 min first approach, not thread-safe" />
+    <MESSAGE value="timed attempt: +4 min for a concurrent pessimistic transfer approach" />
+    <MESSAGE value="timed attempt: +5min to refactor to an optimistic transfer approach" />
+    <MESSAGE value="start over" />
+    <MESSAGE value="timed attempt: 10 min to implement transfer without concurrency control" />
+    <MESSAGE value="timed attempt: +5 min to implement pessimistic transfer approach" />
+    <MESSAGE value="timed attempt: +4 min to implement optimistic transfer approach" />
+    <MESSAGE value="timed attempt: +7 min to refactor to global lock manager" />
+    <option name="LAST_COMMIT_MESSAGE" value="timed attempt: +7 min to refactor to global lock manager" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/example/simple/bank/repository/pessimistic/SynchronizationOnAccountsAccountRepository.java</url>
+          <line>34</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
     <select />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/simple_money_transfer$BankTest__1_.ic" NAME="BankTest (1) Coverage Results" MODIFIED="1720447597721" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>com.example.simple.bank.*</FILTER>
+    </SUITE>
   </component>
 </project>
