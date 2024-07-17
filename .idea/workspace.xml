@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="timed attempt: 10 min to implement transfer without concurrency control">
+    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="timed attempt: +5 min to implement pessimistic transfer approach">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/simple/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/Account.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/simple/AccountId.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/AccountId.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/example/simple/MoneyTransferTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/example/simple/MoneyTransferTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -214,15 +212,7 @@
       <workItem from="1720959455111" duration="4364000" />
       <workItem from="1721065835126" duration="2925000" />
       <workItem from="1721203839660" duration="3817000" />
-      <workItem from="1721238511456" duration="1057000" />
-    </task>
-    <task id="LOCAL-00005" summary="fix: push synchronization to account class so OptimisticLock does not lock in advance">
-      <option name="closed" value="true" />
-      <created>1719673012324</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1719673012324</updated>
+      <workItem from="1721238511456" duration="1301000" />
     </task>
     <task id="LOCAL-00006" summary="add: validation, does not allow negative transfers">
       <option name="closed" value="true" />
@@ -608,11 +598,18 @@
       <option name="project" value="LOCAL" />
       <updated>1721239299985</updated>
     </task>
-    <option name="localTasksCounter" value="54" />
+    <task id="LOCAL-00054" summary="timed attempt: +5 min to implement pessimistic transfer approach">
+      <option name="closed" value="true" />
+      <created>1721239602989</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1721239602989</updated>
+    </task>
+    <option name="localTasksCounter" value="55" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="timed implementation: 30 min, simplest without bank abstraction" />
     <MESSAGE value="timed attempt: 25min, no bank abstraction" />
     <MESSAGE value="replace the transfer implementation by a lock free implementation" />
     <MESSAGE value="add: simple mechanism to avoid livelock in optimistic implementation" />
@@ -637,7 +634,8 @@
     <MESSAGE value="timed attempt: +5min to refactor to an optimistic transfer approach" />
     <MESSAGE value="start over" />
     <MESSAGE value="timed attempt: 10 min to implement transfer without concurrency control" />
-    <option name="LAST_COMMIT_MESSAGE" value="timed attempt: 10 min to implement transfer without concurrency control" />
+    <MESSAGE value="timed attempt: +5 min to implement pessimistic transfer approach" />
+    <option name="LAST_COMMIT_MESSAGE" value="timed attempt: +5 min to implement pessimistic transfer approach" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
