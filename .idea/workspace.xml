@@ -4,14 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="timed attempt: +3 min for optimistic impl">
+    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="start over">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/Account.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/AccountId.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/Money.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/exceptions/InsufficientFundsException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/exceptions/MisMatchCurrencyException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/example/simple/MoneyTransferTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/simple/Account.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/simple/AccountId.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/simple/Money.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/simple/exceptions/InsufficientFundsException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/simple/exceptions/MismatchCurrencyException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/example/simple/MoneyTransferTest.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -216,7 +216,7 @@
       <workItem from="1720871044586" duration="2394000" />
       <workItem from="1720959455111" duration="4364000" />
       <workItem from="1721065835126" duration="2925000" />
-      <workItem from="1721203839660" duration="458000" />
+      <workItem from="1721203839660" duration="1679000" />
     </task>
     <task id="LOCAL-00001" summary="refactor: introduce repository pattern&#10;add: inmemory concurrent hash map implementation">
       <option name="closed" value="true" />
@@ -586,7 +586,15 @@
       <option name="project" value="LOCAL" />
       <updated>1721071550215</updated>
     </task>
-    <option name="localTasksCounter" value="47" />
+    <task id="LOCAL-00047" summary="start over">
+      <option name="closed" value="true" />
+      <created>1721205437245</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1721205437245</updated>
+    </task>
+    <option name="localTasksCounter" value="48" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -609,13 +617,13 @@
     <MESSAGE value="add convoluted test concurrent with retries, 10min" />
     <MESSAGE value="add another pessimistic approach with a global lock manager, 10 min" />
     <MESSAGE value="timed attempt: 12min unfinished" />
-    <MESSAGE value="start over" />
     <MESSAGE value="timed attemp: 10min, no concurrent transfer" />
     <MESSAGE value="timed attempt: +4 min for synchronize transfer method (pessimistic approach)" />
     <MESSAGE value="timed attempt: +4 min for optimistic transfer approach" />
     <MESSAGE value="timed attempt: 17 min for transfer + pessimistic approach impl" />
     <MESSAGE value="timed attempt: +3 min for optimistic impl" />
-    <option name="LAST_COMMIT_MESSAGE" value="timed attempt: +3 min for optimistic impl" />
+    <MESSAGE value="start over" />
+    <option name="LAST_COMMIT_MESSAGE" value="start over" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
