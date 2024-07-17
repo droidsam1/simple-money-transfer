@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="timed attempt: +4 min for a concurrent pessimistic transfer approach">
+    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="timed attempt: +5min to refactor to an optimistic transfer approach">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/simple/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/Account.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -211,15 +210,7 @@
       <workItem from="1720871044586" duration="2394000" />
       <workItem from="1720959455111" duration="4364000" />
       <workItem from="1721065835126" duration="2925000" />
-      <workItem from="1721203839660" duration="2179000" />
-    </task>
-    <task id="LOCAL-00002" summary="refactor: introduce repository pattern&#10;add: inmemory concurrent hash map implementation&#10;refactor: strengthen concurrency in comparative test">
-      <option name="closed" value="true" />
-      <created>1719607794550</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1719607794550</updated>
+      <workItem from="1721203839660" duration="3817000" />
     </task>
     <task id="LOCAL-00003" summary="refactor: extract account existence validation to domain&#10;add: get account method to repository">
       <option name="closed" value="true" />
@@ -605,11 +596,18 @@
       <option name="project" value="LOCAL" />
       <updated>1721206390158</updated>
     </task>
-    <option name="localTasksCounter" value="51" />
+    <task id="LOCAL-00051" summary="timed attempt: +5min to refactor to an optimistic transfer approach">
+      <option name="closed" value="true" />
+      <created>1721206716585</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1721206716585</updated>
+    </task>
+    <option name="localTasksCounter" value="52" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="refactor: remove useless return value" />
     <MESSAGE value="refactor: parameterized test for all implementations" />
     <MESSAGE value="timed implementation: 30 min, simplest without bank abstraction" />
     <MESSAGE value="timed attempt: 25min, no bank abstraction" />
@@ -634,7 +632,8 @@
     <MESSAGE value="timed attempt: first approach, not thread-safe" />
     <MESSAGE value="timed attempt: 11 min first approach, not thread-safe" />
     <MESSAGE value="timed attempt: +4 min for a concurrent pessimistic transfer approach" />
-    <option name="LAST_COMMIT_MESSAGE" value="timed attempt: +4 min for a concurrent pessimistic transfer approach" />
+    <MESSAGE value="timed attempt: +5min to refactor to an optimistic transfer approach" />
+    <option name="LAST_COMMIT_MESSAGE" value="timed attempt: +5min to refactor to an optimistic transfer approach" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
