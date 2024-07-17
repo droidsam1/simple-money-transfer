@@ -22,21 +22,10 @@ public class Account {
 
     public void transfer(Account recipient, Money funds) {
         validateFundsArePositive(funds);
-
-        if (this.id.compareTo(recipient.id) > 0) {
-            GlobalLockManager.getInstance().getLock(this.id).lock();
-            GlobalLockManager.getInstance().getLock(recipient.id).lock();
-        } else {
-            GlobalLockManager.getInstance().getLock(recipient.id).lock();
-            GlobalLockManager.getInstance().getLock(this.id).lock();
-        }
-        try {
+        GlobalLockManager.getInstance().atomic(this.id, recipient.id, () -> {
             this.withdraw(funds);
             recipient.deposit(funds);
-        } finally {
-            GlobalLockManager.getInstance().getLock(recipient.id).unlock();
-            GlobalLockManager.getInstance().getLock(this.id).unlock();
-        }
+        });
     }
 
     private void deposit(Money funds) {
