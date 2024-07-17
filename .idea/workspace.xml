@@ -4,15 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="start over">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/Account.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/AccountId.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/Money.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/exceptions/InsufficientFundsException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/exceptions/MismatchCurrencyException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/exceptions/NegativeAmountTransferException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/example/simple/MoneyTransferTest.java" afterDir="false" />
+    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="timed attempt: 10 min to implement transfer without concurrency control">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/simple/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/Account.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/simple/AccountId.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/AccountId.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/example/simple/MoneyTransferTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/example/simple/MoneyTransferTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -218,15 +214,7 @@
       <workItem from="1720959455111" duration="4364000" />
       <workItem from="1721065835126" duration="2925000" />
       <workItem from="1721203839660" duration="3817000" />
-      <workItem from="1721238511456" duration="758000" />
-    </task>
-    <task id="LOCAL-00004" summary="fix: serialized strategy to rely on synchronized block instead of atomic internal reference, the latter gets better performance but it is not a pure serialization">
-      <option name="closed" value="true" />
-      <created>1719671868233</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1719671868233</updated>
+      <workItem from="1721238511456" duration="1057000" />
     </task>
     <task id="LOCAL-00005" summary="fix: push synchronization to account class so OptimisticLock does not lock in advance">
       <option name="closed" value="true" />
@@ -612,11 +600,18 @@
       <option name="project" value="LOCAL" />
       <updated>1721238583051</updated>
     </task>
-    <option name="localTasksCounter" value="53" />
+    <task id="LOCAL-00053" summary="timed attempt: 10 min to implement transfer without concurrency control">
+      <option name="closed" value="true" />
+      <created>1721239299985</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1721239299985</updated>
+    </task>
+    <option name="localTasksCounter" value="54" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="refactor: parameterized test for all implementations" />
     <MESSAGE value="timed implementation: 30 min, simplest without bank abstraction" />
     <MESSAGE value="timed attempt: 25min, no bank abstraction" />
     <MESSAGE value="replace the transfer implementation by a lock free implementation" />
@@ -641,7 +636,8 @@
     <MESSAGE value="timed attempt: +4 min for a concurrent pessimistic transfer approach" />
     <MESSAGE value="timed attempt: +5min to refactor to an optimistic transfer approach" />
     <MESSAGE value="start over" />
-    <option name="LAST_COMMIT_MESSAGE" value="start over" />
+    <MESSAGE value="timed attempt: 10 min to implement transfer without concurrency control" />
+    <option name="LAST_COMMIT_MESSAGE" value="timed attempt: 10 min to implement transfer without concurrency control" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
