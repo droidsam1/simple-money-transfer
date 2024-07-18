@@ -1,5 +1,6 @@
 package com.example.simple;
 
+import com.example.simple.exceptions.MismatchCurrencyException;
 import java.math.BigDecimal;
 import java.util.Currency;
 
@@ -17,7 +18,7 @@ public record Money(BigDecimal amount, Currency currency) {
 
     private void validateSameCurrency(Money funds) {
         if (currency != funds.currency) {
-            throw new IllegalArgumentException("Currency does not match");
+            throw new MismatchCurrencyException();
         }
     }
 

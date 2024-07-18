@@ -1,5 +1,7 @@
 package com.example.simple;
 
+import com.example.simple.exceptions.InsufficientFundsException;
+import com.example.simple.exceptions.NegativeTransferAttemptException;
 import java.math.BigDecimal;
 
 public class Account {
@@ -36,13 +38,13 @@ public class Account {
 
     private void validateEnoughFunds(Money funds) {
         if (this.balance().amount().compareTo(funds.amount()) < 0) {
-            throw new IllegalArgumentException("Insufficient funds");
+            throw new InsufficientFundsException();
         }
     }
 
     private void validateFundsArePositive(Money funds) {
         if (funds.amount().compareTo(BigDecimal.ZERO) < 0) {
-            throw new IllegalArgumentException("Funds must be positive");
+            throw new NegativeTransferAttemptException();
         }
     }
 }

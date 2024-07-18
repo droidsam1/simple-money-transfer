@@ -4,12 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="start over">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/Account.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/AccountId.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/Money.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/example/simple/MoneyTransferTest.java" afterDir="false" />
+    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="timed attempt: 9 min transfer impl without concurrency control">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/exceptions/InsufficientFundsException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/exceptions/MismatchCurrencyException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/exceptions/NegativeTransferAttemptException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/simple/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/Account.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/simple/Money.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/Money.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/example/simple/MoneyTransferTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/example/simple/MoneyTransferTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,8 +22,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
-        <option value="Class" />
         <option value="Record" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -215,15 +217,7 @@
       <workItem from="1720959455111" duration="4364000" />
       <workItem from="1721065835126" duration="2925000" />
       <workItem from="1721203839660" duration="3817000" />
-      <workItem from="1721238511456" duration="4194000" />
-    </task>
-    <task id="LOCAL-00010" summary="refactor: extract to another implementation of account id to introduce malfunctioning accounts id">
-      <option name="closed" value="true" />
-      <created>1720367587349</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1720367587349</updated>
+      <workItem from="1721238511456" duration="4728000" />
     </task>
     <task id="LOCAL-00011" summary="refactor: add missing validation">
       <option name="closed" value="true" />
@@ -609,11 +603,18 @@
       <option name="project" value="LOCAL" />
       <updated>1721280700900</updated>
     </task>
-    <option name="localTasksCounter" value="59" />
+    <task id="LOCAL-00059" summary="timed attempt: 9 min transfer impl without concurrency control">
+      <option name="closed" value="true" />
+      <created>1721281274228</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1721281274228</updated>
+    </task>
+    <option name="localTasksCounter" value="60" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="timed attempt: 25 min" />
     <MESSAGE value="timed attempt to refactor by an optimistic approach" />
     <MESSAGE value="add: global lock manager to avoid locking directly on accounts" />
     <MESSAGE value="timed attempt: 22 min" />
@@ -638,7 +639,8 @@
     <MESSAGE value="timed attempt: +7 min to refactor to global lock manager" />
     <MESSAGE value="timed attempt: +4 min to refactor to avoid deadlock by pushing lock logic inside GlobalLockManager" />
     <MESSAGE value="start over" />
-    <option name="LAST_COMMIT_MESSAGE" value="start over" />
+    <MESSAGE value="timed attempt: 9 min transfer impl without concurrency control" />
+    <option name="LAST_COMMIT_MESSAGE" value="timed attempt: 9 min transfer impl without concurrency control" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
