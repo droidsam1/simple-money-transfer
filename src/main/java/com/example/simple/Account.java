@@ -21,9 +21,21 @@ public class Account {
     public void transfer(Account recipient, Money funds) {
         validateFundsArePositive(funds);
         //this should be atomic
-        {
-            this.withdraw(funds);
-            recipient.deposit(funds);
+
+        if (this.id.compareTo(recipient.id) > 0) {
+            synchronized (this) {
+                synchronized (recipient) {
+                    this.withdraw(funds);
+                    recipient.deposit(funds);
+                }
+            }
+        } else {
+            synchronized (recipient) {
+                synchronized (this) {
+                    this.withdraw(funds);
+                    recipient.deposit(funds);
+                }
+            }
         }
     }
 
