@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="timed attempt: +7 min to refactor to global lock manager">
+    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="timed attempt: +4 min to refactor to avoid deadlock by pushing lock logic inside GlobalLockManager">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/simple/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/Account.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/simple/GlobalLockManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/GlobalLockManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -213,15 +211,7 @@
       <workItem from="1720959455111" duration="4364000" />
       <workItem from="1721065835126" duration="2925000" />
       <workItem from="1721203839660" duration="3817000" />
-      <workItem from="1721238511456" duration="2023000" />
-    </task>
-    <task id="LOCAL-00008" summary="refactor: push validation logic to Account">
-      <option name="closed" value="true" />
-      <created>1719674723989</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1719674723989</updated>
+      <workItem from="1721238511456" duration="3803000" />
     </task>
     <task id="LOCAL-00009" summary="add: a stronger implementation of the pessimistic lock strategy">
       <option name="closed" value="true" />
@@ -607,11 +597,18 @@
       <option name="project" value="LOCAL" />
       <updated>1721240303782</updated>
     </task>
-    <option name="localTasksCounter" value="57" />
+    <task id="LOCAL-00057" summary="timed attempt: +4 min to refactor to avoid deadlock by pushing lock logic inside GlobalLockManager">
+      <option name="closed" value="true" />
+      <created>1721240593211</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1721240593211</updated>
+    </task>
+    <option name="localTasksCounter" value="58" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add: simple mechanism to avoid livelock in optimistic implementation" />
     <MESSAGE value="timed attempt: 25 min" />
     <MESSAGE value="timed attempt to refactor by an optimistic approach" />
     <MESSAGE value="add: global lock manager to avoid locking directly on accounts" />
@@ -636,7 +633,8 @@
     <MESSAGE value="timed attempt: +5 min to implement pessimistic transfer approach" />
     <MESSAGE value="timed attempt: +4 min to implement optimistic transfer approach" />
     <MESSAGE value="timed attempt: +7 min to refactor to global lock manager" />
-    <option name="LAST_COMMIT_MESSAGE" value="timed attempt: +7 min to refactor to global lock manager" />
+    <MESSAGE value="timed attempt: +4 min to refactor to avoid deadlock by pushing lock logic inside GlobalLockManager" />
+    <option name="LAST_COMMIT_MESSAGE" value="timed attempt: +4 min to refactor to avoid deadlock by pushing lock logic inside GlobalLockManager" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
