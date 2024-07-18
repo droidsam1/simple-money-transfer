@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="timed attempt: +5min to refactor to domain exceptions">
+    <list default="true" id="e0277c47-1c02-4a0b-b0b0-fbe5769ab7e0" name="Changes" comment="timed attempt: +3 min to implement pessimistic transfer approach">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/example/simple/MoneyTransferTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/example/simple/MoneyTransferTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/simple/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/simple/Account.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -212,15 +212,7 @@
       <workItem from="1720959455111" duration="4364000" />
       <workItem from="1721065835126" duration="2925000" />
       <workItem from="1721203839660" duration="3817000" />
-      <workItem from="1721238511456" duration="4863000" />
-    </task>
-    <task id="LOCAL-00012" summary="start over">
-      <option name="closed" value="true" />
-      <created>1720444255699</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1720444255699</updated>
+      <workItem from="1721238511456" duration="5308000" />
     </task>
     <task id="LOCAL-00013" summary="add: timed implementation, around 50min, too slow">
       <option name="closed" value="true" />
@@ -606,11 +598,18 @@
       <option name="project" value="LOCAL" />
       <updated>1721281601543</updated>
     </task>
-    <option name="localTasksCounter" value="61" />
+    <task id="LOCAL-00061" summary="timed attempt: +3 min to implement pessimistic transfer approach">
+      <option name="closed" value="true" />
+      <created>1721281813767</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1721281813767</updated>
+    </task>
+    <option name="localTasksCounter" value="62" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add: global lock manager to avoid locking directly on accounts" />
     <MESSAGE value="timed attempt: 22 min" />
     <MESSAGE value="add a concurrent test, 3 min" />
     <MESSAGE value="add alternative optimistic transfer approach, 9min" />
@@ -635,7 +634,8 @@
     <MESSAGE value="start over" />
     <MESSAGE value="timed attempt: 9 min transfer impl without concurrency control" />
     <MESSAGE value="timed attempt: +5min to refactor to domain exceptions" />
-    <option name="LAST_COMMIT_MESSAGE" value="timed attempt: +5min to refactor to domain exceptions" />
+    <MESSAGE value="timed attempt: +3 min to implement pessimistic transfer approach" />
+    <option name="LAST_COMMIT_MESSAGE" value="timed attempt: +3 min to implement pessimistic transfer approach" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
